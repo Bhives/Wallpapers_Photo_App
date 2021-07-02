@@ -1,0 +1,2 @@
+rootProject.name = "Garbuzov_P3_Wallpapers"
+include ':app'
