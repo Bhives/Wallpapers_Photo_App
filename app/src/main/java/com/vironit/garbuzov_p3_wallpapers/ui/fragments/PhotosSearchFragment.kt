@@ -5,18 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.lifecycleScope
-import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPhotoSearchBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.PhotosSearchAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosSearchViewModel
-import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 lateinit var _binding: FragmentPhotoSearchBinding
 val binding get() = _binding!!
@@ -24,7 +17,7 @@ val binding get() = _binding!!
 @AndroidEntryPoint
 class PhotosSearchFragment : BaseFragment() {
 
-    private val photosSearchViewModel: PhotosSearchViewModel by viewModels<PhotosSearchViewModel>()
+    private val photosSearchViewModel by viewModels<PhotosSearchViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,11 +40,11 @@ class PhotosSearchFragment : BaseFragment() {
     //    setAdapter(photosSearchViewModel)
     //}
 
-    private fun setAdapter(){
+    private fun setAdapter() {
         val photosSearchAdapter = PhotosSearchAdapter()
         binding.apply {
             photosRecyclerView.setHasFixedSize(true)
-            photosRecyclerView.adapter=photosSearchAdapter
+            photosRecyclerView.adapter = photosSearchAdapter
         }
         photosSearchViewModel.photosAll.observe(viewLifecycleOwner) {
             photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
