@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "photo")
 data class Photo(
-    @PrimaryKey val photoId: String,
+    @PrimaryKey var photoId: String,
     @ColumnInfo(name = "created_at") val createdAt: String,
     @ColumnInfo(name = "width") val width: Int,
     @ColumnInfo(name = "height") val height: Int,

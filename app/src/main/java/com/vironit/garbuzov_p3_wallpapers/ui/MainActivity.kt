@@ -5,10 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.vironit.garbuzov_p3_wallpapers.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-lateinit var binding: ActivityMainBinding
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
