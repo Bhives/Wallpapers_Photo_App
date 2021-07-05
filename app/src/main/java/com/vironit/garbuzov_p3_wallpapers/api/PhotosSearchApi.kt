@@ -1,9 +1,9 @@
 package com.vironit.garbuzov_p3_wallpapers.api
 
-import androidx.room.Query
-import androidx.viewbinding.BuildConfig
+import com.vironit.garbuzov_p3_wallpapers.BuildConfig
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Query
 
 interface PhotosSearchApi {
 
@@ -17,6 +17,6 @@ interface PhotosSearchApi {
     suspend fun searchPhotos(
         @Query("query") query: String,
         @Query("page") page: Int,
-        @Query("per_page"), perPage: Int
+        @Query("per_page") perPage: Int
     ): PhotosResults
 }
