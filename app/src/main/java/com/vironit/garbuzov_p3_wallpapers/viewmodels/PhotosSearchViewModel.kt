@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.vironit.garbuzov_p3_wallpapers.data.Photo
-import com.vironit.garbuzov_p3_wallpapers.data.PhotosRepository
+import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseViewModel
 
 class PhotosSearchViewModel @ViewModelInject constructor(private val photosRepository: PhotosRepository) :

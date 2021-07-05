@@ -1,9 +1,10 @@
-package com.vironit.garbuzov_p3_wallpapers.data
+package com.vironit.garbuzov_p3_wallpapers.data.repositories
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.vironit.garbuzov_p3_wallpapers.api.PhotosSearchApi
+import com.vironit.garbuzov_p3_wallpapers.data.PhotosPagingSource
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,7 +17,7 @@ class PhotosRepository @Inject constructor(private val photosSearchApi: PhotosSe
             maxSize = 50,
             enablePlaceholders = false
         ),
-        pagingSourceFactory = {PhotosPagingSource(photosSearchApi, query)}
+        pagingSourceFactory = { PhotosPagingSource(photosSearchApi, query) }
     ).liveData
 
     //fun insertToFavorites(photo: Photo) =
