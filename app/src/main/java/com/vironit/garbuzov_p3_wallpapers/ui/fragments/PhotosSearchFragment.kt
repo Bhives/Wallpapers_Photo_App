@@ -24,7 +24,7 @@ val binding get() = _binding!!
 @AndroidEntryPoint
 class PhotosSearchFragment : BaseFragment() {
 
-    private lateinit var photosSearchViewModel: PhotosSearchViewModel //by viewModels<PhotosSearchViewModel>()
+    private val photosSearchViewModel: PhotosSearchViewModel by viewModels<PhotosSearchViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
