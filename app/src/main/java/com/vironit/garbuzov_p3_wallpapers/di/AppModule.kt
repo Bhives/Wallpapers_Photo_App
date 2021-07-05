@@ -1,6 +1,6 @@
 package com.vironit.garbuzov_p3_wallpapers.di
 
-import com.vironit.garbuzov_p3_wallpapers.api.UnsplashApi
+import com.vironit.garbuzov_p3_wallpapers.api.PhotosSearchApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,12 +16,12 @@ object AppModule {
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl(UnsplashApi.BASE_URL)
+        .baseUrl(PhotosSearchApi.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
     @Provides
     @Singleton
-    fun provideUnsplashApi(retrofit: Retrofit): UnsplashApi =
-        retrofit.create(UnsplashApi::class.java)
+    fun provideUnsplashApi(retrofit: Retrofit): PhotosSearchApi =
+        retrofit.create(PhotosSearchApi::class.java)
 }

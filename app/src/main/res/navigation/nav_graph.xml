@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/imageSearchFragment"
-        android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.ImageSearchFragment"
+        android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.PhotosSearchFragment"
         android:label="fragment_image_search"
-        tools:layout="@layout/fragment_image_search" />
+        tools:layout="@layout/fragment_photo_search" />
 </navigation>

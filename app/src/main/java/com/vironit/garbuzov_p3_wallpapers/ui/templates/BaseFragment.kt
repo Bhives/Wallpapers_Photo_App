@@ -1,17 +1,12 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.templates
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.vironit.garbuzov_p3_wallpapers.R
-import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentBaseBinding
+import androidx.fragment.app.Fragment
 
 open class BaseFragment : Fragment() {
-
-    lateinit var _binding: FragmentBaseBinding
-    val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +16,6 @@ open class BaseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentBaseBinding.inflate(inflater, container, false)
-        return binding.root
+
     }
 }

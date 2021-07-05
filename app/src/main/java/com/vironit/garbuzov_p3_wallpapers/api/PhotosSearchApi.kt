@@ -2,11 +2,10 @@ package com.vironit.garbuzov_p3_wallpapers.api
 
 import androidx.room.Query
 import androidx.viewbinding.BuildConfig
-import com.vironit.garbuzov_p3_wallpapers.BuildConfig
 import retrofit2.http.GET
 import retrofit2.http.Headers
 
-interface UnsplashApi {
+interface PhotosSearchApi {
 
     companion object {
         const val BASE_URL = "https://api.unsplash.com/"
@@ -19,5 +18,5 @@ interface UnsplashApi {
         @Query("query") query: String,
         @Query("page") page: Int,
         @Query("per_page"), perPage: Int
-    ): UnsplashResponse
+    ): PhotosResults
 }
