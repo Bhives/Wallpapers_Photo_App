@@ -37,7 +37,7 @@ class PhotosSearchAdapter : PagingDataAdapter<Photo, PhotosSearchAdapter.PhotosH
             binding.apply {
                 Glide.with(itemView)
                     .load(photo.urls.regular)
-                    .centerCrop()
+                    .fitCenter()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .error(R.drawable.ic_error)
                     .into(currentPhoto)

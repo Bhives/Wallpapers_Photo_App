@@ -4,11 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.vironit.garbuzov_p3_wallpapers.R
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPhotoSearchBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.PhotosSearchAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
@@ -45,19 +42,25 @@ class PhotosSearchFragment : BaseFragment() {
     //}
 
     private fun setAdapter() {
-        ActivityCompat.requestPermissions(
-            this.requireActivity(),
-            arrayOf(android.Manifest.permission.INTERNET, android.Manifest.permission.ACCESS_NETWORK_STATE),
+        requestPermissions(
+            arrayOf(
+                android.Manifest.permission.INTERNET,
+                android.Manifest.permission.ACCESS_NETWORK_STATE
+            ),
             100
         )
         val photosSearchAdapter = PhotosSearchAdapter()
         binding.apply {
-            //photosRecyclerView.setHasFixedSize(true)
+            photosRecyclerView.setHasFixedSize(true)
+            photosRecyclerView.layoutManager =
+                StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
             photosRecyclerView.adapter = photosSearchAdapter
         }
         photosSearchViewModel.photosAll.observe(viewLifecycleOwner) {
             photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
+
+
     }
 
     override fun onDestroyView() {
