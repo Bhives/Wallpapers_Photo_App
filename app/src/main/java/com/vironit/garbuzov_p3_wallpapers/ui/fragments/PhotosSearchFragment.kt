@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPhotoSearchBinding
@@ -18,6 +19,8 @@ val binding get() = _binding!!
 @AndroidEntryPoint
 class PhotosSearchFragment : BaseFragment() {
 
+    private lateinit var photosSearchAdapter: PhotosSearchAdapter
+
     private val photosSearchViewModel by viewModels<PhotosSearchViewModel>()
 
     override fun onCreateView(
@@ -27,6 +30,20 @@ class PhotosSearchFragment : BaseFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentPhotoSearchBinding.inflate(inflater, container, false)
         setAdapter()
+        binding.photoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    binding.photosRecyclerView.scrollToPosition(0)
+                    photosSearchViewModel.searchPhotos(query)
+                    binding.photoSearchView.clearFocus()
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+        })
         return binding.root
     }
 
@@ -59,8 +76,6 @@ class PhotosSearchFragment : BaseFragment() {
         photosSearchViewModel.photosAll.observe(viewLifecycleOwner) {
             photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
-
-
     }
 
     override fun onDestroyView() {

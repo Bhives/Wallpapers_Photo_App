@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Garbuzov_P3_Wallpapers</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="search_hint">Enter search criteria</string>
 </resources>
