@@ -7,16 +7,19 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.vironit.garbuzov_p3_wallpapers.R
+import com.vironit.garbuzov_p3_wallpapers.data.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPhotoSearchBinding
+import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnItemClickListener
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.PhotosSearchAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PhotosSearchFragment : BaseFragment() {
+class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
 
     lateinit var _binding: FragmentPhotoSearchBinding
     val binding get() = _binding!!
@@ -37,10 +40,9 @@ class PhotosSearchFragment : BaseFragment() {
                     photosSearchViewModel.searchPhotos(query)
                     binding.photoSearchView.clearFocus()
                 }
-                if (photosSearchAdapter.itemCount<1){
+                if (photosSearchAdapter.itemCount < 1) {
                     switchNoSearchResultsState(true)
                 }
-
                 return true
             }
 
@@ -51,17 +53,6 @@ class PhotosSearchFragment : BaseFragment() {
         return binding.root
     }
 
-    //private fun setViewModel(){
-    //    val photosRepository = PhotosRepository(PhotosDatabase(requireContext()))
-    //    val employeesViewModelFactory = PhotosViewModelFactory(photosRepository)
-    //    photosSearchViewModel =
-    //        ViewModelProvider(
-    //            ViewModelStore(),
-    //            employeesViewModelFactory
-    //        ).get(PhotosSearchViewModel::class.java)
-    //    setAdapter(photosSearchViewModel)
-    //}
-
     private fun setAdapter() {
         requestPermissions(
             arrayOf(
@@ -70,7 +61,6 @@ class PhotosSearchFragment : BaseFragment() {
             ),
             100
         )
-        //val photosSearchAdapter = PhotosSearchAdapter()
         binding.apply {
             photosRecyclerView.setHasFixedSize(true)
             photosRecyclerView.layoutManager =
@@ -80,19 +70,18 @@ class PhotosSearchFragment : BaseFragment() {
         photosSearchViewModel.photosAll.observe(viewLifecycleOwner) {
             photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
-        if (photosSearchAdapter.itemCount<1){
+        if (photosSearchAdapter.itemCount < 1) {
             switchNoSearchResultsState(true)
         }
     }
 
-    private fun switchNoSearchResultsState(stateFlag: Boolean){
+    private fun switchNoSearchResultsState(stateFlag: Boolean) {
         binding.apply {
-            if(!stateFlag) {
+            if (!stateFlag) {
                 photosRecyclerView.isVisible = false
                 errorText.text = context?.resources?.getString(R.string.no_search_results_alert)
                 errorText.isVisible = true
-            }
-            else{
+            } else {
                 errorText.isVisible = false
                 photosRecyclerView.isVisible = true
             }
@@ -102,5 +91,10 @@ class PhotosSearchFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null!!
+    }
+
+    override fun onItemClick(photo: Photo) {
+        val action = PhotosSearchFragmentDirections.actionImageSearchFragmentToCurrentPhotoFragment(photo)
+        findNavController().navigate(action)
     }
 }

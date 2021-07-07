@@ -10,10 +10,11 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.PhotoCardBinding
+import kotlinx.android.synthetic.main.fragment_current_photo.view.*
 
 class PhotosSearchAdapter : PagingDataAdapter<Photo, PhotosSearchAdapter.PhotosHolder>(
     PHOTO_COMPARATOR
-) {
+){
 
     lateinit var photosList: List<Photo>
 
@@ -31,7 +32,10 @@ class PhotosSearchAdapter : PagingDataAdapter<Photo, PhotosSearchAdapter.PhotosH
     }
 
     class PhotosHolder(private val binding: PhotoCardBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root), OnItemClickListener {
+
+        override fun onItemClick(photo: Photo) {
+        }
 
         fun bindPhoto(photo: Photo) {
             binding.apply {
@@ -40,11 +44,32 @@ class PhotosSearchAdapter : PagingDataAdapter<Photo, PhotosSearchAdapter.PhotosH
                     .centerInside()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .error(R.drawable.ic_error)
-                    .into(currentPhoto)
-                photoAuthor.text = photo.user.username
+                    .into(currentPhotoImageView)
+                photoAuthorTextView.text = photo.user.username
+            }
+
+            binding.root.setOnClickListener{
+                val position = bindingAdapterPosition
+                if (position!=RecyclerView.NO_POSITION){
+                    if (photo != null) {
+                        onItemClick(photo)
+                    }
+                }
+            }
+
+            //itemView.setOnClickListener {
+            //    it.findNavController()
+            //        .navigate(R.id.action_imageSearchFragment_to_currentPhotoFragment)
+            //    Glide.with(itemView)
+            //        .load(photo.urls.regular)
+            //        .centerInside()
+            //        .transition(DrawableTransitionOptions.withCrossFade())
+            //        .into(it?.selectedPhotoImageView!!)
+            //    it.authorTextView?.text = photo.user.username
+
+
             }
         }
-    }
 
     companion object {
         private val PHOTO_COMPARATOR = object : DiffUtil.ItemCallback<Photo>() {

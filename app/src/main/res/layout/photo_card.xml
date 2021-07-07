@@ -15,7 +15,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/currentPhoto"
+            android:id="@+id/currentPhotoImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,12 +23,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/photoAuthor"
+            android:id="@+id/photoAuthorTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/currentPhoto"
-            app:layout_constraintStart_toStartOf="@id/currentPhoto"
-            app:layout_constraintTop_toBottomOf="@id/currentPhoto" />
+            app:layout_constraintEnd_toEndOf="@id/currentPhotoImageView"
+            app:layout_constraintStart_toStartOf="@id/currentPhotoImageView"
+            app:layout_constraintTop_toBottomOf="@id/currentPhotoImageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

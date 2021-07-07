@@ -9,5 +9,15 @@
         android:id="@+id/imageSearchFragment"
         android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.PhotosSearchFragment"
         android:label="fragment_image_search"
-        tools:layout="@layout/fragment_photo_search" />
+        tools:layout="@layout/fragment_photo_search">
+        <action
+            android:id="@+id/action_imageSearchFragment_to_currentPhotoFragment"
+            app:destination="@id/currentPhotoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/currentPhotoFragment"
+        android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.CurrentPhotoFragment"
+        android:label="fragment_current_photo"
+        tools:layout="@layout/fragment_current_photo" />
 </navigation>
