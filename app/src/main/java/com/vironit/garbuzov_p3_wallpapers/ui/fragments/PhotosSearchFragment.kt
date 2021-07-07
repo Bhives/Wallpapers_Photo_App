@@ -5,38 +5,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPhotoSearchBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.PhotosSearchAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-lateinit var _binding: FragmentPhotoSearchBinding
-val binding get() = _binding!!
-
 @AndroidEntryPoint
 class PhotosSearchFragment : BaseFragment() {
 
-    private lateinit var photosSearchAdapter: PhotosSearchAdapter
-
+    lateinit var _binding: FragmentPhotoSearchBinding
+    val binding get() = _binding!!
     private val photosSearchViewModel by viewModels<PhotosSearchViewModel>()
+    private val photosSearchAdapter = PhotosSearchAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentPhotoSearchBinding.inflate(inflater, container, false)
         setAdapter()
         binding.photoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
+                    switchNoSearchResultsState(false)
                     binding.photosRecyclerView.scrollToPosition(0)
                     photosSearchViewModel.searchPhotos(query)
                     binding.photoSearchView.clearFocus()
                 }
+                if (photosSearchAdapter.itemCount<1){
+                    switchNoSearchResultsState(true)
+                }
+
                 return true
             }
 
@@ -66,7 +70,7 @@ class PhotosSearchFragment : BaseFragment() {
             ),
             100
         )
-        val photosSearchAdapter = PhotosSearchAdapter()
+        //val photosSearchAdapter = PhotosSearchAdapter()
         binding.apply {
             photosRecyclerView.setHasFixedSize(true)
             photosRecyclerView.layoutManager =
@@ -75,6 +79,23 @@ class PhotosSearchFragment : BaseFragment() {
         }
         photosSearchViewModel.photosAll.observe(viewLifecycleOwner) {
             photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+        if (photosSearchAdapter.itemCount<1){
+            switchNoSearchResultsState(true)
+        }
+    }
+
+    private fun switchNoSearchResultsState(stateFlag: Boolean){
+        binding.apply {
+            if(!stateFlag) {
+                photosRecyclerView.isVisible = false
+                errorText.text = context?.resources?.getString(R.string.no_search_results_alert)
+                errorText.isVisible = true
+            }
+            else{
+                errorText.isVisible = false
+                photosRecyclerView.isVisible = true
+            }
         }
     }
 
