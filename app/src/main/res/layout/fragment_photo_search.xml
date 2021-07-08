@@ -4,30 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/common_margin"
+    android:layout_marginTop="@dimen/common_margin"
+    android:layout_marginRight="@dimen/common_margin"
+    android:layout_marginBottom="@dimen/common_margin"
     tools:context=".ui.fragments.PhotosSearchFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/photoSearchView"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/light_blue_app_color"
+        android:layout_height="wrap_content"
+        android:background="@color/light_grey"
+        app:layout_constraintCircleRadius="@dimen/common_corner_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/AppTheme"
-        app:title="@string/app_name">
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/photoSearchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:queryHint="@string/search_hint" />
-
-    </androidx.appcompat.widget.Toolbar>
-
+        app:queryHint="@string/search_hint" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/photosRecyclerView"
@@ -36,7 +28,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/photoSearchView" />
 
     <TextView
         android:id="@+id/errorText"

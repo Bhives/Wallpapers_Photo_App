@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,10 +22,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
 
-    lateinit var _binding: FragmentPhotoSearchBinding
+    private var _binding: FragmentPhotoSearchBinding? = null
     val binding get() = _binding!!
     private val photosSearchViewModel by viewModels<PhotosSearchViewModel>()
-    private val photosSearchAdapter = PhotosSearchAdapter()
+    private val photosSearchAdapter = PhotosSearchAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,29 +33,38 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
     ): View? {
         _binding = FragmentPhotoSearchBinding.inflate(inflater, container, false)
         setAdapter()
-        binding.photoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
-                    switchNoSearchResultsState(false)
-                    binding.photosRecyclerView.scrollToPosition(0)
-                    photosSearchViewModel.searchPhotos(query)
-                    binding.photoSearchView.clearFocus()
-                }
-                if (photosSearchAdapter.itemCount < 1) {
-                    switchNoSearchResultsState(true)
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return true
-            }
-        })
+        searchPhotos()
         return binding.root
     }
 
+    private fun searchPhotos() {
+        binding.photoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                //switchNoSearchResultsState(false)
+                binding.photoSearchView.clearFocus()
+                //if (photosSearchAdapter.itemCount < 1) {
+                //    switchNoSearchResultsState(true)
+                //}
+                return true
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                //switchNoSearchResultsState(false)
+                if (query != null) {
+                    binding.photosRecyclerView.scrollToPosition(0)
+                    photosSearchViewModel.searchPhotos(query)
+                }
+                //if (photosSearchAdapter.itemCount < 1) {
+                //    switchNoSearchResultsState(true)
+                //}
+                return true
+            }
+        })
+    }
+
     private fun setAdapter() {
-        requestPermissions(
+        ActivityCompat.requestPermissions(
+            this.requireActivity(),
             arrayOf(
                 android.Manifest.permission.INTERNET,
                 android.Manifest.permission.ACCESS_NETWORK_STATE
@@ -70,14 +80,11 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
         photosSearchViewModel.photosAll.observe(viewLifecycleOwner) {
             photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
-        if (photosSearchAdapter.itemCount < 1) {
-            switchNoSearchResultsState(true)
-        }
     }
 
     private fun switchNoSearchResultsState(stateFlag: Boolean) {
         binding.apply {
-            if (!stateFlag) {
+            if (stateFlag) {
                 photosRecyclerView.isVisible = false
                 errorText.text = context?.resources?.getString(R.string.no_search_results_alert)
                 errorText.isVisible = true
@@ -90,11 +97,12 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null!!
+        _binding = null
     }
 
     override fun onItemClick(photo: Photo) {
-        val action = PhotosSearchFragmentDirections.actionImageSearchFragmentToCurrentPhotoFragment(photo)
+        val action =
+            PhotosSearchFragmentDirections.actionImageSearchFragmentToCurrentPhotoFragment(photo)
         findNavController().navigate(action)
     }
 }
