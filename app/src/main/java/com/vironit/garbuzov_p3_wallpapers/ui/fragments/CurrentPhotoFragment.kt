@@ -1,17 +1,25 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
+import android.annotation.SuppressLint
+import android.app.WallpaperManager
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentCurrentPhotoBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
+import java.io.IOException
+
 
 class CurrentPhotoFragment : BaseFragment() {
 
@@ -26,6 +34,10 @@ class CurrentPhotoFragment : BaseFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentCurrentPhotoBinding.inflate(inflater, container, false)
         attachPhoto()
+        setWallpaper()
+        binding.backButton.setOnClickListener {
+            findNavController().navigate(R.id.action_currentPhotoFragment_to_imageSearchFragment)
+        }
         return binding.root
     }
 
@@ -48,6 +60,27 @@ class CurrentPhotoFragment : BaseFragment() {
                     context.startActivity(portfolioIntent)
                 }
                 paint.isUnderlineText = true
+            }
+        }
+    }
+
+    @SuppressLint("ResourceType")
+    fun setWallpaper() {
+        val wallpaperManager: WallpaperManager = WallpaperManager.getInstance(context)
+        binding.setWallpaperButton.setOnClickListener {
+            ActivityCompat.requestPermissions(
+                this.requireActivity(),
+                arrayOf(android.Manifest.permission.SET_WALLPAPER),
+                100
+            )
+            try {
+                binding.selectedPhotoImageView.buildDrawingCache()
+                val bitmap: Bitmap = binding.selectedPhotoImageView.drawingCache
+                wallpaperManager.setBitmap(bitmap)
+                Toast.makeText(context, "New wallpaper successfully set", Toast.LENGTH_SHORT)
+                    .show()
+            } catch (iOException: IOException) {
+                iOException.printStackTrace()
             }
         }
     }

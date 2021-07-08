@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -39,26 +40,31 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
     private fun searchPhotos() {
         binding.photoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
-                    binding.photosRecyclerView.scrollToPosition(0)
-                    photosSearchViewModel.searchPhotos(query)
-                    binding.photoSearchView.clearFocus()
-                }
-                if (photosSearchAdapter.itemCount < 1) {
-                    switchNoSearchResultsState(true)
-                }
+                //switchNoSearchResultsState(false)
+                binding.photoSearchView.clearFocus()
+                //if (photosSearchAdapter.itemCount < 1) {
+                //    switchNoSearchResultsState(true)
+                //}
                 return true
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                switchNoSearchResultsState(false)
+            override fun onQueryTextChange(query: String?): Boolean {
+                //switchNoSearchResultsState(false)
+                if (query != null) {
+                    binding.photosRecyclerView.scrollToPosition(0)
+                    photosSearchViewModel.searchPhotos(query)
+                }
+                //if (photosSearchAdapter.itemCount < 1) {
+                //    switchNoSearchResultsState(true)
+                //}
                 return true
             }
         })
     }
 
     private fun setAdapter() {
-        requestPermissions(
+        ActivityCompat.requestPermissions(
+            this.requireActivity(),
             arrayOf(
                 android.Manifest.permission.INTERNET,
                 android.Manifest.permission.ACCESS_NETWORK_STATE
@@ -74,9 +80,6 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
         photosSearchViewModel.photosAll.observe(viewLifecycleOwner) {
             photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
-        //if (photosSearchAdapter.itemCount < 1) {
-        //    switchNoSearchResultsState(true)
-        //}
     }
 
     private fun switchNoSearchResultsState(stateFlag: Boolean) {

@@ -23,5 +23,8 @@
         <argument
             android:name="photo"
             app:argType="com.vironit.garbuzov_p3_wallpapers.data.Photo" />
+        <action
+            android:id="@+id/action_currentPhotoFragment_to_imageSearchFragment"
+            app:destination="@id/imageSearchFragment" />
     </fragment>
 </navigation>
