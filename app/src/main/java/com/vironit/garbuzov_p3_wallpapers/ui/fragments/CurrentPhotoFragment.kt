@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -18,12 +19,14 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentCurrentPhotoBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
+import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosFavoritesViewModel
 import java.io.IOException
 
 
 class CurrentPhotoFragment : BaseFragment() {
 
     private val args by navArgs<CurrentPhotoFragmentArgs>()
+    private val photosFavoritesViewModel by viewModels<PhotosFavoritesViewModel>()
     private var _binding: FragmentCurrentPhotoBinding? = null
     val binding get() = _binding!!
 

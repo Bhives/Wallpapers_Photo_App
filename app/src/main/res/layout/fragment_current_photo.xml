@@ -56,4 +56,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <ToggleButton
+        android:id="@+id/favoritesToggle"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/setWallpaperButton"
+        app:layout_constraintBottom_toBottomOf="@id/setWallpaperButton"
+        android:layout_height="wrap_content"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
