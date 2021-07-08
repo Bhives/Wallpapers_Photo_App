@@ -23,6 +23,11 @@ class CurrentPhotoFragment : BaseFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentCurrentPhotoBinding.inflate(inflater, container, false)
+        attachPhoto()
+        return binding.root
+    }
+
+    private fun attachPhoto() {
         binding.apply {
             val photo = args.photo
             Glide.with(this@CurrentPhotoFragment)
@@ -31,10 +36,8 @@ class CurrentPhotoFragment : BaseFragment() {
                 .error(R.drawable.ic_error)
                 .into(selectedPhotoImageView)
             val author = photo.user.username
-            val photoDate = photo.createdAt
             authorTextView.text = "Photo by $author"
-            photoDateTextView.text = "Created at $photoDate"
+            photoDescriptionTextView.text = photo.description
         }
-        return binding.root
     }
 }

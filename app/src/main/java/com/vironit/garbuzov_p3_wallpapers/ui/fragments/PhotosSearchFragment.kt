@@ -32,6 +32,11 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
     ): View? {
         _binding = FragmentPhotoSearchBinding.inflate(inflater, container, false)
         setAdapter()
+        searchPhotos()
+        return binding.root
+    }
+
+    private fun searchPhotos() {
         binding.photoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
@@ -50,7 +55,6 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
                 return true
             }
         })
-        return binding.root
     }
 
     private fun setAdapter() {
@@ -77,7 +81,7 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
 
     private fun switchNoSearchResultsState(stateFlag: Boolean) {
         binding.apply {
-            if (!stateFlag) {
+            if (stateFlag) {
                 photosRecyclerView.isVisible = false
                 errorText.text = context?.resources?.getString(R.string.no_search_results_alert)
                 errorText.isVisible = true

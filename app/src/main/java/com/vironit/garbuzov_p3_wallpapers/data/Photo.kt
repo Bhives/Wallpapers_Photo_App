@@ -17,6 +17,7 @@ data class Photo(
     @ColumnInfo(name = "blur_hash") val blurHash: String,
     @ColumnInfo(name = "likes") val likes: Int,
     @ColumnInfo(name = "liked_by_user") val likedByUser: Boolean,
+    @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "user") val user: User,
     @ColumnInfo(name = "urls") val urls: Urls,
     @ColumnInfo(name = "links") val links: Links
