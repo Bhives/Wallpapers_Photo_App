@@ -48,7 +48,7 @@ class PhotosSearchAdapter(private val clickListener: OnItemClickListener) :
             binding.apply {
                 Glide.with(itemView)
                     .load(photo.urls.regular)
-                    .centerInside()
+                    .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .error(R.drawable.ic_error)
                     .into(currentPhotoImageView)
