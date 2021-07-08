@@ -41,7 +41,6 @@ class PhotosSearchAdapter(private val clickListener: OnItemClickListener) :
                         clickListener.onItemClick(item)
                     }
                 }
-
             }
         }
 
@@ -53,7 +52,6 @@ class PhotosSearchAdapter(private val clickListener: OnItemClickListener) :
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .error(R.drawable.ic_error)
                     .into(currentPhotoImageView)
-                photoAuthorTextView.text = photo.user.username
             }
         }
     }

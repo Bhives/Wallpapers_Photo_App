@@ -40,7 +40,6 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
         binding.photoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
-                    switchNoSearchResultsState(false)
                     binding.photosRecyclerView.scrollToPosition(0)
                     photosSearchViewModel.searchPhotos(query)
                     binding.photoSearchView.clearFocus()
@@ -52,6 +51,7 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                switchNoSearchResultsState(false)
                 return true
             }
         })
@@ -74,9 +74,9 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
         photosSearchViewModel.photosAll.observe(viewLifecycleOwner) {
             photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
-        if (photosSearchAdapter.itemCount < 1) {
-            switchNoSearchResultsState(true)
-        }
+        //if (photosSearchAdapter.itemCount < 1) {
+        //    switchNoSearchResultsState(true)
+        //}
     }
 
     private fun switchNoSearchResultsState(stateFlag: Boolean) {

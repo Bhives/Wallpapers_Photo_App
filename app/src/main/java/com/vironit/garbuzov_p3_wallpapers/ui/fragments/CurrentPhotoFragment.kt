@@ -1,5 +1,7 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,9 +37,18 @@ class CurrentPhotoFragment : BaseFragment() {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .error(R.drawable.ic_error)
                 .into(selectedPhotoImageView)
-            val author = photo.user.username
-            authorTextView.text = "Photo by $author"
             photoDescriptionTextView.text = photo.description
+
+            val uri = Uri.parse(photo.user.portfolioUrl)
+            val portfolioIntent = Intent(Intent.ACTION_VIEW, uri)
+
+            authorTextView.apply {
+                text = "Photo by ${photo.user.username}"
+                setOnClickListener {
+                    context.startActivity(portfolioIntent)
+                }
+                paint.isUnderlineText = true
+            }
         }
     }
 }

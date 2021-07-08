@@ -32,10 +32,10 @@ data class Photo(
         @ColumnInfo(name = "last_name") val lastName: String,
         @ColumnInfo(name = "instagram_username") val instagramUsername: String,
         @ColumnInfo(name = "twitter_username") val twitterUsername: String,
-        @ColumnInfo(name = "portfolio_url") val portfolioUrl: String,
-        @ColumnInfo(name = "profile_image") val profileImage: ProfileImage,
+        //@ColumnInfo(name = "profile_image") val profileImage: ProfileImage,
         @ColumnInfo(name = "links") val links: Links
     ) : Parcelable {
+        val portfolioUrl get() = "https://unsplash.com/$username?utm_source=ImageSearchApp&utm_medium=referral"
         @Entity(tableName = "profile_image")
         @Parcelize
         data class ProfileImage(
