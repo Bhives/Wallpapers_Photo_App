@@ -21,10 +21,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
 
-    lateinit var _binding: FragmentPhotoSearchBinding
+    private var _binding: FragmentPhotoSearchBinding? = null
     val binding get() = _binding!!
     private val photosSearchViewModel by viewModels<PhotosSearchViewModel>()
-    private val photosSearchAdapter = PhotosSearchAdapter()
+    private val photosSearchAdapter = PhotosSearchAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,11 +90,12 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null!!
+        _binding = null
     }
 
     override fun onItemClick(photo: Photo) {
-        val action = PhotosSearchFragmentDirections.actionImageSearchFragmentToCurrentPhotoFragment(photo)
+        val action =
+            PhotosSearchFragmentDirections.actionImageSearchFragmentToCurrentPhotoFragment(photo)
         findNavController().navigate(action)
     }
 }

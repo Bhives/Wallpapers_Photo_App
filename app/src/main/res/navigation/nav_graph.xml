@@ -19,5 +19,9 @@
         android:id="@+id/currentPhotoFragment"
         android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.CurrentPhotoFragment"
         android:label="fragment_current_photo"
-        tools:layout="@layout/fragment_current_photo" />
+        tools:layout="@layout/fragment_current_photo">
+        <argument
+            android:name="photo"
+            app:argType="com.vironit.garbuzov_p3_wallpapers.data.Photo" />
+    </fragment>
 </navigation>
