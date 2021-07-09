@@ -30,10 +30,16 @@ class PhotosFavoritesViewModel @Inject constructor(private val photosRepository:
 
     fun getFavoritePhotos() = photosRepository.getFavoritePhotos()
 
+    private fun getFavoritePhoto(photoId: String) = photosRepository.getFavoritePhoto(photoId)
+
     fun removeFromFavorites(photo: Photo) {
         viewModelScope.launch(Dispatchers.IO) {
             photosRepository.removeFromFavorites(photo)
         }
+    }
+
+    fun photoIsInFavorites(photoId: String): Boolean{
+        return getFavoritePhoto(photoId)== null
     }
 
     @SuppressLint("ResourceType")

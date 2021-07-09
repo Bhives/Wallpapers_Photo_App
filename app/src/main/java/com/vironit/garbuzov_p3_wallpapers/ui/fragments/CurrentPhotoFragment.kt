@@ -1,7 +1,5 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,6 +50,12 @@ class CurrentPhotoFragment : BaseFragment(), CompoundButton.OnCheckedChangeListe
                 .error(R.drawable.ic_error)
                 .into(selectedPhotoImageView)
             photoDescriptionTextView.text = photo.description
+
+            if (photosFavoritesViewModel.photoIsInFavorites(photo.id)) {
+                favoritesToggle.isChecked
+            } else {
+                !favoritesToggle.isChecked
+            }
 
             //val uri = Uri.parse(photo.user.portfolioUrl)
             //val portfolioIntent = Intent(Intent.ACTION_VIEW, uri)

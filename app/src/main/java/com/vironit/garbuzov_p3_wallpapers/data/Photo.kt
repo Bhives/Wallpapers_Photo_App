@@ -1,8 +1,9 @@
 package com.vironit.garbuzov_p3_wallpapers.data
 
 import android.os.Parcelable
-import androidx.room.*
-import com.vironit.garbuzov_p3_wallpapers.data.database.PhotoDataConverter
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "photo")
