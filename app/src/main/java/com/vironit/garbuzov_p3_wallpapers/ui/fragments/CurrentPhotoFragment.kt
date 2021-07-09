@@ -1,16 +1,11 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
-import android.annotation.SuppressLint
-import android.app.WallpaperManager
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,9 +15,9 @@ import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentCurrentPhotoBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosFavoritesViewModel
-import java.io.IOException
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CurrentPhotoFragment : BaseFragment() {
 
     private val args by navArgs<CurrentPhotoFragmentArgs>()
@@ -37,7 +32,7 @@ class CurrentPhotoFragment : BaseFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentCurrentPhotoBinding.inflate(inflater, container, false)
         attachPhoto()
-        setWallpaper()
+        photosFavoritesViewModel.setWallpaper(binding, requireContext(), this.requireActivity())
         binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.action_currentPhotoFragment_to_imageSearchFragment)
         }
@@ -63,27 +58,6 @@ class CurrentPhotoFragment : BaseFragment() {
                     context.startActivity(portfolioIntent)
                 }
                 paint.isUnderlineText = true
-            }
-        }
-    }
-
-    @SuppressLint("ResourceType")
-    fun setWallpaper() {
-        val wallpaperManager: WallpaperManager = WallpaperManager.getInstance(context)
-        binding.setWallpaperButton.setOnClickListener {
-            ActivityCompat.requestPermissions(
-                this.requireActivity(),
-                arrayOf(android.Manifest.permission.SET_WALLPAPER),
-                100
-            )
-            try {
-                binding.selectedPhotoImageView.buildDrawingCache()
-                val bitmap: Bitmap = binding.selectedPhotoImageView.drawingCache
-                wallpaperManager.setBitmap(bitmap)
-                Toast.makeText(context, "New wallpaper successfully set", Toast.LENGTH_SHORT)
-                    .show()
-            } catch (iOException: IOException) {
-                iOException.printStackTrace()
             }
         }
     }
