@@ -7,13 +7,13 @@ import com.vironit.garbuzov_p3_wallpapers.api.PhotosSearchApi
 import com.vironit.garbuzov_p3_wallpapers.data.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.PhotosPagingSource
 import com.vironit.garbuzov_p3_wallpapers.data.database.FavoritePhotosDatabase
+import dagger.Provides
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PhotosRepository @Inject constructor(
-    private val photosSearchApi: PhotosSearchApi,
-    private val favoritePhotosDatabase: FavoritePhotosDatabase
+    private val photosSearchApi: PhotosSearchApi, private val favoritePhotosDatabase: FavoritePhotosDatabase
 ) {
 
     fun getPhotosSearchResults(query: String) = Pager(

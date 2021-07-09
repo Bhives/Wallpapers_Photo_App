@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.vironit.garbuzov_p3_wallpapers.data.Photo
 
 @Database(entities = [Photo::class], version = 1)
+@TypeConverters(PhotoDataConverter::class)
 abstract class FavoritePhotosDatabase : RoomDatabase() {
     abstract fun photoDao(): PhotoDao
 
