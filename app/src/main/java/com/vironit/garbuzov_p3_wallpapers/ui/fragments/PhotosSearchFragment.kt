@@ -14,7 +14,7 @@ import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPhotoSearchBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnItemClickListener
-import com.vironit.garbuzov_p3_wallpapers.ui.adapters.PhotosSearchAdapter
+import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchPhotosAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +25,7 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
     private var _binding: FragmentPhotoSearchBinding? = null
     val binding get() = _binding!!
     private val photosSearchViewModel by viewModels<PhotosSearchViewModel>()
-    private val photosSearchAdapter = PhotosSearchAdapter(this)
+    private val photosSearchAdapter = SearchPhotosAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,17 +40,13 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
     private fun searchPhotos() {
         binding.photoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                //switchNoSearchResultsState(false)
                 binding.photoSearchView.clearFocus()
-                //if (photosSearchAdapter.itemCount < 1) {
-                //    switchNoSearchResultsState(true)
-                //}
                 return true
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                //switchNoSearchResultsState(false)
                 if (query != null) {
+                    //switchNoSearchResultsState(false)
                     binding.photosRecyclerView.scrollToPosition(0)
                     photosSearchViewModel.searchPhotos(query)
                 }
@@ -102,7 +98,7 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemClick(photo: Photo) {
         val action =
-            PhotosSearchFragmentDirections.actionImageSearchFragmentToCurrentPhotoFragment(photo)
+            PhotosSearchFragmentDirections.actionPhotosSearchFragmentToCurrentPhotoFragment(photo)
         findNavController().navigate(action)
     }
 }
