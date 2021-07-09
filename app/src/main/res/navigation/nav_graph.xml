@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/imageSearchFragment">
+    app:startDestination="@id/photosSearchFragment">
 
     <fragment
-        android:id="@+id/imageSearchFragment"
+        android:id="@+id/photosSearchFragment"
         android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.PhotosSearchFragment"
         android:label="fragment_image_search"
         tools:layout="@layout/fragment_photo_search">
         <action
-            android:id="@+id/action_imageSearchFragment_to_currentPhotoFragment"
+            android:id="@+id/action_photosSearchFragment_to_currentPhotoFragment"
             app:destination="@id/currentPhotoFragment" />
     </fragment>
 
@@ -24,7 +24,19 @@
             android:name="photo"
             app:argType="com.vironit.garbuzov_p3_wallpapers.data.Photo" />
         <action
-            android:id="@+id/action_currentPhotoFragment_to_imageSearchFragment"
-            app:destination="@id/imageSearchFragment" />
+            android:id="@+id/action_currentPhotoFragment_to_photosSearchFragment"
+            app:destination="@id/photosSearchFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/favoritePhotosFragment"
+        android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.FavoritePhotosFragment"
+        android:label="fragment_favorite_photos"
+        tools:layout="@layout/fragment_favorite_photos" />
+
+    <fragment
+        android:id="@+id/searchHistoryFragment"
+        android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.SearchHistoryFragment"
+        android:label="fragment_search_history"
+        tools:layout="@layout/fragment_search_history" />
 </navigation>

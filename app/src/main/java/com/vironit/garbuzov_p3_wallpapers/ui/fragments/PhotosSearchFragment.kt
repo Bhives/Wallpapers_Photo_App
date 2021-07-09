@@ -99,7 +99,7 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemClick(photo: Photo) {
         val action =
-            PhotosSearchFragmentDirections.actionImageSearchFragmentToCurrentPhotoFragment(photo)
+            PhotosSearchFragmentDirections.actionPhotosSearchFragmentToCurrentPhotoFragment(photo)
         findNavController().navigate(action)
     }
 }

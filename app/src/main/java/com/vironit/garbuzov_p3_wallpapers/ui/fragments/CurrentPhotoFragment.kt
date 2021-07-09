@@ -32,7 +32,7 @@ class CurrentPhotoFragment : BaseFragment(), CompoundButton.OnCheckedChangeListe
         _binding = FragmentCurrentPhotoBinding.inflate(inflater, container, false)
         attachPhoto()
         binding.backButton.setOnClickListener {
-            findNavController().navigate(R.id.action_currentPhotoFragment_to_imageSearchFragment)
+            findNavController().navigate(R.id.action_currentPhotoFragment_to_photosSearchFragment)
         }
         binding.setWallpaperButton.setOnClickListener {
             photosFavoritesViewModel.setWallpaper(binding, requireContext(), this.requireActivity())
