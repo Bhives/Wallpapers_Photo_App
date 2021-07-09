@@ -13,14 +13,14 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentCurrentPhotoBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
-import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosFavoritesViewModel
+import com.vironit.garbuzov_p3_wallpapers.viewmodels.FavoritePhotosViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CurrentPhotoFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
 
     private val args by navArgs<CurrentPhotoFragmentArgs>()
-    private val photosFavoritesViewModel by viewModels<PhotosFavoritesViewModel>()
+    private val photosFavoritesViewModel by viewModels<FavoritePhotosViewModel>()
     private var _binding: FragmentCurrentPhotoBinding? = null
     val binding get() = _binding!!
 

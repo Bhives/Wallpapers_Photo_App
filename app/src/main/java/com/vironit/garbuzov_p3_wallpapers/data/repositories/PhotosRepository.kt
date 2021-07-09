@@ -25,13 +25,8 @@ class PhotosRepository @Inject constructor(
         pagingSourceFactory = { PhotosPagingSource(photosSearchApi, query) }
     ).liveData
 
-    fun insertToFavorites(photo: Photo) {
-        if (photo.id==""){
-            photo.id= CURRENT_ID.toString()
-            CURRENT_ID++
-        }
+    fun insertToFavorites(photo: Photo) =
         favoritePhotosDatabase.photoDao().insertToFavorites(photo)
-    }
 
     fun getFavoritePhotos() = favoritePhotosDatabase.photoDao().getFavoritePhotos()
 
@@ -41,6 +36,6 @@ class PhotosRepository @Inject constructor(
         favoritePhotosDatabase.photoDao().removeFromFavorites(photo)
 
     companion object {
-        private var CURRENT_ID = 0
+        private val CURRENT_ID = 0
     }
 }

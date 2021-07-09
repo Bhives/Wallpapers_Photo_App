@@ -14,11 +14,10 @@ import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPhotoSearchBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnItemClickListener
-import com.vironit.garbuzov_p3_wallpapers.ui.adapters.PhotosSearchAdapter
+import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchPhotosAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
@@ -26,7 +25,7 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
     private var _binding: FragmentPhotoSearchBinding? = null
     val binding get() = _binding!!
     private val photosSearchViewModel by viewModels<PhotosSearchViewModel>()
-    private val photosSearchAdapter = PhotosSearchAdapter(this)
+    private val photosSearchAdapter = SearchPhotosAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

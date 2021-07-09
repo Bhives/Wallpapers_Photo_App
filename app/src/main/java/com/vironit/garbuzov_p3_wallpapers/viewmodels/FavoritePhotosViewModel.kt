@@ -19,7 +19,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class PhotosFavoritesViewModel @Inject constructor(private val photosRepository: PhotosRepository) :
+class FavoritePhotosViewModel @Inject constructor(private val photosRepository: PhotosRepository) :
     BaseViewModel() {
 
     fun insertToFavorites(photo: Photo) {
