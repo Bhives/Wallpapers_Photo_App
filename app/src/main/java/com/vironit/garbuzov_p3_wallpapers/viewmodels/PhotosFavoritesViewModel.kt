@@ -7,11 +7,14 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.viewModelScope
 import com.vironit.garbuzov_p3_wallpapers.data.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentCurrentPhotoBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
 
@@ -20,33 +23,35 @@ class PhotosFavoritesViewModel @Inject constructor(private val photosRepository:
     BaseViewModel() {
 
     fun insertToFavorites(photo: Photo) {
-        photosRepository.insertToFavorites(photo)
+        viewModelScope.launch(Dispatchers.IO) {
+            photosRepository.insertToFavorites(photo)
+        }
     }
 
     fun getFavoritePhotos() = photosRepository.getFavoritePhotos()
 
     fun removeFromFavorites(photo: Photo) {
-        photosRepository.removeFromFavorites(photo)
+        viewModelScope.launch(Dispatchers.IO) {
+            photosRepository.removeFromFavorites(photo)
+        }
     }
 
     @SuppressLint("ResourceType")
     fun setWallpaper(binding: FragmentCurrentPhotoBinding, context: Context, activity: Activity) {
         val wallpaperManager: WallpaperManager = WallpaperManager.getInstance(context)
-        binding.setWallpaperButton.setOnClickListener {
-            ActivityCompat.requestPermissions(
-                activity,
-                arrayOf(android.Manifest.permission.SET_WALLPAPER),
-                100
-            )
-            try {
-                binding.selectedPhotoImageView.buildDrawingCache()
-                val bitmap: Bitmap = binding.selectedPhotoImageView.drawingCache
-                wallpaperManager.setBitmap(bitmap)
-                Toast.makeText(context, "New wallpaper successfully set", Toast.LENGTH_SHORT)
-                    .show()
-            } catch (iOException: IOException) {
-                iOException.printStackTrace()
-            }
+        ActivityCompat.requestPermissions(
+            activity,
+            arrayOf(android.Manifest.permission.SET_WALLPAPER),
+            100
+        )
+        try {
+            binding.selectedPhotoImageView.buildDrawingCache()
+            val bitmap: Bitmap = binding.selectedPhotoImageView.drawingCache
+            wallpaperManager.setBitmap(bitmap)
+            Toast.makeText(context, "New wallpaper successfully set", Toast.LENGTH_SHORT)
+                .show()
+        } catch (iOException: IOException) {
+            iOException.printStackTrace()
         }
     }
 }

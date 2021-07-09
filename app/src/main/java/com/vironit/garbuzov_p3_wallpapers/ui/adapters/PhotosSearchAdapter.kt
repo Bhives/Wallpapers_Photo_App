@@ -59,7 +59,7 @@ class PhotosSearchAdapter(private val clickListener: OnItemClickListener) :
     companion object {
         private val PHOTO_COMPARATOR = object : DiffUtil.ItemCallback<Photo>() {
             override fun areItemsTheSame(oldItem: Photo, newItem: Photo) =
-                oldItem.photoId == newItem.photoId
+                oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: Photo, newItem: Photo) =
                 oldItem == newItem
