@@ -18,6 +18,7 @@ import com.vironit.garbuzov_p3_wallpapers.ui.adapters.PhotosSearchAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
@@ -40,17 +41,13 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
     private fun searchPhotos() {
         binding.photoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                //switchNoSearchResultsState(false)
                 binding.photoSearchView.clearFocus()
-                //if (photosSearchAdapter.itemCount < 1) {
-                //    switchNoSearchResultsState(true)
-                //}
                 return true
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                //switchNoSearchResultsState(false)
                 if (query != null) {
+                    //switchNoSearchResultsState(false)
                     binding.photosRecyclerView.scrollToPosition(0)
                     photosSearchViewModel.searchPhotos(query)
                 }
