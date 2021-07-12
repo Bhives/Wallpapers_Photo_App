@@ -29,6 +29,7 @@ class FavoritePhotosFragment : BaseFragment(), OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentFavoritePhotosBinding.inflate(inflater, container, false)
         setAdapter(requireContext())
         return binding.root
@@ -37,12 +38,16 @@ class FavoritePhotosFragment : BaseFragment(), OnItemClickListener {
     private fun setAdapter(
         context: Context
     ) {
-        binding.favoritePhotosRecyclerView.layoutManager =
-            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.apply {
+            favoritePhotosRecyclerView.setHasFixedSize(true)
+            favoritePhotosRecyclerView.layoutManager =
+                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            favoritePhotosRecyclerView.adapter = favoritePhotosAdapter
+        }
         photosFavoritesViewModel.getFavoritePhotos().observe(viewLifecycleOwner, {
             favoritePhotosAdapter.photosList = it
+            photosList = it
         })
-        binding.favoritePhotosRecyclerView.adapter = favoritePhotosAdapter
     }
 
     override fun onDestroyView() {
@@ -56,5 +61,9 @@ class FavoritePhotosFragment : BaseFragment(), OnItemClickListener {
                 photo
             )
         findNavController().navigate(action)
+    }
+
+    companion object {
+        var photosList: List<Photo> = listOf()
     }
 }

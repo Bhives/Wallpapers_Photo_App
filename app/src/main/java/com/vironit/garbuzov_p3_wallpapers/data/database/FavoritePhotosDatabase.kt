@@ -20,6 +20,7 @@ abstract class FavoritePhotosDatabase : RoomDatabase() {
         operator fun invoke() = instance ?: synchronized(LOCK) {
             instance ?: AppModule.provideDatabase(Application()).also {
                 instance = it
+                it.close()
             }
         }
     }

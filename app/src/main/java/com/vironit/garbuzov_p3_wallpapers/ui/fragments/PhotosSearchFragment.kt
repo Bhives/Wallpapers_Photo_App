@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.Photo
@@ -31,6 +32,7 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentPhotoSearchBinding.inflate(inflater, container, false)
         setAdapter()
         searchPhotos()
@@ -75,6 +77,7 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
         }
         photosSearchViewModel.photosAll.observe(viewLifecycleOwner) {
             photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+            photosList=it
         }
     }
 
@@ -100,5 +103,9 @@ class PhotosSearchFragment : BaseFragment(), OnItemClickListener {
         val action =
             PhotosSearchFragmentDirections.actionPhotosSearchFragmentToCurrentPhotoFragment(photo)
         findNavController().navigate(action)
+    }
+
+    companion object {
+        var photosList: PagingData<Photo>? = null
     }
 }

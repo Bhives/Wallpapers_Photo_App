@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.Photo
-import com.vironit.garbuzov_p3_wallpapers.databinding.PhotoCardBinding
+import com.vironit.garbuzov_p3_wallpapers.databinding.FavoritePhotoCardBinding
 
 class FavoritePhotosAdapter(
     private val clickListener: OnItemClickListener,
@@ -17,7 +17,7 @@ class FavoritePhotosAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritePhotosHolder {
         val binding =
-            PhotoCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            FavoritePhotoCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FavoritePhotosHolder(binding)
     }
 
@@ -25,7 +25,7 @@ class FavoritePhotosAdapter(
         favoritePhotosHolder.bindPhoto(photosList[position])
     }
 
-    inner class FavoritePhotosHolder(private val binding: PhotoCardBinding) :
+    inner class FavoritePhotosHolder(private val binding: FavoritePhotoCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -45,16 +45,17 @@ class FavoritePhotosAdapter(
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .error(R.drawable.ic_error)
-                    .into(currentPhotoImageView)
+                    .into(favoritePhotoImageView)
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return if (photosList.isNullOrEmpty()) {
-            0
-        } else {
-            photosList.size
-        }
+        return photosList.size
+        //return if (photosList.isNullOrEmpty()) {
+        //    0
+        //} else {
+        //    photosList.size
+        //}
     }
 }

@@ -34,8 +34,4 @@ class PhotosRepository @Inject constructor(
 
     fun removeFromFavorites(photo: Photo) =
         favoritePhotosDatabase.photoDao().removeFromFavorites(photo)
-
-    companion object {
-        private val CURRENT_ID = 0
-    }
 }
