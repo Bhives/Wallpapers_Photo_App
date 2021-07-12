@@ -3,7 +3,7 @@ package com.vironit.garbuzov_p3_wallpapers.di
 import android.app.Application
 import androidx.room.Room
 import com.vironit.garbuzov_p3_wallpapers.api.PhotosSearchApi
-import com.vironit.garbuzov_p3_wallpapers.data.database.FavoritePhotosDatabase
+import com.vironit.garbuzov_p3_wallpapers.data.database.PhotosDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,9 +30,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(application: Application): FavoritePhotosDatabase {
+    fun provideDatabase(application: Application): PhotosDatabase {
         return Room
-            .databaseBuilder(application, FavoritePhotosDatabase::class.java, "favorite_photos.db")
+            .databaseBuilder(application, PhotosDatabase::class.java, "favorite_photos.db")
             .build()
     }
 }

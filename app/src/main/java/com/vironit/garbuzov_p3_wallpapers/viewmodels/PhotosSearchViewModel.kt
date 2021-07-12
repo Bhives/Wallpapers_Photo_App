@@ -4,9 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.vironit.garbuzov_p3_wallpapers.data.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,6 +24,13 @@ class PhotosSearchViewModel @Inject constructor(private val photosRepository: Ph
 
     fun searchPhotos(query: String) {
         currentQuery.value = query
+
+    }
+
+    fun insertSearchQuery(searchQuery: SearchQuery) {
+        viewModelScope.launch(Dispatchers.IO) {
+            photosRepository.insertSearchQuery(searchQuery)
+        }
     }
 
     companion object {

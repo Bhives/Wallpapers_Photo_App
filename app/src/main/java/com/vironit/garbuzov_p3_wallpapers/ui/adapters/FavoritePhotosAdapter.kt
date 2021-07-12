@@ -51,11 +51,10 @@ class FavoritePhotosAdapter(
     }
 
     override fun getItemCount(): Int {
-        return photosList.size
-        //return if (photosList.isNullOrEmpty()) {
-        //    0
-        //} else {
-        //    photosList.size
-        //}
+        return if (photosList.isNullOrEmpty()) {
+            0
+        } else {
+            photosList.size
+        }
     }
 }

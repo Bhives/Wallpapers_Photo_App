@@ -5,16 +5,18 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.vironit.garbuzov_p3_wallpapers.data.Photo
+import com.vironit.garbuzov_p3_wallpapers.data.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.di.AppModule
 
-@Database(entities = [Photo::class], version = 1)
+@Database(entities = [Photo::class, SearchQuery::class], version = 1)
 @TypeConverters(PhotoDataConverter::class)
-abstract class FavoritePhotosDatabase : RoomDatabase() {
+abstract class PhotosDatabase : RoomDatabase() {
     abstract fun photoDao(): PhotoDao
+    abstract fun searchQueryDao(): SearchQueryDao
 
     companion object {
         @Volatile
-        private var instance: FavoritePhotosDatabase? = null
+        private var instance: PhotosDatabase? = null
         private val LOCK = Any()
 
         operator fun invoke() = instance ?: synchronized(LOCK) {

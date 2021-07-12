@@ -24,7 +24,7 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
 
     fun insertToFavorites(photo: Photo) {
         viewModelScope.launch(Dispatchers.IO) {
-            photosRepository.insertToFavorites(photo)
+            photosRepository.insertPhotoToFavorites(photo)
         }
     }
 
@@ -34,7 +34,7 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
 
     fun removeFromFavorites(photo: Photo) {
         viewModelScope.launch(Dispatchers.IO) {
-            photosRepository.removeFromFavorites(photo)
+            photosRepository.removePhotoFromFavorites(photo)
         }
     }
 

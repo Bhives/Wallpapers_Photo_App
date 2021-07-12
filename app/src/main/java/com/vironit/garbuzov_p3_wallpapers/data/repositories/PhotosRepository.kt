@@ -6,14 +6,14 @@ import androidx.paging.liveData
 import com.vironit.garbuzov_p3_wallpapers.api.PhotosSearchApi
 import com.vironit.garbuzov_p3_wallpapers.data.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.PhotosPagingSource
-import com.vironit.garbuzov_p3_wallpapers.data.database.FavoritePhotosDatabase
-import dagger.Provides
+import com.vironit.garbuzov_p3_wallpapers.data.SearchQuery
+import com.vironit.garbuzov_p3_wallpapers.data.database.PhotosDatabase
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PhotosRepository @Inject constructor(
-    private val photosSearchApi: PhotosSearchApi, private val favoritePhotosDatabase: FavoritePhotosDatabase
+    private val photosSearchApi: PhotosSearchApi, private val photosDatabase: PhotosDatabase
 ) {
 
     fun getPhotosSearchResults(query: String) = Pager(
@@ -25,13 +25,24 @@ class PhotosRepository @Inject constructor(
         pagingSourceFactory = { PhotosPagingSource(photosSearchApi, query) }
     ).liveData
 
-    fun insertToFavorites(photo: Photo) =
-        favoritePhotosDatabase.photoDao().insertToFavorites(photo)
+    fun insertPhotoToFavorites(photo: Photo) =
+        photosDatabase.photoDao().insertToFavorites(photo)
 
-    fun getFavoritePhotos() = favoritePhotosDatabase.photoDao().getFavoritePhotos()
+    fun insertSearchQuery(searchQuery: SearchQuery) =
+        photosDatabase.searchQueryDao().insertSearchQuery(searchQuery)
 
-    fun getFavoritePhoto(photoId: String) = favoritePhotosDatabase.photoDao().getFavoritePhoto(photoId)
+    fun getFavoritePhotos() = photosDatabase.photoDao().getFavoritePhotos()
 
-    fun removeFromFavorites(photo: Photo) =
-        favoritePhotosDatabase.photoDao().removeFromFavorites(photo)
+    fun getAllSearchQueries() = photosDatabase.searchQueryDao().getAllSearchQueries()
+
+    fun getFavoritePhoto(photoId: String) = photosDatabase.photoDao().getFavoritePhoto(photoId)
+
+    fun getFavoriteSearchQueries(searchQueryText: String) =
+        photosDatabase.searchQueryDao().getFavoriteSearchQueries(searchQueryText)
+
+    fun removePhotoFromFavorites(photo: Photo) =
+        photosDatabase.photoDao().removeFromFavorites(photo)
+
+    fun removeSearchQueryFromFavorites(searchQuery: SearchQuery) =
+        photosDatabase.searchQueryDao().removeSearchQueryFromFavorites(searchQuery)
 }
