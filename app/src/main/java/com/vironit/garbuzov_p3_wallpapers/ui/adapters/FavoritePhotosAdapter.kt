@@ -9,10 +9,11 @@ import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.PhotoCardBinding
 
-class FavoritePhotosAdapter(private val clickListener: OnItemClickListener, var photosList: List<Photo>) :
+class FavoritePhotosAdapter(
+    private val clickListener: OnItemClickListener,
+    var photosList: List<Photo>
+) :
     RecyclerView.Adapter<FavoritePhotosAdapter.FavoritePhotosHolder>() {
-
-    //lateinit var photosList: List<Photo>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritePhotosHolder {
         val binding =
