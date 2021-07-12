@@ -8,7 +8,7 @@ import android.graphics.Bitmap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewModelScope
-import com.vironit.garbuzov_p3_wallpapers.data.Photo
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentCurrentPhotoBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseViewModel

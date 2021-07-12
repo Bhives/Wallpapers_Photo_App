@@ -3,6 +3,7 @@ package com.vironit.garbuzov_p3_wallpapers.data
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.vironit.garbuzov_p3_wallpapers.api.PhotosSearchApi
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import retrofit2.HttpException
 import java.io.IOException
 
