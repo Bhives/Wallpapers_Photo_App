@@ -4,9 +4,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.vironit.garbuzov_p3_wallpapers.api.PhotosSearchApi
-import com.vironit.garbuzov_p3_wallpapers.data.Photo
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.PhotosPagingSource
-import com.vironit.garbuzov_p3_wallpapers.data.SearchQuery
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.data.database.PhotosDatabase
 import javax.inject.Inject
 import javax.inject.Singleton

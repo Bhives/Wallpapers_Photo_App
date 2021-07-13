@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.vironit.garbuzov_p3_wallpapers.data.SearchQuery
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentSearchHistoryBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchHistoryAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment

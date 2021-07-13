@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.vironit.garbuzov_p3_wallpapers.data.Photo
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentFavoritePhotosBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.FavoritePhotosAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnItemClickListener

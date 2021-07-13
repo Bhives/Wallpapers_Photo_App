@@ -1,4 +1,4 @@
-package com.vironit.garbuzov_p3_wallpapers.data
+package com.vironit.garbuzov_p3_wallpapers.data.database.entities
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.vironit.garbuzov_p3_wallpapers.data.SearchQuery
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

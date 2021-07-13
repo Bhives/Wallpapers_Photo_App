@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.vironit.garbuzov_p3_wallpapers.R
-import com.vironit.garbuzov_p3_wallpapers.data.Photo
-import com.vironit.garbuzov_p3_wallpapers.data.SearchQuery
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPhotoSearchBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnItemClickListener
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchPhotosAdapter
