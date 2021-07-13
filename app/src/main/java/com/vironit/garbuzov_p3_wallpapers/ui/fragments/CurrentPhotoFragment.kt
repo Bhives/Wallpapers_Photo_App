@@ -1,9 +1,7 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,19 +15,17 @@ import com.vironit.garbuzov_p3_wallpapers.viewmodels.FavoritePhotosViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CurrentPhotoFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
+class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
+    CompoundButton.OnCheckedChangeListener {
 
     private val args by navArgs<CurrentPhotoFragmentArgs>()
     private val photosFavoritesViewModel by viewModels<FavoritePhotosViewModel>()
     private var _binding: FragmentCurrentPhotoBinding? = null
     val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        _binding = FragmentCurrentPhotoBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentCurrentPhotoBinding.bind(view)
         attachPhoto()
         binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.action_currentPhotoFragment_to_photosSearchFragment)
@@ -38,7 +34,6 @@ class CurrentPhotoFragment : BaseFragment(), CompoundButton.OnCheckedChangeListe
             photosFavoritesViewModel.setWallpaper(binding, requireContext(), this.requireActivity())
         }
         binding.favoritesToggle.setOnCheckedChangeListener(this)
-        return binding.root
     }
 
     private fun attachPhoto() {
@@ -56,10 +51,8 @@ class CurrentPhotoFragment : BaseFragment(), CompoundButton.OnCheckedChangeListe
             } else {
                 !favoritesToggle.isChecked
             }
-
             //val uri = Uri.parse(photo.user.portfolioUrl)
             //val portfolioIntent = Intent(Intent.ACTION_VIEW, uri)
-
             authorTextView.apply {
                 text = "Photo by ${photo.user.username}"
                 setOnClickListener {

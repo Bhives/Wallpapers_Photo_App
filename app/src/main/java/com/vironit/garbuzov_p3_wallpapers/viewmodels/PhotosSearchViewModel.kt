@@ -24,7 +24,6 @@ class PhotosSearchViewModel @Inject constructor(private val photosRepository: Ph
 
     fun searchPhotos(query: String) {
         currentQuery.value = query
-
     }
 
     fun insertSearchQuery(searchQuery: SearchQuery) {

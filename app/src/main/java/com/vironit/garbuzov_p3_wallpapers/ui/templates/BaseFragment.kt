@@ -1,14 +1,12 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.templates
 
 import android.os.Bundle
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.vironit.garbuzov_p3_wallpapers.R
 
-open class BaseFragment : Fragment() {
+open class BaseFragment(contentLayoutId: Int) : Fragment(contentLayoutId) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
