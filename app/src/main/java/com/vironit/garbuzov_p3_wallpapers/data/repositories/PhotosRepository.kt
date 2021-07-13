@@ -37,8 +37,8 @@ class PhotosRepository @Inject constructor(
 
     fun getFavoritePhoto(photoId: String) = photosDatabase.photoDao().getFavoritePhoto(photoId)
 
-    fun getFavoriteSearchQueries(searchQueryText: String) =
-        photosDatabase.searchQueryDao().getFavoriteSearchQueries(searchQueryText)
+    fun getFavoriteSearchQueries() =
+        photosDatabase.searchQueryDao().getFavoriteSearchQueries()
 
     fun removePhotoFromFavorites(photo: Photo) =
         photosDatabase.photoDao().removeFromFavorites(photo)

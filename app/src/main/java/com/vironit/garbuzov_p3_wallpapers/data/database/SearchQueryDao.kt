@@ -14,7 +14,7 @@ interface SearchQueryDao {
     fun getAllSearchQueries(): LiveData<List<SearchQuery>>
 
     @Query("SELECT * FROM search_query WHERE query_favorite_flag='true'")
-    fun getFavoriteSearchQueries(queryText: String): LiveData<SearchQuery>
+    fun getFavoriteSearchQueries(): LiveData<SearchQuery>
 
     @Delete
     fun removeSearchQueryFromFavorites(searchQuery: SearchQuery)
