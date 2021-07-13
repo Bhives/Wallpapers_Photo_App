@@ -1,4 +1,4 @@
-package com.vironit.garbuzov_p3_wallpapers.viewmodels
+package com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -8,7 +8,7 @@ import android.graphics.Bitmap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewModelScope
-import com.vironit.garbuzov_p3_wallpapers.data.Photo
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentCurrentPhotoBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseViewModel
@@ -24,7 +24,7 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
 
     fun insertToFavorites(photo: Photo) {
         viewModelScope.launch(Dispatchers.IO) {
-            photosRepository.insertToFavorites(photo)
+            photosRepository.insertPhotoToFavorites(photo)
         }
     }
 
@@ -34,7 +34,7 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
 
     fun removeFromFavorites(photo: Photo) {
         viewModelScope.launch(Dispatchers.IO) {
-            photosRepository.removeFromFavorites(photo)
+            photosRepository.removePhotoFromFavorites(photo)
         }
     }
 

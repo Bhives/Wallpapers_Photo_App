@@ -4,25 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.fragments.FavoritesFragment">
 
-    <fragment
-        android:id="@+id/currentFragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/favoritesTabLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@id/fragmentsMenu"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/nav_graph" />
+        app:tabBackground="@drawable/favorites_tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="2dp" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/fragmentsMenu"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/favoritesViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_menu" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/favoritesTabLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

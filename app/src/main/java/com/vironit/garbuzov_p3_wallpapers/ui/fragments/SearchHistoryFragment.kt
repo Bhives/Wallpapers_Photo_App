@@ -1,18 +1,54 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vironit.garbuzov_p3_wallpapers.R
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
+import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentSearchHistoryBinding
+import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchHistoryAdapter
+import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
+import com.vironit.garbuzov_p3_wallpapers.viewmodels.SearchHistoryViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class SearchHistoryFragment : Fragment() {
+@AndroidEntryPoint
+class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_search_history, container, false)
+    private var _binding: FragmentSearchHistoryBinding? = null
+    val binding get() = _binding!!
+    private val searchHistoryViewModel by viewModels<SearchHistoryViewModel>()
+    private val searchHistoryAdapter = SearchHistoryAdapter(listOf())
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentSearchHistoryBinding.bind(view)
+        setAdapter(requireContext())
+    }
+
+    private fun setAdapter(
+        context: Context
+    ) {
+        binding.apply {
+            searchHistoryRecyclerView.setHasFixedSize(true)
+            searchHistoryRecyclerView.layoutManager =
+                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            searchHistoryRecyclerView.adapter = searchHistoryAdapter
+        }
+        searchHistoryViewModel.getAllSearchQueries().observe(viewLifecycleOwner, {
+            searchHistoryAdapter.searchQueriesList = it
+            searchQueriesList = it
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    companion object {
+        var searchQueriesList: List<SearchQuery> = listOf()
     }
 }

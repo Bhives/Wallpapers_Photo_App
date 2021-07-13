@@ -14,11 +14,11 @@
             android:id="@+id/action_photosSearchFragment_to_currentPhotoFragment"
             app:destination="@id/currentPhotoFragment" />
         <action
-            android:id="@+id/action_photosSearchFragment_to_favoritePhotosFragment"
-            app:destination="@id/favoritePhotosFragment" />
-        <action
             android:id="@+id/action_photosSearchFragment_to_searchHistoryFragment"
             app:destination="@id/searchHistoryFragment" />
+        <action
+            android:id="@+id/action_photosSearchFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
 
     <fragment
@@ -28,34 +28,38 @@
         tools:layout="@layout/fragment_current_photo">
         <argument
             android:name="photo"
-            app:argType="com.vironit.garbuzov_p3_wallpapers.data.Photo" />
+            app:argType="com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo" />
         <action
             android:id="@+id/action_currentPhotoFragment_to_photosSearchFragment"
             app:destination="@id/photosSearchFragment" />
         <action
-            android:id="@+id/action_currentPhotoFragment_to_favoritePhotosFragment"
-            app:destination="@id/favoritePhotosFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/favoritePhotosFragment"
-        android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.FavoritePhotosFragment"
-        android:label="fragment_favorite_photos"
-        tools:layout="@layout/fragment_favorite_photos">
-        <action
-            android:id="@+id/action_favoritePhotosFragment_to_photosSearchFragment"
-            app:destination="@id/photosSearchFragment" />
-        <action
-            android:id="@+id/action_favoritePhotosFragment_to_searchHistoryFragment"
-            app:destination="@id/searchHistoryFragment" />
-        <action
-            android:id="@+id/action_favoritePhotosFragment_to_currentPhotoFragment"
-            app:destination="@id/currentPhotoFragment" />
+            android:id="@+id/action_currentPhotoFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/searchHistoryFragment"
         android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.SearchHistoryFragment"
         android:label="fragment_search_history"
-        tools:layout="@layout/fragment_search_history" />
+        tools:layout="@layout/fragment_search_history">
+        <action
+            android:id="@+id/action_searchHistoryFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_favoritesFragment_to_photosSearchFragment"
+            app:destination="@id/photosSearchFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_searchHistoryFragment"
+            app:destination="@id/searchHistoryFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_currentPhotoFragment"
+            app:destination="@id/currentPhotoFragment" />
+    </fragment>
 </navigation>
