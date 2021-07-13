@@ -18,13 +18,13 @@ class SearchHistoryAdapter(
     }
 
     override fun onBindViewHolder(searchHistoryHolder: SearchHistoryHolder, position: Int) {
-        searchHistoryHolder.bindPhoto(searchQueriesList[position])
+        searchHistoryHolder.bindSearchQuery(searchQueriesList[position])
     }
 
     class SearchHistoryHolder(private val binding: SearchQueryCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindPhoto(searchQuery: SearchQuery) {
+        fun bindSearchQuery(searchQuery: SearchQuery) {
             binding.apply {
                 queryTextView.text = searchQuery.queryText
                 queryInfoTextView.text =

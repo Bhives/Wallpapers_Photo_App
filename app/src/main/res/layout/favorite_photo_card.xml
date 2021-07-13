@@ -4,10 +4,10 @@
     android:id="@+id/favoritePhotoCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/card_elevation"
-    android:layout_marginBottom="@dimen/card_elevation"
-    android:layout_marginLeft="@dimen/card_elevation"
-    android:layout_marginRight="@dimen/card_elevation"
+    android:layout_marginTop="@dimen/card_margin_from_card"
+    android:layout_marginBottom="@dimen/card_margin_from_card"
+    android:layout_marginLeft="@dimen/card_margin_from_card"
+    android:layout_marginRight="@dimen/card_margin_from_card"
     app:cardCornerRadius="@dimen/common_corner_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout

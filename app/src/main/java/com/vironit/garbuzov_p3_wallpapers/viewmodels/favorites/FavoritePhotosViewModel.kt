@@ -1,4 +1,4 @@
-package com.vironit.garbuzov_p3_wallpapers.viewmodels
+package com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites
 
 import android.annotation.SuppressLint
 import android.app.Activity

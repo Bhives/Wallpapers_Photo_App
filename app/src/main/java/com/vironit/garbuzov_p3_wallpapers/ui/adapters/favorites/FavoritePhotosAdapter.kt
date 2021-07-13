@@ -1,4 +1,4 @@
-package com.vironit.garbuzov_p3_wallpapers.ui.adapters
+package com.vironit.garbuzov_p3_wallpapers.ui.adapters.favorites
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,9 +8,10 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.FavoritePhotoCardBinding
+import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnItemClickListener
 
 class FavoritePhotosAdapter(
-    private val clickListener: OnItemClickListener,
+    val clickListener: OnItemClickListener,
     var photosList: List<Photo>
 ) :
     RecyclerView.Adapter<FavoritePhotosAdapter.FavoritePhotosHolder>() {

@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/common_margin"
-    android:layout_marginTop="@dimen/common_margin"
-    android:layout_marginRight="@dimen/common_margin"
-    android:layout_marginBottom="@dimen/common_margin"
-    tools:context=".ui.fragments.FavoritePhotosFragment">
+    android:layout_marginLeft="@dimen/default_border_margin"
+    android:layout_marginTop="@dimen/default_border_margin"
+    android:layout_marginRight="@dimen/default_border_margin"
+    android:layout_marginBottom="@dimen/default_border_margin"
+    tools:context=".ui.fragments.favorites.FavoritePhotosFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favoritePhotosRecyclerView"
