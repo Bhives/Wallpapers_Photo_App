@@ -11,7 +11,9 @@ import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentFavoriteSearchQueriesBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.favorites.FavoriteSearchQueriesAdapter
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites.FavoriteSearchQueriesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoriteSearchQueriesFragment : Fragment() {
 
     private var _binding: FragmentFavoriteSearchQueriesBinding? = null
