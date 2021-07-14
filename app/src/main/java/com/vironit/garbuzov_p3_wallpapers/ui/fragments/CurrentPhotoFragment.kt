@@ -28,7 +28,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
         _binding = FragmentCurrentPhotoBinding.bind(view)
         attachPhoto()
         binding.backButton.setOnClickListener {
-            findNavController().navigate(R.id.action_currentPhotoFragment_to_photosSearchFragment)
+            findNavController().popBackStack()
         }
         binding.setWallpaperButton.setOnClickListener {
             photosFavoritesViewModel.setWallpaper(binding, requireContext(), this.requireActivity())

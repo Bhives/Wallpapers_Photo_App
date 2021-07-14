@@ -19,6 +19,7 @@ class SearchHistoryAdapter(
 
     override fun onBindViewHolder(searchHistoryHolder: SearchHistoryHolder, position: Int) {
         searchHistoryHolder.bindSearchQuery(searchQueriesList[position])
+        SearchHistoryAdapter.searchQueriesList=searchQueriesList
     }
 
     class SearchHistoryHolder(private val binding: SearchQueryCardBinding) :
@@ -29,6 +30,16 @@ class SearchHistoryAdapter(
                 queryTextView.text = searchQuery.queryText
                 queryInfoTextView.text =
                     "${searchQuery.numberOfResults} results, ${searchQuery.lastUsed}"
+                if (searchQuery.queryFavoriteFlag){
+                    binding.addToFavoritesButton.isEnabled
+                }
+                //addToFavoritesButton.setOnCheckedChangeListener { buttonView, isChecked ->
+                //    if (isChecked) {
+                //        searchHistoryViewModel.addSearchQueryToFavorites(searchQuery)
+                //    } else {
+                //        searchHistoryViewModel.removeFromFavorites(searchQuery)
+                //    }
+                //}
             }
         }
     }
@@ -39,5 +50,9 @@ class SearchHistoryAdapter(
         } else {
             searchQueriesList.size
         }
+    }
+
+    companion object {
+        var searchQueriesList: List<SearchQuery> = listOf()
     }
 }

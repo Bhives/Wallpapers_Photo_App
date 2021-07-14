@@ -7,5 +7,5 @@
     <dimen name="query_text_size">16sp</dimen>
     <dimen name="query_info_text_size">12sp</dimen>
     <dimen name="card_height">65dp</dimen>
-    <dimen name="favorite_toggle_button_size">40dp</dimen>
+    <dimen name="favorite_toggle_button_size">30dp</dimen>
 </resources>
