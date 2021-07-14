@@ -35,7 +35,12 @@ class PhotosRepository @Inject constructor(
 
     fun getAllSearchQueries() = photosDatabase.searchQueryDao().getAllSearchQueries()
 
+    fun getSearchQuery(searchQueryText: String) = photosDatabase.searchQueryDao().getSearchQuery(searchQueryText)
+
     fun getFavoritePhoto(photoId: String) = photosDatabase.photoDao().getFavoritePhoto(photoId)
+
+    fun addSearchQueryToFavorites(searchQuery: SearchQuery) =
+        photosDatabase.searchQueryDao().addSearchQueryToFavorites(searchQuery)
 
     fun getFavoriteSearchQueries() =
         photosDatabase.searchQueryDao().getFavoriteSearchQueries()

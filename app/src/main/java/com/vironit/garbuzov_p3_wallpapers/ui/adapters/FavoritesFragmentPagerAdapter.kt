@@ -9,7 +9,7 @@ import com.vironit.garbuzov_p3_wallpapers.ui.fragments.favorites.FavoriteSearchQ
 class FavoritesFragmentPagerAdapter(fragmentManager: FragmentManager) :
     FragmentPagerAdapter(
         fragmentManager,
-        FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
     ) {
 
     override fun getCount(): Int {

@@ -35,7 +35,6 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search), OnIte
     }
 
     private fun searchPhotos() {
-        val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         binding.photoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.photoSearchView.clearFocus()
@@ -52,13 +51,9 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search), OnIte
 
             override fun onQueryTextChange(query: String?): Boolean {
                 if (query != null) {
-                    //switchNoSearchResultsState(false)
                     binding.photosRecyclerView.scrollToPosition(0)
                     photosSearchViewModel.searchPhotos(query)
                 }
-                //if (photosSearchAdapter.itemCount < 1) {
-                //    switchNoSearchResultsState(true)
-                //}
                 return true
             }
         })
@@ -77,28 +72,15 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search), OnIte
         }
     }
 
-    private fun switchNoSearchResultsState(stateFlag: Boolean) {
-        binding.apply {
-            if (stateFlag) {
-                photosRecyclerView.isVisible = false
-                errorText.text = context?.resources?.getString(R.string.no_search_results_alert)
-                errorText.isVisible = true
-            } else {
-                errorText.isVisible = false
-                photosRecyclerView.isVisible = true
-            }
-        }
+    override fun onItemClick(photo: Photo) {
+        val action =
+            PhotosSearchFragmentDirections.actionPhotosSearchFragmentToCurrentPhotoFragment(photo)
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onItemClick(photo: Photo) {
-        val action =
-            PhotosSearchFragmentDirections.actionPhotosSearchFragmentToCurrentPhotoFragment(photo)
-        findNavController().navigate(action)
     }
 
     companion object {

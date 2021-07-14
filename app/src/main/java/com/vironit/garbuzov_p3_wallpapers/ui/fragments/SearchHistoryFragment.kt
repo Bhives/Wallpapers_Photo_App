@@ -3,6 +3,7 @@ package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,9 +14,11 @@ import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchHistoryAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.SearchHistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.search_query_card.view.*
 
 @AndroidEntryPoint
-class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history) {
+class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
+    CompoundButton.OnCheckedChangeListener {
 
     private var _binding: FragmentSearchHistoryBinding? = null
     val binding get() = _binding!!
@@ -26,6 +29,7 @@ class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSearchHistoryBinding.bind(view)
         setAdapter(requireContext())
+        //binding.searchHistoryRecyclerView.addToFavoritesButton.setOnCheckedChangeListener(this)
     }
 
     private fun setAdapter(
@@ -41,6 +45,15 @@ class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history) {
             searchHistoryAdapter.searchQueriesList = it
             searchQueriesList = it
         })
+    }
+
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        //val searchQuery = searchHistoryAdapter.
+        //if (isChecked) {
+        //    searchHistoryViewModel.addSearchQueryToFavorites(searchQuery)
+        //} else {
+        //    searchHistoryViewModel.removeFromFavorites(searchQuery)
+        //}
     }
 
     override fun onDestroyView() {

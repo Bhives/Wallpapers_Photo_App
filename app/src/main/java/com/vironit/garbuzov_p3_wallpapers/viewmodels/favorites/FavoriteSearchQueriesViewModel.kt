@@ -16,6 +16,7 @@ class FavoriteSearchQueriesViewModel @Inject constructor(private val photosRepos
     fun getFavoriteSearchQueries() = photosRepository.getFavoriteSearchQueries()
 
     fun removeFromFavorites(searchQuery: SearchQuery) {
+        searchQuery.queryFavoriteFlag = false
         viewModelScope.launch(Dispatchers.IO) {
             photosRepository.removeSearchQueryFromFavorites(searchQuery)
         }
