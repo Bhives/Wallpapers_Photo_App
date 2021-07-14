@@ -1,5 +1,6 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.vironit.garbuzov_p3_wallpapers.R
@@ -17,16 +18,20 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentFavoritesBinding.bind(view)
 
-        val articlesViewPager = binding.favoritesViewPager
-        articlesViewPager.adapter = FavoritesFragmentPagerAdapter(childFragmentManager)
-        articlesViewPager.currentItem = 1
-        articlesViewPager.setPageTransformer(false
+        val favoritesViewPager = binding.favoritesViewPager
+        favoritesViewPager.adapter = FavoritesFragmentPagerAdapter(childFragmentManager)
+        favoritesViewPager.currentItem = 0
+        favoritesViewPager.setPageTransformer(
+            false
         ) { v, pos ->
             val opacity = abs(abs(pos) - 1)
             v.alpha = opacity
         }
-
-        binding.favoritesTabLayout.setupWithViewPager(articlesViewPager, true)
+        binding.apply {
+            favoritesTabLayout.setupWithViewPager(favoritesViewPager, true)
+            favoritesTabLayout.getTabAt(0)?.setIcon(R.drawable.ic_photo)
+            favoritesTabLayout.getTabAt(1)?.setIcon(R.drawable.ic_search_query)
+        }
     }
 
     override fun onDestroyView() {
