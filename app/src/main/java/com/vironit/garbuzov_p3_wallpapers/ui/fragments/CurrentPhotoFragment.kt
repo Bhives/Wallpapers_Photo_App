@@ -1,12 +1,9 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.View
 import android.widget.CompoundButton
 import androidx.core.app.ActivityCompat
@@ -23,7 +20,6 @@ import com.vironit.garbuzov_p3_wallpapers.ui.bindingActivity
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites.FavoritePhotosViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.ByteArrayOutputStream
 import java.util.*
 
 
@@ -120,7 +116,10 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                     var bitmap: Bitmap = resource
                     val intent = Intent()
                     intent.action = Intent.ACTION_SEND
-                    intent.putExtra(Intent.EXTRA_STREAM, getImageUri(requireContext(), bitmap))
+                    intent.putExtra(
+                        Intent.EXTRA_STREAM,
+                        photosFavoritesViewModel.getImageUri(requireContext(), bitmap)
+                    )
                     intent.type = "image/*"
                     startActivity(Intent.createChooser(intent, "Share to: "))
                 }
@@ -128,21 +127,6 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                 override fun onLoadCleared(placeholder: Drawable?) {
                 }
             })
-
-
-    }
-
-    fun getImageUri(context: Context, bitmap: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-
-        val path: String = MediaStore.Images.Media.insertImage(
-            context.contentResolver,
-            bitmap,
-            UUID.randomUUID().toString() + ".png",
-            "drawing"
-        )
-        return Uri.parse(path)
     }
 
     override fun onDestroyView() {
