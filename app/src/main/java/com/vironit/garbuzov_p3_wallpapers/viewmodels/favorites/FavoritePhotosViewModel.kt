@@ -4,9 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.WallpaperManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.viewModelScope
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
@@ -38,8 +42,8 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
         }
     }
 
-    fun photoIsInFavorites(photoId: String): Boolean{
-        return getFavoritePhoto(photoId)== null
+    fun photoIsInFavorites(photoId: String): Boolean {
+        return getFavoritePhoto(photoId) == null
     }
 
     @SuppressLint("ResourceType")

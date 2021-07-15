@@ -2,7 +2,7 @@
 <resources>
     <dimen name="default_border_margin">16dp</dimen>
     <dimen name="card_margin_from_card">4dp</dimen>
-    <dimen name="common_corner_radius">4dp</dimen>
+    <dimen name="common_corner_radius">16dp</dimen>
     <dimen name="photo_card_height">150dp</dimen>
     <dimen name="query_text_size">16sp</dimen>
     <dimen name="query_info_text_size">12sp</dimen>

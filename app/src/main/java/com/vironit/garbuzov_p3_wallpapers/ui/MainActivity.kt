@@ -8,21 +8,20 @@ import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+lateinit var bindingActivity: ActivityMainBinding
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.root
-        val view = binding.root
+        bindingActivity = ActivityMainBinding.inflate(layoutInflater)
+        bindingActivity.root
+        val view = bindingActivity.root
         setContentView(view)
-
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.currentFragment) as NavHostFragment
         val navController = navHostFragment.navController
-        NavigationUI.setupWithNavController(binding.fragmentsMenu, navController)
+        NavigationUI.setupWithNavController(bindingActivity.fragmentsMenu, navController)
     }
 }

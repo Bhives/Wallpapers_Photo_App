@@ -8,7 +8,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/selectedPhotoToolbar"
-        android:background="@color/light_blue_app_color"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,7 +17,6 @@
         <ImageButton
             android:id="@+id/backButton"
             android:src="@drawable/ic_back"
-            android:layout_marginStart="0dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="0dp" />
@@ -28,39 +27,21 @@
         android:id="@+id/selectedPhotoImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectedPhotoToolbar" />
 
-    <TextView
-        android:id="@+id/authorTextView"
-        android:layout_width="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/currentPhotoBottomMenu"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/selectedPhotoImageView"
-        app:layout_constraintTop_toBottomOf="@id/selectedPhotoImageView" />
-
-    <TextView
-        android:id="@+id/photoDescriptionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/selectedPhotoImageView"
-        app:layout_constraintTop_toBottomOf="@id/authorTextView" />
-
-    <Button
-        android:id="@+id/setWallpaperButton"
-        android:layout_width="wrap_content"
-        android:text="@string/set_wallpaper"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <ToggleButton
-        android:id="@+id/favoritesToggle"
-        android:layout_width="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/setWallpaperButton"
-        app:layout_constraintBottom_toBottomOf="@id/setWallpaperButton"
-        android:layout_height="wrap_content"/>
+        android:layout_marginBottom="@dimen/default_border_margin"
+        android:layout_marginLeft="@dimen/default_border_margin"
+        android:layout_marginRight="@dimen/default_border_margin"
+        android:background="@drawable/rounded_bottom_navigation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_current_photo_menu"
+        app:labelVisibilityMode="unlabeled"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

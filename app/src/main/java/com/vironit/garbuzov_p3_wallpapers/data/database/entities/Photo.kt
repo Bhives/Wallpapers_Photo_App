@@ -31,7 +31,7 @@ data class Photo(
         val lastName: String?,
         val instagramUsername: String?,
         val twitterUsername: String?,
-        val profileImage: ProfileImage,
+        val profileImage: ProfileImage?,
         val links: Links
     ) : Parcelable {
         //val portfolioUrl get() = "https://unsplash.com/$username?utm_source=ImageSearchApp&utm_medium=referral"
