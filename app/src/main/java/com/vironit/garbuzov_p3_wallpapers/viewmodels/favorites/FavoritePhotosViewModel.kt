@@ -5,6 +5,8 @@ import android.app.Activity
 import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewModelScope
@@ -15,7 +17,9 @@ import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,8 +42,8 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
         }
     }
 
-    fun photoIsInFavorites(photoId: String): Boolean{
-        return getFavoritePhoto(photoId)== null
+    fun photoIsInFavorites(photoId: String): Boolean {
+        return getFavoritePhoto(photoId) == null
     }
 
     @SuppressLint("ResourceType")
@@ -59,5 +63,17 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
         } catch (iOException: IOException) {
             iOException.printStackTrace()
         }
+    }
+
+    fun getImageUri(context: Context, bitmap: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(
+            context.contentResolver,
+            bitmap,
+            UUID.randomUUID().toString() + ".png",
+            "drawing"
+        )
+        return Uri.parse(path)
     }
 }

@@ -48,12 +48,12 @@ class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        //val searchQuery = searchHistoryAdapter.
-        //if (isChecked) {
-        //    searchHistoryViewModel.addSearchQueryToFavorites(searchQuery)
-        //} else {
-        //    searchHistoryViewModel.removeFromFavorites(searchQuery)
-        //}
+        val searchQuery = searchHistoryAdapter.searchQueriesList[searchHistoryAdapter.getPosition()]
+        if (isChecked) {
+            searchHistoryViewModel.addSearchQueryToFavorites(searchQuery)
+        } else {
+            searchHistoryViewModel.removeFromFavorites(searchQuery)
+        }
     }
 
     override fun onDestroyView() {

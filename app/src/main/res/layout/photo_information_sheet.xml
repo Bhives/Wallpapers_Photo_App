@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/photoInfoCard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/userPhotoImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_border_margin"
+            android:layout_marginRight="@dimen/default_border_margin"
+            app:layout_constraintRight_toLeftOf="@id/userNameTextView"
+            app:layout_constraintTop_toTopOf="@id/userNameTextView" />
+
+        <TextView
+            android:id="@+id/userNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_border_margin"
+            android:layout_marginEnd="@dimen/default_border_margin"
+            android:layout_marginRight="@dimen/default_border_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/userLoginTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin_from_card"
+            app:layout_constraintStart_toStartOf="@id/userNameTextView"
+            app:layout_constraintTop_toBottomOf="@id/userNameTextView" />
+
+        <TextView
+            android:id="@+id/userInstagramLoginTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_border_margin"
+            app:layout_constraintTop_toBottomOf="@id/userLoginTextView"
+            app:layout_constraintStart_toStartOf="@id/userLoginTextView" />
+
+        <TextView
+            android:id="@+id/userTwitterLoginTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin_from_card"
+            app:layout_constraintTop_toBottomOf="@id/userInstagramLoginTextView"
+            app:layout_constraintStart_toStartOf="@id/userNameTextView" />
+
+        <Button
+            android:id="@+id/portfolioButton"
+            android:layout_width="@dimen/portfolio_button_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userTwitterLoginTextView"
+            android:layout_marginTop="@dimen/default_border_margin"
+            android:background="@drawable/rounded_bottom_navigation"
+            android:backgroundTint="@color/light_blue_app_color"
+            android:text="@string/portfolio"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

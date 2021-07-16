@@ -17,15 +17,20 @@ class SearchHistoryAdapter(
         return SearchHistoryHolder(binding)
     }
 
+    var itemPosition = 0
+
     override fun onBindViewHolder(searchHistoryHolder: SearchHistoryHolder, position: Int) {
         searchHistoryHolder.bindSearchQuery(searchQueriesList[position])
         SearchHistoryAdapter.searchQueriesList=searchQueriesList
     }
 
-    class SearchHistoryHolder(private val binding: SearchQueryCardBinding) :
+    inner class SearchHistoryHolder(private val binding: SearchQueryCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindSearchQuery(searchQuery: SearchQuery) {
+            binding.addToFavoritesButton.setOnClickListener{
+                itemPosition = bindingAdapterPosition
+            }
             binding.apply {
                 queryTextView.text = searchQuery.queryText
                 queryInfoTextView.text =
@@ -42,6 +47,10 @@ class SearchHistoryAdapter(
                 //}
             }
         }
+    }
+
+    fun getPosition():Int{
+        return itemPosition
     }
 
     override fun getItemCount(): Int {

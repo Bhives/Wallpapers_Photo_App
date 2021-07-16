@@ -16,13 +16,14 @@ import javax.inject.Inject
 class PhotosSearchViewModel @Inject constructor(private val photosRepository: PhotosRepository) :
     BaseViewModel() {
 
-    private val currentQuery = MutableLiveData(DEFAULT_QUERY)
+    private val currentQuery = MutableLiveData(CURRENT_QUERY)
 
     val photosAll = currentQuery.switchMap { queryString ->
         photosRepository.getPhotosSearchResults(queryString).cachedIn(viewModelScope)
     }
 
     fun searchPhotos(query: String) {
+        CURRENT_QUERY=query
         currentQuery.value = query
     }
 
@@ -33,6 +34,6 @@ class PhotosSearchViewModel @Inject constructor(private val photosRepository: Ph
     }
 
     companion object {
-        private const val DEFAULT_QUERY = "mandalorian"
+        private var CURRENT_QUERY = "mandalorian"
     }
 }

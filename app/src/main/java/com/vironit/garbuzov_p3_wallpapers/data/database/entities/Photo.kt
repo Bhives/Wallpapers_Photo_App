@@ -27,14 +27,14 @@ data class Photo(
         val userId: String?,
         val username: String?,
         val name: String?,
-        val firstName: String?,
-        val lastName: String?,
+        //val firstName: String?,
+        //val lastName: String?,
         val instagramUsername: String?,
         val twitterUsername: String?,
-        val profileImage: ProfileImage,
+        val profileImage: ProfileImage?,
         val links: Links
     ) : Parcelable {
-        //val portfolioUrl get() = "https://unsplash.com/$username?utm_source=ImageSearchApp&utm_medium=referral"
+        val portfolioUrl get() = "https://unsplash.com/$username?utm_source=ImageSearchApp&utm_medium=referral"
         @Parcelize
         data class ProfileImage(
             val small: String?,
