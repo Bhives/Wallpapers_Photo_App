@@ -3,6 +3,7 @@ package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.CompoundButton
@@ -64,7 +65,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                     true
                 }
                 R.id.photoInformation -> {
-                    showPhotoInfo(bottomSheetBehavior)
+                    showPhotoInfo(bottomSheetBehavior, photo)
                     true
                 }
                 else -> false
@@ -81,21 +82,17 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                 .error(R.drawable.ic_error)
                 .into(selectedPhotoImageView)
 
-            Glide.with(this@CurrentPhotoFragment)
-                .load(photo.user.profileImage?.large)
+        }
+        photoInfoCard.apply {
+            Glide.with(photoInfoCard)
+                .load(photo.user.profileImage?.small)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .error(R.drawable.ic_error)
-                .into(photoInfoCard.userPhotoImageView)
-            photoInfoCard.userNameTextView.text = "${photo.user.name}"
-
-            //val uri = Uri.parse(photo.user.portfolioUrl)
-            //val portfolioIntent = Intent(Intent.ACTION_VIEW, uri)
-            //authorTextView.apply {
-            //    text = "Photo by ${photo.user.username}"
-            //    setOnClickListener {
-            //        context.startActivity(portfolioIntent)
-            //    }
-            //    paint.isUnderlineText = true
-            //}
+                .into(userPhotoImageView)
+            userNameTextView.text = photo.user.name
+            userLoginTextView.text = "@${photo.user.username}"
+            userInstagramLoginTextView.text = photo.user.instagramUsername
+            userTwitterLoginTextView.text = photo.user.twitterUsername
         }
     }
 
@@ -139,7 +136,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
         //dialog.dismiss()
     }
 
-    private fun showPhotoInfo(bottomSheetBehavior: BottomSheetBehavior<CardView>) {
+    private fun showPhotoInfo(bottomSheetBehavior: BottomSheetBehavior<CardView>, photo: Photo) {
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
         bottomSheetBehavior.isDraggable = false
         bottomSheetBehavior.addBottomSheetCallback(object :
@@ -161,6 +158,13 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
         })
+
+        photoInfoCard.portfolioButton.setOnClickListener {
+            val portfolioUri = Uri.parse(photo.user.portfolioUrl)
+            val portfolioIntent = Intent(Intent.ACTION_VIEW, portfolioUri)
+            context?.startActivity(portfolioIntent)
+        }
+
         binding.photoInfoHideButton.setOnClickListener {
             if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HALF_EXPANDED) {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -168,16 +172,18 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
         }
     }
 
-    private fun onBackPressedAction(bottomSheetBehavior: BottomSheetBehavior<CardView>){
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HALF_EXPANDED) {
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                } else{
-                    findNavController().navigate(R.id.action_currentPhotoFragment_to_photosSearchFragment)
+    private fun onBackPressedAction(bottomSheetBehavior: BottomSheetBehavior<CardView>) {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HALF_EXPANDED) {
+                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    } else {
+                        findNavController().popBackStack()
+                    }
                 }
-            }
-        })
+            })
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {

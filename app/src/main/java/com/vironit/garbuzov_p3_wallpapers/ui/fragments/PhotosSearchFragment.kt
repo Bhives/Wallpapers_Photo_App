@@ -30,6 +30,7 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search), OnIte
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPhotoSearchBinding.bind(view)
+        findNavController().restoreState(savedInstanceState)
         setAdapter()
         searchPhotos()
     }
