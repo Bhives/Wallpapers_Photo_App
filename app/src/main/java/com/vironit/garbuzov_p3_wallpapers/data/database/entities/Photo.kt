@@ -34,7 +34,7 @@ data class Photo(
         val profileImage: ProfileImage?,
         val links: Links
     ) : Parcelable {
-        //val portfolioUrl get() = "https://unsplash.com/$username?utm_source=ImageSearchApp&utm_medium=referral"
+        val portfolioUrl get() = "https://unsplash.com/$username?utm_source=ImageSearchApp&utm_medium=referral"
         @Parcelize
         data class ProfileImage(
             val small: String?,

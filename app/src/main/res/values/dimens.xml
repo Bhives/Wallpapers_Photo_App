@@ -8,4 +8,5 @@
     <dimen name="query_info_text_size">12sp</dimen>
     <dimen name="card_height">65dp</dimen>
     <dimen name="favorite_toggle_button_size">30dp</dimen>
+    <dimen name="account_photo_height">100dp</dimen>
 </resources>

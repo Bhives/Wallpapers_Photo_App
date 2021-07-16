@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.CompoundButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -14,12 +15,16 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.target.CustomTarget
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.vironit.garbuzov_p3_wallpapers.R
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentCurrentPhotoBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.bindingActivity
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites.FavoritePhotosViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.photo_information_sheet.*
+import kotlinx.android.synthetic.main.photo_information_sheet.view.*
 import java.util.*
 
 
@@ -35,8 +40,9 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCurrentPhotoBinding.bind(view)
+        val photo = args.photo
         bindingActivity.fragmentsMenu.isVisible = false
-        attachPhoto()
+        attachPhoto(photo)
         binding.backButton.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -45,7 +51,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
         binding.currentPhotoBottomMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.sharePhoto -> {
-                    share()
+                    share(photo)
                     true
                 }
                 R.id.wallpaperSet -> {
@@ -56,19 +62,29 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                     )
                     true
                 }
+                R.id.photoInformation -> {
+                    showPhotoInfo()
+                    true
+                }
                 else -> false
             }
         }
     }
 
-    private fun attachPhoto() {
+    private fun attachPhoto(photo: Photo) {
         binding.apply {
-            val photo = args.photo
             Glide.with(this@CurrentPhotoFragment)
                 .load(photo.urls.full)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .error(R.drawable.ic_error)
                 .into(selectedPhotoImageView)
+
+            Glide.with(this@CurrentPhotoFragment)
+                .load(photo.user.profileImage?.large)
+                .error(R.drawable.ic_error)
+                .into(photoInfoCard.userPhotoImageView)
+            photoInfoCard.userNameTextView.text = "${photo.user.name}"
+
             //photoDescriptionTextView.text = photo.description
 
             //if (photosFavoritesViewModel.photoIsInFavorites(photo.id)) {
@@ -96,8 +112,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
         }
     }
 
-    private fun share() {
-        val photo = args.photo
+    private fun share(photo: Photo) {
         ActivityCompat.requestPermissions(
             this.requireActivity(),
             arrayOf(
@@ -127,6 +142,43 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                 override fun onLoadCleared(placeholder: Drawable?) {
                 }
             })
+    }
+
+    private fun showPhotoInfo() {
+        val bottomSheetBehavior = BottomSheetBehavior.from(photoInfoCard)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+        bottomSheetBehavior.isDraggable = false
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (bottomSheetBehavior.state) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        binding.photoInfoHideButton.isVisible = false
+                        binding.selectedPhotoToolbar.isVisible = true
+                        bottomSheetBehavior.isDraggable = false
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                        binding.selectedPhotoToolbar.isVisible = false
+                        binding.photoInfoHideButton.isVisible = true
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
+        binding.photoInfoHideButton.setOnClickListener {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            bottomSheetBehavior.setPeekHeight(0, true)
+        }
+    }
+
+    private fun setWallpaper() {
+        //val dialog = BottomSheetDialog(requireContext())
+        //dialog.setCancelable(false)
+        //dialog.setContentView(view)
+        //dialog.show()
+        //dialog.dismiss()
     }
 
     override fun onDestroyView() {
