@@ -6,7 +6,8 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.CompoundButton
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.activity.OnBackPressedCallback
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -23,10 +24,10 @@ import com.vironit.garbuzov_p3_wallpapers.ui.bindingActivity
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites.FavoritePhotosViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.photo_information_sheet.*
 import kotlinx.android.synthetic.main.photo_information_sheet.view.*
 import java.util.*
-
 
 @AndroidEntryPoint
 class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
@@ -41,13 +42,13 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCurrentPhotoBinding.bind(view)
         val photo = args.photo
+        val bottomSheetBehavior = BottomSheetBehavior.from(photoInfoCard)
         bindingActivity.fragmentsMenu.isVisible = false
-        attachPhoto(photo)
+        attachPhotoAndInfo(photo)
         binding.backButton.setOnClickListener {
             findNavController().popBackStack()
         }
         //binding.favoritesToggle.setOnCheckedChangeListener(this)
-
         binding.currentPhotoBottomMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.sharePhoto -> {
@@ -63,15 +64,16 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                     true
                 }
                 R.id.photoInformation -> {
-                    showPhotoInfo()
+                    showPhotoInfo(bottomSheetBehavior)
                     true
                 }
                 else -> false
             }
         }
+        onBackPressedAction(bottomSheetBehavior)
     }
 
-    private fun attachPhoto(photo: Photo) {
+    private fun attachPhotoAndInfo(photo: Photo) {
         binding.apply {
             Glide.with(this@CurrentPhotoFragment)
                 .load(photo.urls.full)
@@ -85,30 +87,15 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                 .into(photoInfoCard.userPhotoImageView)
             photoInfoCard.userNameTextView.text = "${photo.user.name}"
 
-            //photoDescriptionTextView.text = photo.description
-
-            //if (photosFavoritesViewModel.photoIsInFavorites(photo.id)) {
-            //    favoritesToggle.isChecked
-            //} else {
-            //    !favoritesToggle.isChecked
-            //}
             //val uri = Uri.parse(photo.user.portfolioUrl)
             //val portfolioIntent = Intent(Intent.ACTION_VIEW, uri)
             //authorTextView.apply {
             //    text = "Photo by ${photo.user.username}"
             //    setOnClickListener {
-            //        //context.startActivity(portfolioIntent)
+            //        context.startActivity(portfolioIntent)
             //    }
             //    paint.isUnderlineText = true
             //}
-        }
-    }
-
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if (isChecked) {
-            photosFavoritesViewModel.insertToFavorites(args.photo)
-        } else {
-            photosFavoritesViewModel.removeFromFavorites(args.photo)
         }
     }
 
@@ -144,8 +131,15 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
             })
     }
 
-    private fun showPhotoInfo() {
-        val bottomSheetBehavior = BottomSheetBehavior.from(photoInfoCard)
+    private fun setWallpaper() {
+        //val dialog = BottomSheetDialog(requireContext())
+        //dialog.setCancelable(false)
+        //dialog.setContentView(view)
+        //dialog.show()
+        //dialog.dismiss()
+    }
+
+    private fun showPhotoInfo(bottomSheetBehavior: BottomSheetBehavior<CardView>) {
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
         bottomSheetBehavior.isDraggable = false
         bottomSheetBehavior.addBottomSheetCallback(object :
@@ -168,17 +162,30 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
             }
         })
         binding.photoInfoHideButton.setOnClickListener {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            bottomSheetBehavior.setPeekHeight(0, true)
+            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HALF_EXPANDED) {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            }
         }
     }
 
-    private fun setWallpaper() {
-        //val dialog = BottomSheetDialog(requireContext())
-        //dialog.setCancelable(false)
-        //dialog.setContentView(view)
-        //dialog.show()
-        //dialog.dismiss()
+    private fun onBackPressedAction(bottomSheetBehavior: BottomSheetBehavior<CardView>){
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HALF_EXPANDED) {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                } else{
+                    findNavController().navigate(R.id.action_currentPhotoFragment_to_photosSearchFragment)
+                }
+            }
+        })
+    }
+
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        if (isChecked) {
+            photosFavoritesViewModel.insertToFavorites(args.photo)
+        } else {
+            photosFavoritesViewModel.removeFromFavorites(args.photo)
+        }
     }
 
     override fun onDestroyView() {
