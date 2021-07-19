@@ -35,16 +35,14 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
 
     fun getFavoritePhotos() = photosRepository.getFavoritePhotos()
 
-    private fun getFavoritePhoto(photoId: String) = photosRepository.getFavoritePhoto(photoId)
-
     fun removeFromFavorites(photo: Photo) {
         viewModelScope.launch(Dispatchers.IO) {
             photosRepository.removePhotoFromFavorites(photo)
         }
     }
 
-    fun photoIsInFavorites(photoId: String): Boolean {
-        return getFavoritePhoto(photoId) == null
+    fun photoIsInFavorites(photo: Photo): Boolean {
+        return getFavoritePhotos().value?.contains(photo)==true
     }
 
     @SuppressLint("ResourceType")
@@ -65,26 +63,20 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
             val bitmap: Bitmap = binding.selectedPhotoImageView.drawingCache
             when (setupOption) {
                 0 -> {
-                    asWallpaper(wallpaperManager, bitmap)
+                    wallpaperManager.setBitmap(bitmap)
+                    Toast.makeText(context, "New wallpaper successfully set", Toast.LENGTH_SHORT)
+                        .show()
                 }
                 1 -> {
-                    asLockScreen(wallpaperManager, bitmap)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
+                    }
+                    Toast.makeText(context, "New lock screen successfully set", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
-            Toast.makeText(context, "New wallpaper successfully set", Toast.LENGTH_SHORT)
-                .show()
         } catch (iOException: IOException) {
             iOException.printStackTrace()
-        }
-    }
-
-    private fun asWallpaper(wallpaperManager: WallpaperManager, bitmap: Bitmap) {
-        wallpaperManager.setBitmap(bitmap)
-    }
-
-    private fun asLockScreen(wallpaperManager: WallpaperManager, bitmap: Bitmap) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
         }
     }
 

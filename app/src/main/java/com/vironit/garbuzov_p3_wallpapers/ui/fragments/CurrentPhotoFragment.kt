@@ -6,7 +6,8 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.CompoundButton
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
@@ -32,8 +33,7 @@ import kotlinx.android.synthetic.main.photo_information_sheet.view.*
 import java.util.*
 
 @AndroidEntryPoint
-class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
-    CompoundButton.OnCheckedChangeListener {
+class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo) {
 
     private val args by navArgs<CurrentPhotoFragmentArgs>()
     private val photosFavoritesViewModel by viewModels<FavoritePhotosViewModel>()
@@ -44,13 +44,13 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCurrentPhotoBinding.bind(view)
         val photo = args.photo
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
         val bottomSheetBehavior = BottomSheetBehavior.from(photoInfoCard)
         bindingActivity.fragmentsMenu.isVisible = false
         attachPhotoAndInfo(photo)
         binding.backButton.setOnClickListener {
             findNavController().popBackStack()
         }
-        //binding.favoritesToggle.setOnCheckedChangeListener(this)
         binding.currentPhotoBottomMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.sharePhoto -> {
@@ -58,7 +58,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                     true
                 }
                 R.id.wallpaperSet -> {
-                    setPhotoAction()
+                    setPhotoAction(bottomSheetDialog, photo)
                     true
                 }
                 R.id.photoInformation -> {
@@ -68,7 +68,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                 else -> false
             }
         }
-        onBackPressedAction(bottomSheetBehavior)
+        onBackPressedAction(bottomSheetDialog, bottomSheetBehavior)
     }
 
     private fun attachPhotoAndInfo(photo: Photo) {
@@ -78,7 +78,6 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .error(R.drawable.ic_error)
                 .into(selectedPhotoImageView)
-
         }
         photoInfoCard.apply {
             Glide.with(photoInfoCard)
@@ -125,11 +124,28 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
             })
     }
 
-    private fun setPhotoAction() {
-        val dialog = BottomSheetDialog(requireContext())
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.bottom_photo_actions_dialog)
-        dialog.show()
+    private fun setPhotoAction(bottomSheetDialog: BottomSheetDialog, photo: Photo) {
+        //bottomSheetDialog.setCancelable(false)
+        bottomSheetDialog.setContentView(R.layout.bottom_photo_actions_dialog)
+        bottomSheetDialog.show()
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.wallpaperOption)?.setOnClickListener {
+            photosFavoritesViewModel.setPhotoAs(binding, requireContext(), requireActivity(), 0)
+            bottomSheetDialog.hide()
+        }
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.lockScreenOption)?.setOnClickListener {
+            photosFavoritesViewModel.setPhotoAs(binding, requireContext(), requireActivity(), 1)
+            bottomSheetDialog.hide()
+        }
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.favoritesOption)?.setOnClickListener {
+            if (photosFavoritesViewModel.photoIsInFavorites(photo)) {
+                photosFavoritesViewModel.removeFromFavorites(photo)
+                Toast.makeText(context, "Photo removed from favorites", Toast.LENGTH_SHORT).show()
+            } else {
+                photosFavoritesViewModel.insertToFavorites(photo)
+                Toast.makeText(context, "Photo added to favorites", Toast.LENGTH_SHORT).show()
+            }
+            bottomSheetDialog.hide()
+        }
     }
 
     private fun showPhotoInfo(bottomSheetBehavior: BottomSheetBehavior<CardView>, photo: Photo) {
@@ -168,26 +184,27 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
         }
     }
 
-    private fun onBackPressedAction(bottomSheetBehavior: BottomSheetBehavior<CardView>) {
+    private fun onBackPressedAction(
+        bottomSheetDialog: BottomSheetDialog,
+        bottomSheetBehavior: BottomSheetBehavior<CardView>
+    ) {
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HALF_EXPANDED) {
-                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                    } else {
-                        findNavController().popBackStack()
+                    when {
+                        bottomSheetDialog.isShowing -> {
+                            bottomSheetDialog.hide()
+                        }
+                        bottomSheetBehavior.state == BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                        }
+                        else -> {
+                            findNavController().popBackStack()
+                        }
                     }
                 }
             })
-    }
-
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if (isChecked) {
-            photosFavoritesViewModel.insertToFavorites(args.photo)
-        } else {
-            photosFavoritesViewModel.removeFromFavorites(args.photo)
-        }
     }
 
     override fun onDestroyView() {
