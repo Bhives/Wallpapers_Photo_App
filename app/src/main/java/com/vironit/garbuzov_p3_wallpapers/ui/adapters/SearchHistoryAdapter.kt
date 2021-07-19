@@ -2,8 +2,6 @@ package com.vironit.garbuzov_p3_wallpapers.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.widget.CompoundButtonCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.SearchQueryCardBinding
@@ -16,14 +14,14 @@ class SearchHistoryAdapter(
 ) :
     RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryHolder>() {
 
+    var itemPosition = 0
+    lateinit var searchHistoryViewModel: SearchHistoryViewModel
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHistoryHolder {
         val binding =
             SearchQueryCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SearchHistoryHolder(binding)
     }
-
-    var itemPosition = 0
-    lateinit var searchHistoryViewModel: SearchHistoryViewModel
 
     override fun onBindViewHolder(searchHistoryHolder: SearchHistoryHolder, position: Int) {
         searchHistoryHolder.bindSearchQuery(searchQueriesList[position])
@@ -64,8 +62,8 @@ class SearchHistoryAdapter(
         }
     }
 
-    fun passViewModelValue(searchHistoryViewModel: SearchHistoryViewModel){
-        this.searchHistoryViewModel=searchHistoryViewModel
+    fun passViewModelValue(searchHistoryViewModel: SearchHistoryViewModel) {
+        this.searchHistoryViewModel = searchHistoryViewModel
     }
 
     override fun getItemCount(): Int {

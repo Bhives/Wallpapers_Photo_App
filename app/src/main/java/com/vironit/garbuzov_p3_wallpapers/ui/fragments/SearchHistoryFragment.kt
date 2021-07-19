@@ -3,8 +3,6 @@ package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.CompoundButton
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,11 +15,10 @@ import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchHistoryAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.SearchHistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.search_query_card.view.*
 
 @AndroidEntryPoint
 class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
-    OnSearchQueryItemClickListener{
+    OnSearchQueryItemClickListener {
 
     private var _binding: FragmentSearchHistoryBinding? = null
     val binding get() = _binding!!
@@ -32,7 +29,7 @@ class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSearchHistoryBinding.bind(view)
         setAdapter(requireContext())
-        onCheckedChanged()
+        searchHistoryAdapter.passViewModelValue(searchHistoryViewModel)
     }
 
     private fun setAdapter(
@@ -50,14 +47,11 @@ class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
         })
     }
 
-    private fun onCheckedChanged() {
-        //val searchQuery = searchHistoryAdapter.searchQueriesList[searchHistoryAdapter.itemPosition]
-        searchHistoryAdapter.passViewModelValue(searchHistoryViewModel)
-    }
-
     override fun onItemClick(searchQuery: SearchQuery) {
         val action =
-            SearchHistoryFragmentDirections.actionSearchHistoryFragmentToPhotosSearchFragment(searchQuery)
+            SearchHistoryFragmentDirections.actionSearchHistoryFragmentToPhotosSearchFragment(
+                searchQuery
+            )
         findNavController().navigate(action)
     }
 
