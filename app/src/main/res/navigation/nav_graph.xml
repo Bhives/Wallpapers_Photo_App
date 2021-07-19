@@ -10,6 +10,9 @@
         android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.PhotosSearchFragment"
         android:label="fragment_image_search"
         tools:layout="@layout/fragment_photo_search">
+        <argument
+            android:name="searchQuery"
+            app:argType="com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery" />
         <action
             android:id="@+id/action_photosSearchFragment_to_currentPhotoFragment"
             app:destination="@id/currentPhotoFragment" />
@@ -44,6 +47,12 @@
         tools:layout="@layout/fragment_search_history">
         <action
             android:id="@+id/action_searchHistoryFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_searchHistoryFragment_to_photosSearchFragment"
+            app:destination="@id/photosSearchFragment" />
+        <action
+            android:id="@+id/action_searchHistoryFragment_to_favoritesFragment2"
             app:destination="@id/favoritesFragment" />
     </fragment>
 

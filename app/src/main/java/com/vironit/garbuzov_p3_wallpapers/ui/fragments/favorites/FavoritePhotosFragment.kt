@@ -11,14 +11,14 @@ import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentFavoritePhotosBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.favorites.FavoritePhotosAdapter
-import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnItemClickListener
+import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnPhotosItemClickListener
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites.FavoritePhotosViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavoritePhotosFragment : BaseFragment(R.layout.fragment_favorite_photos),
-    OnItemClickListener {
+    OnPhotosItemClickListener {
 
     private var _binding: FragmentFavoritePhotosBinding? = null
     val binding get() = _binding!!

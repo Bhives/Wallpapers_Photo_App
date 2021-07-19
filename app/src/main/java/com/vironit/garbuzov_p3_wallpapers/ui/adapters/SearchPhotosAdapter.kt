@@ -11,7 +11,7 @@ import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.PhotoCardBinding
 
-class SearchPhotosAdapter(private val clickListener: OnItemClickListener) :
+class SearchPhotosAdapter(private val clickListenerPhotos: OnPhotosItemClickListener) :
     PagingDataAdapter<Photo, SearchPhotosAdapter.PhotosSearchHolder>(
         PHOTO_COMPARATOR
     ) {
@@ -38,7 +38,7 @@ class SearchPhotosAdapter(private val clickListener: OnItemClickListener) :
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     if (item != null) {
-                        clickListener.onItemClick(item)
+                        clickListenerPhotos.onItemClick(item)
                     }
                 }
             }

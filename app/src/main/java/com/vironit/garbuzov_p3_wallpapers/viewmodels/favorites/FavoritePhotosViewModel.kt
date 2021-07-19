@@ -45,7 +45,6 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
         return getFavoritePhotos().value?.contains(photo)==true
     }
 
-    @SuppressLint("ResourceType")
     fun setPhotoAs(
         binding: FragmentCurrentPhotoBinding,
         context: Context,

@@ -125,7 +125,6 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo) {
     }
 
     private fun setPhotoAction(bottomSheetDialog: BottomSheetDialog, photo: Photo) {
-        //bottomSheetDialog.setCancelable(false)
         bottomSheetDialog.setContentView(R.layout.bottom_photo_actions_dialog)
         bottomSheetDialog.show()
         bottomSheetDialog.findViewById<LinearLayout>(R.id.wallpaperOption)?.setOnClickListener {

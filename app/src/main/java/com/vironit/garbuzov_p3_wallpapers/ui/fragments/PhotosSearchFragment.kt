@@ -3,25 +3,26 @@ package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPhotoSearchBinding
-import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnItemClickListener
+import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnPhotosItemClickListener
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchPhotosAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
-class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search), OnItemClickListener {
+class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search),
+    OnPhotosItemClickListener {
 
+    private val args by navArgs<PhotosSearchFragmentArgs>()
     private var _binding: FragmentPhotoSearchBinding? = null
     val binding get() = _binding!!
     private val photosSearchViewModel by viewModels<PhotosSearchViewModel>()
@@ -30,12 +31,16 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search), OnIte
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPhotoSearchBinding.bind(view)
-        findNavController().restoreState(savedInstanceState)
         setAdapter()
         searchPhotos()
     }
 
     private fun searchPhotos() {
+        //if (args != null) {
+        //    binding.photosRecyclerView.scrollToPosition(0)
+        //    photosSearchViewModel.searchPhotos(args.searchQuery.queryText)
+        //}
+
         binding.photoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.photoSearchView.clearFocus()

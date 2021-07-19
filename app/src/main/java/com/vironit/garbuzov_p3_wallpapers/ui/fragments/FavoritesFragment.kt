@@ -1,6 +1,5 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.vironit.garbuzov_p3_wallpapers.R
@@ -17,7 +16,6 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentFavoritesBinding.bind(view)
-
         val favoritesViewPager = binding.favoritesViewPager
         favoritesViewPager.adapter = FavoritesFragmentPagerAdapter(childFragmentManager)
         favoritesViewPager.currentItem = 0

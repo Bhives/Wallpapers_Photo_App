@@ -2,12 +2,17 @@ package com.vironit.garbuzov_p3_wallpapers.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.widget.CompoundButtonCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.SearchQueryCardBinding
+import com.vironit.garbuzov_p3_wallpapers.viewmodels.SearchHistoryViewModel
+import kotlinx.android.synthetic.main.search_query_card.view.*
 
 class SearchHistoryAdapter(
-    var searchQueriesList: List<SearchQuery>
+    var searchQueriesList: List<SearchQuery>,
+    private val clickListenerSearchQueries: OnSearchQueryItemClickListener
 ) :
     RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryHolder>() {
 
@@ -18,39 +23,49 @@ class SearchHistoryAdapter(
     }
 
     var itemPosition = 0
+    lateinit var searchHistoryViewModel: SearchHistoryViewModel
 
     override fun onBindViewHolder(searchHistoryHolder: SearchHistoryHolder, position: Int) {
         searchHistoryHolder.bindSearchQuery(searchQueriesList[position])
-        SearchHistoryAdapter.searchQueriesList=searchQueriesList
+        searchHistoryHolder.itemView.addToFavoritesButton.setOnClickListener {
+            itemPosition = position
+        }
     }
 
     inner class SearchHistoryHolder(private val binding: SearchQueryCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindSearchQuery(searchQuery: SearchQuery) {
-            binding.addToFavoritesButton.setOnClickListener{
-                itemPosition = bindingAdapterPosition
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    clickListenerSearchQueries.onItemClick(searchQueriesList[position])
+                }
             }
+
+            binding.addToFavoritesButton.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    searchHistoryViewModel.addSearchQueryToFavorites(searchQueriesList[itemPosition])
+                } else {
+                    searchHistoryViewModel.removeFromFavorites(searchQueriesList[itemPosition])
+                }
+            }
+        }
+
+        fun bindSearchQuery(searchQuery: SearchQuery) {
             binding.apply {
                 queryTextView.text = searchQuery.queryText
                 queryInfoTextView.text =
                     "${searchQuery.numberOfResults} results, ${searchQuery.lastUsed}"
-                if (searchQuery.queryFavoriteFlag){
+                if (searchQuery.queryFavoriteFlag) {
                     binding.addToFavoritesButton.isEnabled
                 }
-                //addToFavoritesButton.setOnCheckedChangeListener { buttonView, isChecked ->
-                //    if (isChecked) {
-                //        searchHistoryViewModel.addSearchQueryToFavorites(searchQuery)
-                //    } else {
-                //        searchHistoryViewModel.removeFromFavorites(searchQuery)
-                //    }
-                //}
             }
         }
     }
 
-    fun getPosition():Int{
-        return itemPosition
+    fun passViewModelValue(searchHistoryViewModel: SearchHistoryViewModel){
+        this.searchHistoryViewModel=searchHistoryViewModel
     }
 
     override fun getItemCount(): Int {
@@ -59,9 +74,5 @@ class SearchHistoryAdapter(
         } else {
             searchQueriesList.size
         }
-    }
-
-    companion object {
-        var searchQueriesList: List<SearchQuery> = listOf()
     }
 }
