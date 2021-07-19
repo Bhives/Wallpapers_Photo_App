@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentCurrentPhotoBinding
@@ -57,11 +58,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                     true
                 }
                 R.id.wallpaperSet -> {
-                    photosFavoritesViewModel.setWallpaper(
-                        binding,
-                        requireContext(),
-                        this.requireActivity()
-                    )
+                    setPhotoAction()
                     true
                 }
                 R.id.photoInformation -> {
@@ -128,12 +125,11 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
             })
     }
 
-    private fun setWallpaper() {
-        //val dialog = BottomSheetDialog(requireContext())
-        //dialog.setCancelable(false)
-        //dialog.setContentView(view)
-        //dialog.show()
-        //dialog.dismiss()
+    private fun setPhotoAction() {
+        val dialog = BottomSheetDialog(requireContext())
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.bottom_photo_actions_dialog)
+        dialog.show()
     }
 
     private fun showPhotoInfo(bottomSheetBehavior: BottomSheetBehavior<CardView>, photo: Photo) {

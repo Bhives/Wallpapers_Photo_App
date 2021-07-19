@@ -10,4 +10,5 @@
     <dimen name="favorite_toggle_button_size">30dp</dimen>
     <dimen name="account_photo_height">100dp</dimen>
     <dimen name="portfolio_button_width">150dp</dimen>
+    <dimen name="photo_options_icons_height">40dp</dimen>
 </resources>

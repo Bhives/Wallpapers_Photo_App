@@ -6,6 +6,7 @@ import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -47,7 +48,12 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
     }
 
     @SuppressLint("ResourceType")
-    fun setWallpaper(binding: FragmentCurrentPhotoBinding, context: Context, activity: Activity) {
+    fun setPhotoAs(
+        binding: FragmentCurrentPhotoBinding,
+        context: Context,
+        activity: Activity,
+        setupOption: Int
+    ) {
         val wallpaperManager: WallpaperManager = WallpaperManager.getInstance(context)
         ActivityCompat.requestPermissions(
             activity,
@@ -57,11 +63,28 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
         try {
             binding.selectedPhotoImageView.buildDrawingCache()
             val bitmap: Bitmap = binding.selectedPhotoImageView.drawingCache
-            wallpaperManager.setBitmap(bitmap)
+            when (setupOption) {
+                0 -> {
+                    asWallpaper(wallpaperManager, bitmap)
+                }
+                1 -> {
+                    asLockScreen(wallpaperManager, bitmap)
+                }
+            }
             Toast.makeText(context, "New wallpaper successfully set", Toast.LENGTH_SHORT)
                 .show()
         } catch (iOException: IOException) {
             iOException.printStackTrace()
+        }
+    }
+
+    private fun asWallpaper(wallpaperManager: WallpaperManager, bitmap: Bitmap) {
+        wallpaperManager.setBitmap(bitmap)
+    }
+
+    private fun asLockScreen(wallpaperManager: WallpaperManager, bitmap: Bitmap) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
         }
     }
 
