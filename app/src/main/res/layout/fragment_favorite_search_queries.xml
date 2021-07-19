@@ -14,8 +14,7 @@
         android:id="@+id/favoriteQueriesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/default_border_margin"
-        android:layout_marginRight="@dimen/default_border_margin"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toTopOf="parent" />
 
 </FrameLayout>

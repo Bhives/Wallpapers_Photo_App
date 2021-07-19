@@ -8,14 +8,13 @@ import com.vironit.garbuzov_p3_wallpapers.databinding.SearchQueryCardBinding
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.SearchHistoryViewModel
 import kotlinx.android.synthetic.main.search_query_card.view.*
 
-class SearchHistoryAdapter(
+class SearchHistoryAdapter(val searchHistoryViewModel: SearchHistoryViewModel,
     var searchQueriesList: List<SearchQuery>,
     private val clickListenerSearchQueries: OnSearchQueryItemClickListener
 ) :
     RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryHolder>() {
 
     var itemPosition = 0
-    lateinit var searchHistoryViewModel: SearchHistoryViewModel
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHistoryHolder {
         val binding =
@@ -60,10 +59,6 @@ class SearchHistoryAdapter(
                 }
             }
         }
-    }
-
-    fun passViewModelValue(searchHistoryViewModel: SearchHistoryViewModel) {
-        this.searchHistoryViewModel = searchHistoryViewModel
     }
 
     override fun getItemCount(): Int {

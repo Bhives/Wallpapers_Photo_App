@@ -23,18 +23,17 @@ class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
     private var _binding: FragmentSearchHistoryBinding? = null
     val binding get() = _binding!!
     private val searchHistoryViewModel by viewModels<SearchHistoryViewModel>()
-    private val searchHistoryAdapter = SearchHistoryAdapter(listOf(), this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSearchHistoryBinding.bind(view)
         setAdapter(requireContext())
-        searchHistoryAdapter.passViewModelValue(searchHistoryViewModel)
     }
 
     private fun setAdapter(
         context: Context
     ) {
+        val searchHistoryAdapter = SearchHistoryAdapter(searchHistoryViewModel, listOf(), this)
         binding.apply {
             searchHistoryRecyclerView.setHasFixedSize(true)
             searchHistoryRecyclerView.layoutManager =
