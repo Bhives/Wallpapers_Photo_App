@@ -8,7 +8,8 @@ import com.vironit.garbuzov_p3_wallpapers.databinding.SearchQueryCardBinding
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.SearchHistoryViewModel
 import kotlinx.android.synthetic.main.search_query_card.view.*
 
-class SearchHistoryAdapter(val searchHistoryViewModel: SearchHistoryViewModel,
+class SearchHistoryAdapter(
+    val searchHistoryViewModel: SearchHistoryViewModel,
     var searchQueriesList: List<SearchQuery>,
     private val clickListenerSearchQueries: OnSearchQueryItemClickListener
 ) :
@@ -39,14 +40,6 @@ class SearchHistoryAdapter(val searchHistoryViewModel: SearchHistoryViewModel,
                     clickListenerSearchQueries.onItemClick(searchQueriesList[position])
                 }
             }
-
-            binding.addToFavoritesButton.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    searchHistoryViewModel.addSearchQueryToFavorites(searchQueriesList[itemPosition])
-                } else {
-                    searchHistoryViewModel.removeFromFavorites(searchQueriesList[itemPosition])
-                }
-            }
         }
 
         fun bindSearchQuery(searchQuery: SearchQuery) {
@@ -55,7 +48,14 @@ class SearchHistoryAdapter(val searchHistoryViewModel: SearchHistoryViewModel,
                 queryInfoTextView.text =
                     "${searchQuery.numberOfResults} results, ${searchQuery.lastUsed}"
                 if (searchQuery.queryFavoriteFlag) {
-                    binding.addToFavoritesButton.isEnabled
+                    binding.addToFavoritesButton.isChecked
+                }
+                addToFavoritesButton.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        searchHistoryViewModel.addSearchQueryToFavorites(searchQuery)
+                    } else {
+                        searchHistoryViewModel.removeFromFavorites(searchQuery)
+                    }
                 }
             }
         }

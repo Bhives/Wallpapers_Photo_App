@@ -1,6 +1,7 @@
 package com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites
 
 import androidx.lifecycle.viewModelScope
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseViewModel

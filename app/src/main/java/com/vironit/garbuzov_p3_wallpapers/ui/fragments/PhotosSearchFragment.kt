@@ -3,6 +3,7 @@ package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -14,6 +15,7 @@ import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPhotoSearchBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnPhotosItemClickListener
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchPhotosAdapter
+import com.vironit.garbuzov_p3_wallpapers.ui.bindingActivity
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,12 +37,20 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search),
         searchPhotos()
     }
 
-    private fun searchPhotos() {
-        //if (args != null) {
-        //    binding.photosRecyclerView.scrollToPosition(0)
-        //    photosSearchViewModel.searchPhotos(args.searchQuery.queryText)
-        //}
+    private fun setAdapter() {
+        binding.apply {
+            photosRecyclerView.setHasFixedSize(true)
+            photosRecyclerView.layoutManager =
+                StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+            photosRecyclerView.adapter = photosSearchAdapter
+        }
+        photosSearchViewModel.photosAll.observe(viewLifecycleOwner) {
+            photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+            photosList = it
+        }
+    }
 
+    private fun searchPhotos() {
         binding.photoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.photoSearchView.clearFocus()
@@ -65,17 +75,9 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search),
         })
     }
 
-    private fun setAdapter() {
-        binding.apply {
-            photosRecyclerView.setHasFixedSize(true)
-            photosRecyclerView.layoutManager =
-                StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-            photosRecyclerView.adapter = photosSearchAdapter
-        }
-        photosSearchViewModel.photosAll.observe(viewLifecycleOwner) {
-            photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-            photosList = it
-        }
+    fun searchPhotoWithArgs(){
+        binding.photosRecyclerView.scrollToPosition(0)
+        photosSearchViewModel.searchPhotos(args.searchQuery.queryText)
     }
 
     override fun onItemClick(photo: Photo) {

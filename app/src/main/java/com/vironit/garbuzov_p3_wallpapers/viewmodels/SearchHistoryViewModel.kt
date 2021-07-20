@@ -17,6 +17,12 @@ class SearchHistoryViewModel @Inject constructor(private val photosRepository: P
 
     fun getSearchQuery(searchQueryText: String) = photosRepository.getSearchQuery(searchQueryText)
 
+    fun getFavoriteSearchQueries() = photosRepository.getFavoriteSearchQueries()
+
+    fun searchQueryIsInFavorites(searchQuery: SearchQuery): Boolean {
+        return getFavoriteSearchQueries().value?.contains(searchQuery)==true
+    }
+
     fun addSearchQueryToFavorites(searchQuery: SearchQuery) {
         searchQuery.queryFavoriteFlag=true
         viewModelScope.launch(Dispatchers.IO) {

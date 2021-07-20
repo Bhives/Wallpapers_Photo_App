@@ -43,7 +43,6 @@ class PhotosRepository @Inject constructor(
         photosDatabase.searchQueryDao().addSearchQueryToFavorites(searchQuery)
     }
 
-
     fun getFavoriteSearchQueries() =
         photosDatabase.searchQueryDao().getFavoriteSearchQueries()
 

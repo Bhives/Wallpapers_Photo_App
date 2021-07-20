@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_currentPhotoFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_currentPhotoFragment_to_authorPortfolioFragment"
+            app:destination="@id/authorPortfolioFragment" />
     </fragment>
 
     <fragment
@@ -69,6 +72,19 @@
             app:destination="@id/searchHistoryFragment" />
         <action
             android:id="@+id/action_favoritesFragment_to_currentPhotoFragment"
+            app:destination="@id/currentPhotoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/authorPortfolioFragment"
+        android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.PortfolioFragment"
+        android:label="fragment_author_portfolio"
+        tools:layout="@layout/fragment_portfolio">
+        <argument
+            android:name="url"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_authorPortfolioFragment_to_currentPhotoFragment"
             app:destination="@id/currentPhotoFragment" />
     </fragment>
 </navigation>

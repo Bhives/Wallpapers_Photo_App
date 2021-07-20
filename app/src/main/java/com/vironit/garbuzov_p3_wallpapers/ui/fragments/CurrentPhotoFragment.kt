@@ -108,7 +108,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo) {
                     resource: Bitmap,
                     transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
                 ) {
-                    var bitmap: Bitmap = resource
+                    val bitmap: Bitmap = resource
                     val intent = Intent()
                     intent.action = Intent.ACTION_SEND
                     intent.putExtra(
@@ -169,13 +169,13 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo) {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
         })
-
         photoInfoCard.portfolioButton.setOnClickListener {
-            val portfolioUri = Uri.parse(photo.user.portfolioUrl)
-            val portfolioIntent = Intent(Intent.ACTION_VIEW, portfolioUri)
-            context?.startActivity(portfolioIntent)
+            findNavController().navigate(
+                CurrentPhotoFragmentDirections.actionCurrentPhotoFragmentToAuthorPortfolioFragment(
+                    photo.user.portfolioUrl
+                )
+            )
         }
-
         binding.photoInfoHideButton.setOnClickListener {
             if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HALF_EXPANDED) {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
