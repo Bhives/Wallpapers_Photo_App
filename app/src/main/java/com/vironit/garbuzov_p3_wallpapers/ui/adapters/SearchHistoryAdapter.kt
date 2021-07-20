@@ -25,9 +25,9 @@ class SearchHistoryAdapter(
 
     override fun onBindViewHolder(searchHistoryHolder: SearchHistoryHolder, position: Int) {
         searchHistoryHolder.bindSearchQuery(searchQueriesList[position])
-        searchHistoryHolder.itemView.addToFavoritesButton.setOnClickListener {
-            itemPosition = position
-        }
+        //searchHistoryHolder.itemView.addToFavoritesButton.setOnClickListener {
+        //    itemPosition = position
+        //}
     }
 
     inner class SearchHistoryHolder(private val binding: SearchQueryCardBinding) :

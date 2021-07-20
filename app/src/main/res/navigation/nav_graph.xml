@@ -54,9 +54,6 @@
         <action
             android:id="@+id/action_searchHistoryFragment_to_photosSearchFragment"
             app:destination="@id/photosSearchFragment" />
-        <action
-            android:id="@+id/action_searchHistoryFragment_to_favoritesFragment2"
-            app:destination="@id/favoritesFragment" />
     </fragment>
 
     <fragment
@@ -82,7 +79,7 @@
         tools:layout="@layout/fragment_portfolio">
         <argument
             android:name="url"
-            app:argType="string"/>
+            app:argType="string" />
         <action
             android:id="@+id/action_authorPortfolioFragment_to_currentPhotoFragment"
             app:destination="@id/currentPhotoFragment" />
