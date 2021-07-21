@@ -2,8 +2,9 @@ package com.vironit.garbuzov_p3_wallpapers.ui.fragments.favorites
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.Fragment
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,10 +24,14 @@ class FavoriteSearchQueriesFragment : BaseFragment(R.layout.fragment_favorite_se
     private val favoriteSearchQueriesViewModel by viewModels<FavoriteSearchQueriesViewModel>()
     private val favoriteSearchQueriesAdapter = FavoriteSearchQueriesAdapter(listOf())
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentFavoriteSearchQueriesBinding.bind(view)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentFavoriteSearchQueriesBinding.inflate(inflater, container, false)
         setAdapter(requireContext())
+        return binding.root
     }
 
     private fun setAdapter(

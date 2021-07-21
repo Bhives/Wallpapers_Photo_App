@@ -1,8 +1,9 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -28,21 +29,26 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search),
     private var _binding: FragmentPhotoSearchBinding? = null
     val binding get() = _binding!!
     private val photosSearchViewModel by viewModels<PhotosSearchViewModel>()
-    private val photosSearchAdapter = SearchPhotosAdapter(this)
+    lateinit var photosSearchAdapter: SearchPhotosAdapter
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentPhotoSearchBinding.bind(view)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        photosSearchAdapter = SearchPhotosAdapter(this)
+        _binding = FragmentPhotoSearchBinding.inflate(inflater, container, false)
         setAdapter()
         searchPhotos()
         if (findNavController().navigateUp()) {
             searchPhotoWithArgs()
         }
+        return binding.root
     }
 
     private fun setAdapter() {
         binding.apply {
-            photosRecyclerView.setHasFixedSize(true)
+            photosRecyclerView.setHasFixedSize(false)
             photosRecyclerView.layoutManager =
                 StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
             photosRecyclerView.adapter = photosSearchAdapter

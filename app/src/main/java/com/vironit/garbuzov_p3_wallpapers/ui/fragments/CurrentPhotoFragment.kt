@@ -3,7 +3,6 @@ package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout

@@ -1,7 +1,9 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
@@ -17,15 +19,19 @@ class PortfolioFragment : BaseFragment(R.layout.fragment_portfolio) {
     private var _binding: FragmentPortfolioBinding? = null
     val binding get() = _binding!!
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentPortfolioBinding.bind(view)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentPortfolioBinding.inflate(inflater, container, false)
         bindingActivity.fragmentsMenu.isVisible = false
         binding.portfolioWebView.webViewClient = WebViewClient()
         binding.portfolioWebView.loadUrl(args.url)
         binding.backButton.setOnClickListener {
             findNavController().popBackStack()
         }
+        return binding.root
     }
 
     override fun onDestroyView() {

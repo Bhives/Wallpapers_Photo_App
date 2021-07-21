@@ -1,12 +1,11 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentSearchHistoryBinding
@@ -23,21 +22,22 @@ class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
     private var _binding: FragmentSearchHistoryBinding? = null
     val binding get() = _binding!!
     private val searchHistoryViewModel by viewModels<SearchHistoryViewModel>()
+    lateinit var searchHistoryAdapter: SearchHistoryAdapter
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentSearchHistoryBinding.bind(view)
-        setAdapter(requireContext())
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentSearchHistoryBinding.inflate(inflater, container, false)
+        setAdapter()
+        return binding.root
     }
 
-    private fun setAdapter(
-        context: Context
-    ) {
-        val searchHistoryAdapter = SearchHistoryAdapter(searchHistoryViewModel, listOf(), this)
+    private fun setAdapter() {
+        searchHistoryAdapter = SearchHistoryAdapter(searchHistoryViewModel, listOf(), this)
         binding.apply {
-            searchHistoryRecyclerView.setHasFixedSize(true)
-            searchHistoryRecyclerView.layoutManager =
-                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            searchHistoryRecyclerView.setHasFixedSize(false)
             searchHistoryRecyclerView.adapter = searchHistoryAdapter
         }
         searchHistoryViewModel.getAllSearchQueries().observe(viewLifecycleOwner, {

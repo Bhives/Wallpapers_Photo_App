@@ -2,7 +2,9 @@ package com.vironit.garbuzov_p3_wallpapers.ui.fragments.favorites
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,10 +27,14 @@ class FavoritePhotosFragment : BaseFragment(R.layout.fragment_favorite_photos),
     private val photosFavoritesViewModel by viewModels<FavoritePhotosViewModel>()
     private val favoritePhotosAdapter = FavoritePhotosAdapter(this, listOf())
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentFavoritePhotosBinding.bind(view)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentFavoritePhotosBinding.inflate(inflater, container, false)
         setAdapter(requireContext())
+        return binding.root
     }
 
     private fun setAdapter(

@@ -15,8 +15,6 @@ class SearchHistoryAdapter(
 ) :
     RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryHolder>() {
 
-    var itemPosition = 0
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHistoryHolder {
         val binding =
             SearchQueryCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -25,9 +23,6 @@ class SearchHistoryAdapter(
 
     override fun onBindViewHolder(searchHistoryHolder: SearchHistoryHolder, position: Int) {
         searchHistoryHolder.bindSearchQuery(searchQueriesList[position])
-        //searchHistoryHolder.itemView.addToFavoritesButton.setOnClickListener {
-        //    itemPosition = position
-        //}
     }
 
     inner class SearchHistoryHolder(private val binding: SearchQueryCardBinding) :
@@ -48,7 +43,7 @@ class SearchHistoryAdapter(
                 queryInfoTextView.text =
                     "${searchQuery.numberOfResults} results, ${searchQuery.lastUsed}"
                 if (searchQuery.queryFavoriteFlag) {
-                    binding.addToFavoritesButton.isChecked
+                    addToFavoritesButton.isChecked = true
                 }
                 addToFavoritesButton.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked) {
