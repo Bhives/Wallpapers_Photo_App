@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentFavoritesBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.FavoritesFragmentPagerAdapter

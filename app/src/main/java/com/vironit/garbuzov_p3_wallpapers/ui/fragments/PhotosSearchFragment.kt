@@ -55,7 +55,6 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search),
         }
         photosSearchViewModel.photosAll.observe(viewLifecycleOwner) {
             photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-            photosList = it
         }
     }
 
@@ -98,9 +97,5 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search),
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        var photosList: PagingData<Photo>? = null
     }
 }

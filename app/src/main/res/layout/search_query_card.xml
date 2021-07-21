@@ -25,8 +25,8 @@
     <ToggleButton
         android:id="@+id/addToFavoritesButton"
         style="@style/toggleButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/favorite_toggle_button_size"
+        android:layout_height="@dimen/favorite_toggle_button_size"
         android:background="@drawable/ic_toggle_bg"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"

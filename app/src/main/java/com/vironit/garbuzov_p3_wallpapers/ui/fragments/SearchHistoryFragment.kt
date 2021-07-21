@@ -42,7 +42,6 @@ class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
         }
         searchHistoryViewModel.getAllSearchQueries().observe(viewLifecycleOwner, {
             searchHistoryAdapter.searchQueriesList = it
-            searchQueriesList = it
         })
     }
 
@@ -57,9 +56,5 @@ class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        var searchQueriesList: List<SearchQuery> = listOf()
     }
 }

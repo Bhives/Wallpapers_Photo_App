@@ -115,7 +115,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo) {
                         photosFavoritesViewModel.getImageUri(requireContext(), bitmap)
                     )
                     intent.type = "image/*"
-                    startActivity(Intent.createChooser(intent, "Share to: "))
+                    startActivity(Intent.createChooser(intent, "Share with: "))
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {

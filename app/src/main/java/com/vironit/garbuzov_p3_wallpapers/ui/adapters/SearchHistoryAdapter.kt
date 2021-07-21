@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.SearchQueryCardBinding
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.SearchHistoryViewModel
-import kotlinx.android.synthetic.main.search_query_card.view.*
 
 class SearchHistoryAdapter(
     val searchHistoryViewModel: SearchHistoryViewModel,

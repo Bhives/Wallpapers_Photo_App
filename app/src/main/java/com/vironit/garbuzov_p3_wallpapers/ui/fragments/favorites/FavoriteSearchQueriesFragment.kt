@@ -1,28 +1,29 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments.favorites
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.navigation.fragment.findNavController
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentFavoriteSearchQueriesBinding
+import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnSearchQueryItemClickListener
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.favorites.FavoriteSearchQueriesAdapter
+import com.vironit.garbuzov_p3_wallpapers.ui.fragments.FavoritesFragmentDirections
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites.FavoriteSearchQueriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoriteSearchQueriesFragment : BaseFragment(R.layout.fragment_favorite_search_queries) {
+class FavoriteSearchQueriesFragment : BaseFragment(R.layout.fragment_favorite_search_queries),
+    OnSearchQueryItemClickListener {
 
     private var _binding: FragmentFavoriteSearchQueriesBinding? = null
     val binding get() = _binding!!
     private val favoriteSearchQueriesViewModel by viewModels<FavoriteSearchQueriesViewModel>()
-    private val favoriteSearchQueriesAdapter = FavoriteSearchQueriesAdapter(listOf())
+    private lateinit var favoriteSearchQueriesAdapter: FavoriteSearchQueriesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,31 +31,31 @@ class FavoriteSearchQueriesFragment : BaseFragment(R.layout.fragment_favorite_se
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFavoriteSearchQueriesBinding.inflate(inflater, container, false)
-        setAdapter(requireContext())
+        setAdapter()
         return binding.root
     }
 
-    private fun setAdapter(
-        context: Context
-    ) {
+    private fun setAdapter() {
+        favoriteSearchQueriesAdapter =
+            FavoriteSearchQueriesAdapter(favoriteSearchQueriesViewModel, mutableListOf(), this)
         binding.apply {
-            favoriteQueriesRecyclerView.setHasFixedSize(true)
-            favoriteQueriesRecyclerView.layoutManager =
-                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             favoriteQueriesRecyclerView.adapter = favoriteSearchQueriesAdapter
         }
         favoriteSearchQueriesViewModel.getFavoriteSearchQueries().observe(viewLifecycleOwner, {
-            favoriteSearchQueriesAdapter.favoriteSearchQueriesList = it
-            favoriteSearchQueriesList = it
+            favoriteSearchQueriesAdapter.favoriteSearchQueriesList = it.toMutableList()
         })
+    }
+
+    override fun onItemClick(searchQuery: SearchQuery) {
+        val action =
+            FavoritesFragmentDirections.actionFavoritesFragmentToPhotosSearchFragment(
+                searchQuery
+            )
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        var favoriteSearchQueriesList: List<SearchQuery> = listOf()
     }
 }

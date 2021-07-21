@@ -48,7 +48,6 @@ class FavoritePhotosFragment : BaseFragment(R.layout.fragment_favorite_photos),
         }
         photosFavoritesViewModel.getFavoritePhotos().observe(viewLifecycleOwner, {
             favoritePhotosAdapter.photosList = it
-            photosList = it
         })
     }
 
@@ -63,9 +62,5 @@ class FavoritePhotosFragment : BaseFragment(R.layout.fragment_favorite_photos),
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        var photosList: List<Photo> = listOf()
     }
 }
