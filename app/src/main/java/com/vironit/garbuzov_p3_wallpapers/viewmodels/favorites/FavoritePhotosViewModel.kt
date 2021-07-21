@@ -1,6 +1,5 @@
 package com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.WallpaperManager
 import android.content.Context
@@ -42,7 +41,7 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
     }
 
     fun photoIsInFavorites(photo: Photo): Boolean {
-        return getFavoritePhotos().value?.contains(photo)==true
+        return getFavoritePhotos().value?.contains(photo) == true
     }
 
     fun setPhotoAs(

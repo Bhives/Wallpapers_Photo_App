@@ -42,7 +42,7 @@ class FavoriteSearchQueriesFragment : BaseFragment(R.layout.fragment_favorite_se
             favoriteQueriesRecyclerView.adapter = favoriteSearchQueriesAdapter
         }
         favoriteSearchQueriesViewModel.getFavoriteSearchQueries().observe(viewLifecycleOwner, {
-            favoriteSearchQueriesAdapter.favoriteSearchQueriesList = it.toMutableList()
+            favoriteSearchQueriesAdapter.searchQueriesList = it.toMutableList()
         })
     }
 

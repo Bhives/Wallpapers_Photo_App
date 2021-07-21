@@ -1,14 +1,11 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments.favorites
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentFavoritePhotosBinding
@@ -25,7 +22,7 @@ class FavoritePhotosFragment : BaseFragment(R.layout.fragment_favorite_photos),
     private var _binding: FragmentFavoritePhotosBinding? = null
     val binding get() = _binding!!
     private val photosFavoritesViewModel by viewModels<FavoritePhotosViewModel>()
-    private val favoritePhotosAdapter = FavoritePhotosAdapter(this, listOf())
+    lateinit var favoritePhotosAdapter: FavoritePhotosAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,17 +30,13 @@ class FavoritePhotosFragment : BaseFragment(R.layout.fragment_favorite_photos),
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFavoritePhotosBinding.inflate(inflater, container, false)
-        setAdapter(requireContext())
+        setAdapter()
         return binding.root
     }
 
-    private fun setAdapter(
-        context: Context
-    ) {
+    private fun setAdapter() {
+        favoritePhotosAdapter = FavoritePhotosAdapter(this, listOf())
         binding.apply {
-            favoritePhotosRecyclerView.setHasFixedSize(true)
-            favoritePhotosRecyclerView.layoutManager =
-                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             favoritePhotosRecyclerView.adapter = favoritePhotosAdapter
         }
         photosFavoritesViewModel.getFavoritePhotos().observe(viewLifecycleOwner, {

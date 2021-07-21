@@ -10,7 +10,7 @@ import com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites.FavoriteSearchQue
 
 class FavoriteSearchQueriesAdapter(
     private val favoriteSearchQueriesViewModel: FavoriteSearchQueriesViewModel,
-    var favoriteSearchQueriesList: MutableList<SearchQuery>,
+    var searchQueriesList: MutableList<SearchQuery>,
     private val clickListenerFavoriteSearchQueries: OnSearchQueryItemClickListener
 ) :
     RecyclerView.Adapter<FavoriteSearchQueriesAdapter.FavoriteSearchQueriesHolder>() {
@@ -29,7 +29,7 @@ class FavoriteSearchQueriesAdapter(
         favoriteSearchQueriesHolder: FavoriteSearchQueriesHolder,
         position: Int
     ) {
-        favoriteSearchQueriesHolder.bindSearchQuery(favoriteSearchQueriesList[position])
+        favoriteSearchQueriesHolder.bindSearchQuery(searchQueriesList[position])
     }
 
     inner class FavoriteSearchQueriesHolder(private val binding: FavoriteSearchQueryCardBinding) :
@@ -39,7 +39,7 @@ class FavoriteSearchQueriesAdapter(
             binding.root.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    clickListenerFavoriteSearchQueries.onItemClick(favoriteSearchQueriesList[position])
+                    clickListenerFavoriteSearchQueries.onItemClick(searchQueriesList[position])
                 }
             }
         }
@@ -57,16 +57,16 @@ class FavoriteSearchQueriesAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (favoriteSearchQueriesList.isNullOrEmpty()) {
+        return if (searchQueriesList.isNullOrEmpty()) {
             0
         } else {
-            favoriteSearchQueriesList.size
+            searchQueriesList.size
         }
     }
 
     fun deleteItem(searchQuery: SearchQuery) {
         favoriteSearchQueriesViewModel.removeFromFavorites(searchQuery)
-        favoriteSearchQueriesList.remove(searchQuery)
+        searchQueriesList.remove(searchQuery)
         notifyDataSetChanged()
     }
 }
