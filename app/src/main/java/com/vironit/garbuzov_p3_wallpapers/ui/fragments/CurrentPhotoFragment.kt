@@ -27,6 +27,7 @@ import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites.FavoritePhotosViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_current_photo.*
 import kotlinx.android.synthetic.main.photo_information_sheet.*
 import kotlinx.android.synthetic.main.photo_information_sheet.view.*
 import java.util.*
@@ -36,21 +37,18 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo) {
 
     private val args by navArgs<CurrentPhotoFragmentArgs>()
     private val photosFavoritesViewModel by viewModels<FavoritePhotosViewModel>()
-    private var _binding: FragmentCurrentPhotoBinding? = null
-    val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentCurrentPhotoBinding.bind(view)
         val photo = args.photo
         val bottomSheetDialog = BottomSheetDialog(requireContext())
         val bottomSheetBehavior = BottomSheetBehavior.from(photoInfoCard)
         bindingActivity.fragmentsMenu.isVisible = false
         attachPhotoAndInfo(photo)
-        binding.backButton.setOnClickListener {
+        backButton.setOnClickListener {
             findNavController().popBackStack()
         }
-        binding.currentPhotoBottomMenu.setOnItemSelectedListener { item ->
+        currentPhotoBottomMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.sharePhoto -> {
                     share(photo)
@@ -127,11 +125,11 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo) {
         bottomSheetDialog.setContentView(R.layout.bottom_photo_actions_dialog)
         bottomSheetDialog.show()
         bottomSheetDialog.findViewById<LinearLayout>(R.id.wallpaperOption)?.setOnClickListener {
-            photosFavoritesViewModel.setPhotoAs(binding, requireContext(), requireActivity(), 0)
+            photosFavoritesViewModel.setPhotoAs(selectedPhotoImageView, requireContext(), requireActivity(), 0)
             bottomSheetDialog.hide()
         }
         bottomSheetDialog.findViewById<LinearLayout>(R.id.lockScreenOption)?.setOnClickListener {
-            photosFavoritesViewModel.setPhotoAs(binding, requireContext(), requireActivity(), 1)
+            photosFavoritesViewModel.setPhotoAs(selectedPhotoImageView, requireContext(), requireActivity(), 1)
             bottomSheetDialog.hide()
         }
         bottomSheetDialog.findViewById<LinearLayout>(R.id.favoritesOption)?.setOnClickListener {
@@ -154,13 +152,13 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo) {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (bottomSheetBehavior.state) {
                     BottomSheetBehavior.STATE_COLLAPSED -> {
-                        binding.photoInfoHideButton.isVisible = false
-                        binding.selectedPhotoToolbar.isVisible = true
+                        photoInfoHideButton.isVisible = false
+                        selectedPhotoToolbar.isVisible = true
                         bottomSheetBehavior.isDraggable = false
                     }
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                        binding.selectedPhotoToolbar.isVisible = false
-                        binding.photoInfoHideButton.isVisible = true
+                        selectedPhotoToolbar.isVisible = false
+                        photoInfoHideButton.isVisible = true
                     }
                 }
             }
@@ -175,7 +173,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo) {
                 )
             )
         }
-        binding.photoInfoHideButton.setOnClickListener {
+        photoInfoHideButton.setOnClickListener {
             if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HALF_EXPANDED) {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             }
@@ -207,7 +205,6 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo) {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
         bindingActivity.fragmentsMenu.isVisible = true
     }
 }

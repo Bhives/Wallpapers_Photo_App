@@ -1,41 +1,26 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.vironit.garbuzov_p3_wallpapers.R
-import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPortfolioBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.bindingActivity
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
+import kotlinx.android.synthetic.main.fragment_portfolio.*
 
 class PortfolioFragment : BaseFragment(R.layout.fragment_portfolio) {
 
     private val args by navArgs<PortfolioFragmentArgs>()
-    private var _binding: FragmentPortfolioBinding? = null
-    val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentPortfolioBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         bindingActivity.fragmentsMenu.isVisible = false
-        binding.portfolioWebView.webViewClient = WebViewClient()
-        binding.portfolioWebView.loadUrl(args.url)
-        binding.backButton.setOnClickListener {
+        portfolioWebView.webViewClient = WebViewClient()
+        portfolioWebView.loadUrl(args.url)
+        backButton.setOnClickListener {
             findNavController().popBackStack()
         }
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

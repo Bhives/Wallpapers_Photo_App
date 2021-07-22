@@ -7,12 +7,12 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewModelScope
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
-import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentCurrentPhotoBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +45,7 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
     }
 
     fun setPhotoAs(
-        binding: FragmentCurrentPhotoBinding,
+        selectedPhotoImageView: ImageView,
         context: Context,
         activity: Activity,
         setupOption: Int
@@ -57,8 +57,8 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
             100
         )
         try {
-            binding.selectedPhotoImageView.buildDrawingCache()
-            val bitmap: Bitmap = binding.selectedPhotoImageView.drawingCache
+            selectedPhotoImageView.buildDrawingCache()
+            val bitmap: Bitmap = selectedPhotoImageView.drawingCache
             when (setupOption) {
                 0 -> {
                     wallpaperManager.setBitmap(bitmap)

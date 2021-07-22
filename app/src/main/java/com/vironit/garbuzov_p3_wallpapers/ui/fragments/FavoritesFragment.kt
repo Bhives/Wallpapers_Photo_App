@@ -1,28 +1,18 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import com.vironit.garbuzov_p3_wallpapers.R
-import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentFavoritesBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.FavoritesFragmentPagerAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
+import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlin.math.abs
 
 class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
 
-    private var _binding: FragmentFavoritesBinding? = null
-    val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-        val favoritesViewPager = binding.favoritesViewPager
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val favoritesViewPager = favoritesViewPager
         favoritesViewPager.adapter = FavoritesFragmentPagerAdapter(childFragmentManager)
         favoritesViewPager.currentItem = 0
         favoritesViewPager.setPageTransformer(
@@ -31,16 +21,8 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
             val opacity = abs(abs(pos) - 1)
             v.alpha = opacity
         }
-        binding.apply {
-            favoritesTabLayout.setupWithViewPager(favoritesViewPager, true)
-            favoritesTabLayout.getTabAt(0)?.setIcon(R.drawable.ic_photo)
-            favoritesTabLayout.getTabAt(1)?.setIcon(R.drawable.ic_search_query)
-        }
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        favoritesTabLayout.setupWithViewPager(favoritesViewPager, true)
+        favoritesTabLayout.getTabAt(0)?.setIcon(R.drawable.ic_photo)
+        favoritesTabLayout.getTabAt(1)?.setIcon(R.drawable.ic_search_query)
     }
 }
