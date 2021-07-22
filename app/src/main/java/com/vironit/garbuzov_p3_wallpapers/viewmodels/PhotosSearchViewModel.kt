@@ -33,6 +33,8 @@ class PhotosSearchViewModel @Inject constructor(private val photosRepository: Ph
         }
     }
 
+    fun getAllSearchQueriesValues() = photosRepository.getAllSearchQueriesValues()
+
     companion object {
         private var CURRENT_QUERY = "mandalorian"
     }

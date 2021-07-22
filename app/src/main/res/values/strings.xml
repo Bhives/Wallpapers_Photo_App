@@ -19,6 +19,4 @@
     <string name="set_as_wallpaper">Set photo as wallpaper</string>
     <string name="set_as_lock_screen">Set photo as lock screen image</string>
     <string name="add_to_favorites">Add photo to favorites</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
