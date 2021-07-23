@@ -8,6 +8,7 @@ import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnSearchQueryItemClickListener
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchHistoryAdapter
+import com.vironit.garbuzov_p3_wallpapers.ui.bindingActivity
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.SearchHistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,18 +28,18 @@ class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
 
     private fun setAdapter() {
         searchHistoryAdapter = SearchHistoryAdapter(viewModel, listOf(), this)
-        searchHistoryRecyclerView.setHasFixedSize(false)
-        searchHistoryRecyclerView.adapter = searchHistoryAdapter
         viewModel.getAllSearchQueries().observe(viewLifecycleOwner, {
             searchHistoryAdapter.searchQueriesList = it
         })
+        searchHistoryRecyclerView.adapter = searchHistoryAdapter
     }
 
-    override fun onItemClick(searchQuery: SearchQuery) {
+    override fun onItemClick(searchQueryText: String) {
         val action =
             SearchHistoryFragmentDirections.actionSearchHistoryFragmentToPhotosSearchFragment(
-                searchQuery
+                searchQueryText
             )
         findNavController().navigate(action)
+        //PhotosSearchFragment().searchPhotoWithArgs()
     }
 }

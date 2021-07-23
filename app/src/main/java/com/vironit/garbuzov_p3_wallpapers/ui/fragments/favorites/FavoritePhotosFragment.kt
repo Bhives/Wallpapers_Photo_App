@@ -28,10 +28,10 @@ class FavoritePhotosFragment : BaseFragment(R.layout.fragment_favorite_photos),
 
     private fun setAdapter() {
         favoritePhotosAdapter = FavoritePhotosAdapter(this, listOf())
-        favoritePhotosRecyclerView.adapter = favoritePhotosAdapter
         viewModel.getFavoritePhotos().observe(viewLifecycleOwner, {
             favoritePhotosAdapter.photosList = it
         })
+        favoritePhotosRecyclerView.adapter = favoritePhotosAdapter
     }
 
     override fun onItemClick(photo: Photo) {

@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_photo_search">
         <argument
             android:name="searchQuery"
-            app:argType="com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery" />
+            app:nullable="true"
+            app:argType="string" />
         <action
             android:id="@+id/action_photosSearchFragment_to_currentPhotoFragment"
             app:destination="@id/currentPhotoFragment" />

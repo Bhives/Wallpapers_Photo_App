@@ -6,6 +6,7 @@ import android.database.MatrixCursor
 import android.os.Bundle
 import android.provider.BaseColumns
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.cursoradapter.widget.CursorAdapter
 import androidx.cursoradapter.widget.SimpleCursorAdapter
@@ -35,10 +36,11 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search),
         super.onViewCreated(view, savedInstanceState)
         photosSearchAdapter = SearchPhotosAdapter(this)
         setAdapter()
+        //if (args.searchQuery!=null) {
+        //    searchPhotoWithArgs()
+        //    Toast.makeText(context, "searchPhotoWithArgs", Toast.LENGTH_SHORT).show()
+        //}
         searchPhotos()
-        if (findNavController().navigateUp()) {
-            searchPhotoWithArgs()
-        }
         toggleColumnsButton.setOnCheckedChangeListener{ _, isChecked ->
             if (isChecked) {
                 photosRecyclerView.layoutManager =
@@ -53,10 +55,10 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search),
     private fun setAdapter() {
         photosRecyclerView.layoutManager =
             StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-        photosRecyclerView.adapter = photosSearchAdapter
         viewModel.photosAll.observe(viewLifecycleOwner) {
             photosSearchAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
+        photosRecyclerView.adapter = photosSearchAdapter
     }
 
     private fun searchPhotos() {
@@ -91,7 +93,7 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search),
 
             override fun onQueryTextChange(query: String?): Boolean {
                 if (query != null) {
-                    photosRecyclerView.scrollToPosition(0)
+                    photosRecyclerView.smoothScrollToPosition(0)
                     viewModel.searchPhotos(query)
                 }
                 val cursor =
@@ -123,9 +125,9 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search),
         })
     }
 
-    private fun searchPhotoWithArgs() {
-        photosRecyclerView.scrollToPosition(0)
-        viewModel.searchPhotos(args.searchQuery.queryText)
+    fun searchPhotoWithArgs() {
+        photosRecyclerView.smoothScrollToPosition(0)
+        photoSearchView.setQuery(args.searchQuery, true)
     }
 
     override fun onItemClick(photo: Photo) {

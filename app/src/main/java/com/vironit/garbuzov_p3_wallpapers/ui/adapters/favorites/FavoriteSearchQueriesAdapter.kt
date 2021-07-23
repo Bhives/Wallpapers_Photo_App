@@ -39,7 +39,7 @@ class FavoriteSearchQueriesAdapter(
             binding.root.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    clickListenerFavoriteSearchQueries.onItemClick(searchQueriesList[position])
+                    clickListenerFavoriteSearchQueries.onItemClick(searchQueriesList[position].queryText)
                 }
             }
         }

@@ -29,16 +29,16 @@ class FavoriteSearchQueriesFragment : BaseFragment(R.layout.fragment_favorite_se
     private fun setAdapter() {
         favoriteSearchQueriesAdapter =
             FavoriteSearchQueriesAdapter(viewModel, mutableListOf(), this)
-        favoriteQueriesRecyclerView.adapter = favoriteSearchQueriesAdapter
         viewModel.getFavoriteSearchQueries().observe(viewLifecycleOwner, {
             favoriteSearchQueriesAdapter.searchQueriesList = it.toMutableList()
         })
+        favoriteQueriesRecyclerView.adapter = favoriteSearchQueriesAdapter
     }
 
-    override fun onItemClick(searchQuery: SearchQuery) {
+    override fun onItemClick(searchQueryText: String) {
         val action =
             FavoritesFragmentDirections.actionFavoritesFragmentToPhotosSearchFragment(
-                searchQuery
+                searchQueryText
             )
         findNavController().navigate(action)
     }

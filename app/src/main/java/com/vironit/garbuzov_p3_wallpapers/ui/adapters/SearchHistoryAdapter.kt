@@ -31,7 +31,7 @@ class SearchHistoryAdapter(
             binding.root.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    clickListenerSearchQueries.onItemClick(searchQueriesList[position])
+                    clickListenerSearchQueries.onItemClick(searchQueriesList[position].queryText)
                 }
             }
         }

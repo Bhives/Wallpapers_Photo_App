@@ -4,7 +4,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
-    id("androidx.navigation.safeargs")
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -125,4 +125,5 @@ dependencies {
 
     //recyclerView
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
 }
