@@ -7,7 +7,10 @@
     <dimen name="query_text_size">16sp</dimen>
     <dimen name="query_info_text_size">12sp</dimen>
     <dimen name="card_height">65dp</dimen>
-    <dimen name="favorite_toggle_button_size">30dp</dimen>
+    <dimen name="favorite_toggle_button_size">40dp</dimen>
     <dimen name="account_photo_height">100dp</dimen>
     <dimen name="portfolio_button_width">150dp</dimen>
+    <dimen name="photo_options_icons_height">40dp</dimen>
+    <dimen name="query_suggestion_size">20sp</dimen>
+    <dimen name="columns_toggle_button_size">50dp</dimen>
 </resources>

@@ -1,18 +1,20 @@
 package com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
-import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentCurrentPhotoBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,27 +29,36 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
     BaseViewModel() {
 
     fun insertToFavorites(photo: Photo) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             photosRepository.insertPhotoToFavorites(photo)
         }
     }
 
-    fun getFavoritePhotos() = photosRepository.getFavoritePhotos()
-
-    private fun getFavoritePhoto(photoId: String) = photosRepository.getFavoritePhoto(photoId)
+    fun getFavoritePhotos(): LiveData<List<Photo>> {
+        var photosList =
+            MutableLiveData(listOf<Photo>()) as LiveData<List<Photo>>
+        viewModelScope.launch(Dispatchers.Default) {
+            photosList = photosRepository.getFavoritePhotos()
+        }
+        return photosList
+    }
 
     fun removeFromFavorites(photo: Photo) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             photosRepository.removePhotoFromFavorites(photo)
         }
     }
 
-    fun photoIsInFavorites(photoId: String): Boolean {
-        return getFavoritePhoto(photoId) == null
+    fun photoIsInFavorites(photo: Photo): Boolean {
+        return getFavoritePhotos().value?.contains(photo) == true
     }
 
-    @SuppressLint("ResourceType")
-    fun setWallpaper(binding: FragmentCurrentPhotoBinding, context: Context, activity: Activity) {
+    fun setPhotoAs(
+        selectedPhotoImageView: ImageView,
+        context: Context,
+        activity: Activity,
+        setupOption: Int
+    ) {
         val wallpaperManager: WallpaperManager = WallpaperManager.getInstance(context)
         ActivityCompat.requestPermissions(
             activity,
@@ -55,11 +66,22 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
             100
         )
         try {
-            binding.selectedPhotoImageView.buildDrawingCache()
-            val bitmap: Bitmap = binding.selectedPhotoImageView.drawingCache
-            wallpaperManager.setBitmap(bitmap)
-            Toast.makeText(context, "New wallpaper successfully set", Toast.LENGTH_SHORT)
-                .show()
+            selectedPhotoImageView.buildDrawingCache()
+            val bitmap: Bitmap = selectedPhotoImageView.drawingCache
+            when (setupOption) {
+                0 -> {
+                    wallpaperManager.setBitmap(bitmap)
+                    Toast.makeText(context, "New wallpaper successfully set", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                1 -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
+                    }
+                    Toast.makeText(context, "New lock screen successfully set", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
         } catch (iOException: IOException) {
             iOException.printStackTrace()
         }

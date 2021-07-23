@@ -8,10 +8,10 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.FavoritePhotoCardBinding
-import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnItemClickListener
+import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnPhotosItemClickListener
 
 class FavoritePhotosAdapter(
-    val clickListener: OnItemClickListener,
+    val clickListenerPhotos: OnPhotosItemClickListener,
     var photosList: List<Photo>
 ) :
     RecyclerView.Adapter<FavoritePhotosAdapter.FavoritePhotosHolder>() {
@@ -34,7 +34,7 @@ class FavoritePhotosAdapter(
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val item = photosList[position]
-                    clickListener.onItemClick(item)
+                    clickListenerPhotos.onItemClick(item)
                 }
             }
         }

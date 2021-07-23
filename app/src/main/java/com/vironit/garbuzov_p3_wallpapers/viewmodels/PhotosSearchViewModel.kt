@@ -28,10 +28,12 @@ class PhotosSearchViewModel @Inject constructor(private val photosRepository: Ph
     }
 
     fun insertSearchQuery(searchQuery: SearchQuery) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             photosRepository.insertSearchQuery(searchQuery)
         }
     }
+
+    fun getAllSearchQueriesValues() = photosRepository.getAllSearchQueriesValues()
 
     companion object {
         private var CURRENT_QUERY = "mandalorian"

@@ -1,67 +1,43 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.CompoundButton
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.navigation.fragment.findNavController
 import com.vironit.garbuzov_p3_wallpapers.R
-import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
-import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentSearchHistoryBinding
+import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnSearchQueryItemClickListener
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchHistoryAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.SearchHistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.search_query_card.view.*
+import kotlinx.android.synthetic.main.fragment_search_history.*
 
 @AndroidEntryPoint
 class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
-    CompoundButton.OnCheckedChangeListener {
+    OnSearchQueryItemClickListener {
 
-    private var _binding: FragmentSearchHistoryBinding? = null
-    val binding get() = _binding!!
-    private val searchHistoryViewModel by viewModels<SearchHistoryViewModel>()
-    private val searchHistoryAdapter = SearchHistoryAdapter(listOf())
+    override val viewModel by viewModels<SearchHistoryViewModel>()
+    lateinit var searchHistoryAdapter: SearchHistoryAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentSearchHistoryBinding.bind(view)
-        setAdapter(requireContext())
-        //binding.searchHistoryRecyclerView.addToFavoritesButton.setOnCheckedChangeListener(this)
+        setAdapter()
     }
 
-    private fun setAdapter(
-        context: Context
-    ) {
-        binding.apply {
-            searchHistoryRecyclerView.setHasFixedSize(true)
-            searchHistoryRecyclerView.layoutManager =
-                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            searchHistoryRecyclerView.adapter = searchHistoryAdapter
-        }
-        searchHistoryViewModel.getAllSearchQueries().observe(viewLifecycleOwner, {
+    private fun setAdapter() {
+        searchHistoryAdapter = SearchHistoryAdapter(viewModel, listOf(), this)
+        viewModel.getAllSearchQueries().observe(viewLifecycleOwner, {
             searchHistoryAdapter.searchQueriesList = it
-            searchQueriesList = it
         })
+        searchHistoryRecyclerView.adapter = searchHistoryAdapter
     }
 
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        val searchQuery = searchHistoryAdapter.searchQueriesList[searchHistoryAdapter.getPosition()]
-        if (isChecked) {
-            searchHistoryViewModel.addSearchQueryToFavorites(searchQuery)
-        } else {
-            searchHistoryViewModel.removeFromFavorites(searchQuery)
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    companion object {
-        var searchQueriesList: List<SearchQuery> = listOf()
+    override fun onItemClick(searchQueryText: String) {
+        val action =
+            SearchHistoryFragmentDirections.actionSearchHistoryFragmentToPhotosSearchFragment(
+                searchQueryText
+            )
+        findNavController().navigate(action)
+        //PhotosSearchFragment().searchPhotoWithArgs()
     }
 }

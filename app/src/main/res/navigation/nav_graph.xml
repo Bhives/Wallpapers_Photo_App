@@ -10,15 +10,31 @@
         android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.PhotosSearchFragment"
         android:label="fragment_image_search"
         tools:layout="@layout/fragment_photo_search">
+        <argument
+            android:name="searchQuery"
+            app:nullable="true"
+            app:argType="string" />
         <action
             android:id="@+id/action_photosSearchFragment_to_currentPhotoFragment"
-            app:destination="@id/currentPhotoFragment" />
+            app:destination="@id/currentPhotoFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"/>
         <action
             android:id="@+id/action_photosSearchFragment_to_searchHistoryFragment"
-            app:destination="@id/searchHistoryFragment" />
+            app:destination="@id/searchHistoryFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"/>
         <action
             android:id="@+id/action_photosSearchFragment_to_favoritesFragment"
-            app:destination="@id/favoritesFragment" />
+            app:destination="@id/favoritesFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"/>
     </fragment>
 
     <fragment
@@ -31,10 +47,25 @@
             app:argType="com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo" />
         <action
             android:id="@+id/action_currentPhotoFragment_to_photosSearchFragment"
-            app:destination="@id/photosSearchFragment" />
+            app:destination="@id/photosSearchFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"/>
         <action
             android:id="@+id/action_currentPhotoFragment_to_favoritesFragment"
-            app:destination="@id/favoritesFragment" />
+            app:destination="@id/favoritesFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"/>
+        <action
+            android:id="@+id/action_currentPhotoFragment_to_authorPortfolioFragment"
+            app:destination="@id/authorPortfolioFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"/>
     </fragment>
 
     <fragment
@@ -44,7 +75,18 @@
         tools:layout="@layout/fragment_search_history">
         <action
             android:id="@+id/action_searchHistoryFragment_to_favoritesFragment"
-            app:destination="@id/favoritesFragment" />
+            app:destination="@id/favoritesFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"/>
+        <action
+            android:id="@+id/action_searchHistoryFragment_to_photosSearchFragment"
+            app:destination="@id/photosSearchFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"/>
     </fragment>
 
     <fragment
@@ -54,12 +96,41 @@
         tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favoritesFragment_to_photosSearchFragment"
-            app:destination="@id/photosSearchFragment" />
+            app:destination="@id/photosSearchFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"/>
         <action
             android:id="@+id/action_favoritesFragment_to_searchHistoryFragment"
-            app:destination="@id/searchHistoryFragment" />
+            app:destination="@id/searchHistoryFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"/>
         <action
             android:id="@+id/action_favoritesFragment_to_currentPhotoFragment"
-            app:destination="@id/currentPhotoFragment" />
+            app:destination="@id/currentPhotoFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/authorPortfolioFragment"
+        android:name="com.vironit.garbuzov_p3_wallpapers.ui.fragments.PortfolioFragment"
+        android:label="fragment_author_portfolio"
+        tools:layout="@layout/fragment_portfolio">
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_authorPortfolioFragment_to_currentPhotoFragment"
+            app:destination="@id/currentPhotoFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_slide_in"
+            app:popExitAnim="@anim/fragment_slide_out"/>
     </fragment>
 </navigation>

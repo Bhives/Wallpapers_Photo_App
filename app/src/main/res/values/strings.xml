@@ -6,8 +6,6 @@
     <string name="no_internet_connection_alert">Could not complete your query! Please check your internet connection and try again.</string>
     <string name="retry">Retry</string>
 
-    <string name="set_wallpaper">Set photo as a wallpaper</string>
-
     <string name="menu_search">Search</string>
     <string name="menu_favorites">Favorites</string>
     <string name="menu_history">History</string>
@@ -18,4 +16,7 @@
 
     <string name="portfolio">Portfolio</string>
 
+    <string name="set_as_wallpaper">Set photo as wallpaper</string>
+    <string name="set_as_lock_screen">Set photo as lock screen image</string>
+    <string name="add_to_favorites">Add photo to favorites</string>
 </resources>

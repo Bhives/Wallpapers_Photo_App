@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/wallpaperOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_border_margin"
+        android:layout_marginLeft="@dimen/default_border_margin"
+        android:layout_marginTop="@dimen/card_margin_from_card">
+
+        <ImageView
+            android:layout_width="@dimen/photo_options_icons_height"
+            android:layout_height="@dimen/photo_options_icons_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_wallpaper" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/default_border_margin"
+            android:layout_marginLeft="@dimen/default_border_margin"
+            android:text="@string/set_as_wallpaper" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lockScreenOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_border_margin"
+        android:layout_marginLeft="@dimen/default_border_margin"
+        android:layout_marginTop="@dimen/card_margin_from_card">
+
+        <ImageView
+            android:layout_width="@dimen/photo_options_icons_height"
+            android:layout_height="@dimen/photo_options_icons_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_wallpaper" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/default_border_margin"
+            android:layout_marginLeft="@dimen/default_border_margin"
+            android:text="@string/set_as_lock_screen" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/favoritesOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_border_margin"
+        android:layout_marginLeft="@dimen/default_border_margin"
+        android:layout_marginTop="@dimen/card_margin_from_card"
+        android:layout_marginBottom="@dimen/default_border_margin">
+
+        <ImageView
+            android:layout_width="@dimen/photo_options_icons_height"
+            android:layout_height="@dimen/photo_options_icons_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_favorite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/default_border_margin"
+            android:layout_marginLeft="@dimen/default_border_margin"
+            android:text="@string/add_to_favorites" />
+    </LinearLayout>
+
+</LinearLayout>

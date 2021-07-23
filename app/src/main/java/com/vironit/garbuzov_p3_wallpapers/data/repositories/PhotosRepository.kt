@@ -4,10 +4,10 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.vironit.garbuzov_p3_wallpapers.api.PhotosSearchApi
-import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.PhotosPagingSource
-import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.data.database.PhotosDatabase
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,12 +35,12 @@ class PhotosRepository @Inject constructor(
 
     fun getAllSearchQueries() = photosDatabase.searchQueryDao().getAllSearchQueries()
 
-    fun getSearchQuery(searchQueryText: String) = photosDatabase.searchQueryDao().getSearchQuery(searchQueryText)
+    fun getAllSearchQueriesValues() = photosDatabase.searchQueryDao().getAllSearchQueriesValues()
 
-    fun getFavoritePhoto(photoId: String) = photosDatabase.photoDao().getFavoritePhoto(photoId)
-
-    fun addSearchQueryToFavorites(searchQuery: SearchQuery) =
+    fun addSearchQueryToFavorites(searchQuery: SearchQuery) {
+        searchQuery.queryFavoriteFlag = true
         photosDatabase.searchQueryDao().addSearchQueryToFavorites(searchQuery)
+    }
 
     fun getFavoriteSearchQueries() =
         photosDatabase.searchQueryDao().getFavoriteSearchQueries()

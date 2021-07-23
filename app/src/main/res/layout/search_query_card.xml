@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/queryCard"
     android:layout_width="match_parent"
-    android:layout_marginTop="@dimen/card_margin_from_card"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/card_margin_from_card">
 
     <TextView
         android:id="@+id/queryTextView"
@@ -19,14 +19,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/query_info_text_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ToggleButton
         android:id="@+id/addToFavoritesButton"
         style="@style/toggleButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/favorite_toggle_button_size"
+        android:layout_height="@dimen/favorite_toggle_button_size"
         android:background="@drawable/ic_toggle_bg"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"

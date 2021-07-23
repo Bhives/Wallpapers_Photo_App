@@ -3,10 +3,10 @@ package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.CompoundButton
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentCurrentPhotoBinding
@@ -26,42 +27,35 @@ import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites.FavoritePhotosViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_current_photo.*
 import kotlinx.android.synthetic.main.photo_information_sheet.*
 import kotlinx.android.synthetic.main.photo_information_sheet.view.*
 import java.util.*
 
 @AndroidEntryPoint
-class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
-    CompoundButton.OnCheckedChangeListener {
+class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo) {
 
     private val args by navArgs<CurrentPhotoFragmentArgs>()
     private val photosFavoritesViewModel by viewModels<FavoritePhotosViewModel>()
-    private var _binding: FragmentCurrentPhotoBinding? = null
-    val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentCurrentPhotoBinding.bind(view)
         val photo = args.photo
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
         val bottomSheetBehavior = BottomSheetBehavior.from(photoInfoCard)
         bindingActivity.fragmentsMenu.isVisible = false
         attachPhotoAndInfo(photo)
-        binding.backButton.setOnClickListener {
+        backButton.setOnClickListener {
             findNavController().popBackStack()
         }
-        //binding.favoritesToggle.setOnCheckedChangeListener(this)
-        binding.currentPhotoBottomMenu.setOnItemSelectedListener { item ->
+        currentPhotoBottomMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.sharePhoto -> {
                     share(photo)
                     true
                 }
                 R.id.wallpaperSet -> {
-                    photosFavoritesViewModel.setWallpaper(
-                        binding,
-                        requireContext(),
-                        this.requireActivity()
-                    )
+                    setPhotoAction(bottomSheetDialog, photo)
                     true
                 }
                 R.id.photoInformation -> {
@@ -71,7 +65,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                 else -> false
             }
         }
-        onBackPressedAction(bottomSheetBehavior)
+        onBackPressedAction(bottomSheetDialog, bottomSheetBehavior)
     }
 
     private fun attachPhotoAndInfo(photo: Photo) {
@@ -81,7 +75,6 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .error(R.drawable.ic_error)
                 .into(selectedPhotoImageView)
-
         }
         photoInfoCard.apply {
             Glide.with(photoInfoCard)
@@ -112,7 +105,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                     resource: Bitmap,
                     transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
                 ) {
-                    var bitmap: Bitmap = resource
+                    val bitmap: Bitmap = resource
                     val intent = Intent()
                     intent.action = Intent.ACTION_SEND
                     intent.putExtra(
@@ -120,7 +113,7 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
                         photosFavoritesViewModel.getImageUri(requireContext(), bitmap)
                     )
                     intent.type = "image/*"
-                    startActivity(Intent.createChooser(intent, "Share to: "))
+                    startActivity(Intent.createChooser(intent, "Share with: "))
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {
@@ -128,12 +121,27 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
             })
     }
 
-    private fun setWallpaper() {
-        //val dialog = BottomSheetDialog(requireContext())
-        //dialog.setCancelable(false)
-        //dialog.setContentView(view)
-        //dialog.show()
-        //dialog.dismiss()
+    private fun setPhotoAction(bottomSheetDialog: BottomSheetDialog, photo: Photo) {
+        bottomSheetDialog.setContentView(R.layout.bottom_photo_actions_dialog)
+        bottomSheetDialog.show()
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.wallpaperOption)?.setOnClickListener {
+            photosFavoritesViewModel.setPhotoAs(selectedPhotoImageView, requireContext(), requireActivity(), 0)
+            bottomSheetDialog.hide()
+        }
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.lockScreenOption)?.setOnClickListener {
+            photosFavoritesViewModel.setPhotoAs(selectedPhotoImageView, requireContext(), requireActivity(), 1)
+            bottomSheetDialog.hide()
+        }
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.favoritesOption)?.setOnClickListener {
+            if (photosFavoritesViewModel.photoIsInFavorites(photo)) {
+                photosFavoritesViewModel.removeFromFavorites(photo)
+                Toast.makeText(context, "Photo removed from favorites", Toast.LENGTH_SHORT).show()
+            } else {
+                photosFavoritesViewModel.insertToFavorites(photo)
+                Toast.makeText(context, "Photo added to favorites", Toast.LENGTH_SHORT).show()
+            }
+            bottomSheetDialog.hide()
+        }
     }
 
     private fun showPhotoInfo(bottomSheetBehavior: BottomSheetBehavior<CardView>, photo: Photo) {
@@ -144,13 +152,13 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (bottomSheetBehavior.state) {
                     BottomSheetBehavior.STATE_COLLAPSED -> {
-                        binding.photoInfoHideButton.isVisible = false
-                        binding.selectedPhotoToolbar.isVisible = true
+                        photoInfoHideButton.isVisible = false
+                        selectedPhotoToolbar.isVisible = true
                         bottomSheetBehavior.isDraggable = false
                     }
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                        binding.selectedPhotoToolbar.isVisible = false
-                        binding.photoInfoHideButton.isVisible = true
+                        selectedPhotoToolbar.isVisible = false
+                        photoInfoHideButton.isVisible = true
                     }
                 }
             }
@@ -158,45 +166,45 @@ class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo),
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
         })
-
         photoInfoCard.portfolioButton.setOnClickListener {
-            val portfolioUri = Uri.parse(photo.user.portfolioUrl)
-            val portfolioIntent = Intent(Intent.ACTION_VIEW, portfolioUri)
-            context?.startActivity(portfolioIntent)
+            findNavController().navigate(
+                CurrentPhotoFragmentDirections.actionCurrentPhotoFragmentToAuthorPortfolioFragment(
+                    photo.user.portfolioUrl
+                )
+            )
         }
-
-        binding.photoInfoHideButton.setOnClickListener {
+        photoInfoHideButton.setOnClickListener {
             if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HALF_EXPANDED) {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
     }
 
-    private fun onBackPressedAction(bottomSheetBehavior: BottomSheetBehavior<CardView>) {
+    private fun onBackPressedAction(
+        bottomSheetDialog: BottomSheetDialog,
+        bottomSheetBehavior: BottomSheetBehavior<CardView>
+    ) {
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HALF_EXPANDED) {
-                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                    } else {
-                        findNavController().popBackStack()
+                    when {
+                        bottomSheetDialog.isShowing -> {
+                            bottomSheetDialog.hide()
+                        }
+                        bottomSheetBehavior.state == BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                        }
+                        else -> {
+                            findNavController().popBackStack()
+                        }
                     }
                 }
             })
     }
 
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if (isChecked) {
-            photosFavoritesViewModel.insertToFavorites(args.photo)
-        } else {
-            photosFavoritesViewModel.removeFromFavorites(args.photo)
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
         bindingActivity.fragmentsMenu.isVisible = true
     }
 }

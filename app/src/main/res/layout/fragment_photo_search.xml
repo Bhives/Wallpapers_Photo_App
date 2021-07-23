@@ -14,18 +14,29 @@
         android:id="@+id/photoSearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_grey"
+        android:layout_marginEnd="@dimen/columns_toggle_button_size"
+        android:background="@drawable/rounded_bottom_navigation"
         app:layout_constraintCircleRadius="@dimen/common_corner_radius"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:queryHint="@string/search_hint" />
+        app:layout_constraintEnd_toStartOf="@id/toggleColumnsButton"
+        app:queryHint="@string/search_hint"
+        android:layout_marginRight="@dimen/columns_toggle_button_size" />
+
+    <ToggleButton
+        android:id="@+id/toggleColumnsButton"
+        style="@style/toggleButton"
+        android:layout_width="@dimen/columns_toggle_button_size"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_toggle_columns_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/photoSearchView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/photosRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/photoSearchView" />
