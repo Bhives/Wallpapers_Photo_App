@@ -39,6 +39,15 @@ class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search),
         if (findNavController().navigateUp()) {
             searchPhotoWithArgs()
         }
+        toggleColumnsButton.setOnCheckedChangeListener{ _, isChecked ->
+            if (isChecked) {
+                photosRecyclerView.layoutManager =
+                    StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            } else {
+                photosRecyclerView.layoutManager =
+                    StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+            }
+        }
     }
 
     private fun setAdapter() {

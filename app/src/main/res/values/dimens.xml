@@ -12,4 +12,5 @@
     <dimen name="portfolio_button_width">150dp</dimen>
     <dimen name="photo_options_icons_height">40dp</dimen>
     <dimen name="query_suggestion_size">20sp</dimen>
+    <dimen name="columns_toggle_button_size">50dp</dimen>
 </resources>
