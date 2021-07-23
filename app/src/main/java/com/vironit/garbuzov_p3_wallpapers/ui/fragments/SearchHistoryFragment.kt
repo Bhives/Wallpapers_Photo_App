@@ -27,7 +27,6 @@ class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
     private fun setAdapter() {
         searchHistoryAdapter = SearchHistoryAdapter(viewModel, listOf(), this)
         viewModel.getAllSearchQueries().observe(viewLifecycleOwner, {
-
             searchHistoryAdapter.searchQueriesList = it
         })
         searchHistoryRecyclerView.adapter = searchHistoryAdapter
