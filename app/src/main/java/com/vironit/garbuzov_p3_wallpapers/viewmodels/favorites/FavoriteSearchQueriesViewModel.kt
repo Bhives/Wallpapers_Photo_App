@@ -1,5 +1,7 @@
 package com.vironit.garbuzov_p3_wallpapers.viewmodels.favorites
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
@@ -14,11 +16,17 @@ import javax.inject.Inject
 class FavoriteSearchQueriesViewModel @Inject constructor(private val photosRepository: PhotosRepository) :
     BaseViewModel() {
 
-    fun getFavoriteSearchQueries() = photosRepository.getFavoriteSearchQueries()
+    fun getFavoriteSearchQueries(): LiveData<List<SearchQuery>> {
+        var searchQueriesList = MutableLiveData(listOf<SearchQuery>()) as LiveData<List<SearchQuery>>
+        viewModelScope.launch(Dispatchers.Default)  {
+            searchQueriesList = photosRepository.getFavoriteSearchQueries()
+        }
+        return searchQueriesList
+    }
 
     fun removeFromFavorites(searchQuery: SearchQuery) {
         searchQuery.queryFavoriteFlag = false
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             photosRepository.removeSearchQueryFromFavorites(searchQuery)
         }
     }

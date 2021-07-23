@@ -10,6 +10,8 @@ import android.provider.MediaStore
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
@@ -27,15 +29,22 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
     BaseViewModel() {
 
     fun insertToFavorites(photo: Photo) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             photosRepository.insertPhotoToFavorites(photo)
         }
     }
 
-    fun getFavoritePhotos() = photosRepository.getFavoritePhotos()
+    fun getFavoritePhotos(): LiveData<List<Photo>> {
+        var photosList =
+            MutableLiveData(listOf<Photo>()) as LiveData<List<Photo>>
+        viewModelScope.launch(Dispatchers.Default) {
+            photosList = photosRepository.getFavoritePhotos()
+        }
+        return photosList
+    }
 
     fun removeFromFavorites(photo: Photo) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             photosRepository.removePhotoFromFavorites(photo)
         }
     }

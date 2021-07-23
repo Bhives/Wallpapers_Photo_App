@@ -5,10 +5,8 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.vironit.garbuzov_p3_wallpapers.R
-import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnSearchQueryItemClickListener
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchHistoryAdapter
-import com.vironit.garbuzov_p3_wallpapers.ui.bindingActivity
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.SearchHistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +27,7 @@ class SearchHistoryFragment : BaseFragment(R.layout.fragment_search_history),
     private fun setAdapter() {
         searchHistoryAdapter = SearchHistoryAdapter(viewModel, listOf(), this)
         viewModel.getAllSearchQueries().observe(viewLifecycleOwner, {
+
             searchHistoryAdapter.searchQueriesList = it
         })
         searchHistoryRecyclerView.adapter = searchHistoryAdapter
