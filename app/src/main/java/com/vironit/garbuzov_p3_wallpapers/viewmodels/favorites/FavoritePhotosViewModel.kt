@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
@@ -26,10 +27,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoritePhotosViewModel @Inject constructor(private val photosRepository: PhotosRepository) :
-    BaseViewModel() {
+    ViewModel() {
 
     fun insertToFavorites(photo: Photo) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             photosRepository.insertPhotoToFavorites(photo)
         }
     }

@@ -2,6 +2,7 @@ package com.vironit.garbuzov_p3_wallpapers.ui.adapters.favorites
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -24,6 +25,11 @@ class FavoritePhotosAdapter(
 
     override fun onBindViewHolder(favoritePhotosHolder: FavoritePhotosHolder, position: Int) {
         favoritePhotosHolder.bindPhoto(photosList[position])
+        favoritePhotosHolder.itemView.animation =
+            AnimationUtils.loadAnimation(
+                favoritePhotosHolder.itemView.context,
+                R.anim.recyclerview_items_animation
+            )
     }
 
     inner class FavoritePhotosHolder(private val binding: FavoritePhotoCardBinding) :

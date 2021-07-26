@@ -2,7 +2,9 @@ package com.vironit.garbuzov_p3_wallpapers.ui.adapters.favorites
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
+import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.FavoriteSearchQueryCardBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnSearchQueryItemClickListener
@@ -30,6 +32,11 @@ class FavoriteSearchQueriesAdapter(
         position: Int
     ) {
         favoriteSearchQueriesHolder.bindSearchQuery(searchQueriesList[position])
+        favoriteSearchQueriesHolder.itemView.animation =
+            AnimationUtils.loadAnimation(
+                favoriteSearchQueriesHolder.itemView.context,
+                R.anim.recyclerview_items_animation
+            )
     }
 
     inner class FavoriteSearchQueriesHolder(private val binding: FavoriteSearchQueryCardBinding) :

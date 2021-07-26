@@ -13,9 +13,6 @@ interface PhotoDao {
     @Query("SELECT * FROM photo")
     fun getFavoritePhotos(): LiveData<List<Photo>>
 
-    @Query("SELECT * FROM photo WHERE id=:photoId")
-    fun getFavoritePhoto(photoId: String): LiveData<Photo>
-
     @Delete
     fun removeFromFavorites(photo: Photo)
 }

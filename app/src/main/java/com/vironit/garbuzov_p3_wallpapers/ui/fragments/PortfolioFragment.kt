@@ -7,11 +7,12 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.vironit.garbuzov_p3_wallpapers.R
+import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPortfolioBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.bindingActivity
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import kotlinx.android.synthetic.main.fragment_portfolio.*
 
-class PortfolioFragment : BaseFragment(R.layout.fragment_portfolio) {
+class PortfolioFragment : BaseFragment<FragmentPortfolioBinding>(R.layout.fragment_portfolio) {
 
     private val args by navArgs<PortfolioFragmentArgs>()
 

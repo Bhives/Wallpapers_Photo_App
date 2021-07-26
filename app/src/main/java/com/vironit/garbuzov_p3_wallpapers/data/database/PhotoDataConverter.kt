@@ -10,9 +10,6 @@ class PhotoDataConverter {
 
     @TypeConverter
     fun fromUser(user: Photo.User): String? {
-        if (user == null) {
-            return null
-        }
         val gson = Gson()
         val type: Type = object : TypeToken<Photo.User>() {}.type
         return gson.toJson(user, type)
@@ -31,9 +28,6 @@ class PhotoDataConverter {
 
     @TypeConverter
     fun fromUrls(urls: Photo.Urls): String? {
-        if (urls == null) {
-            return null
-        }
         val gson = Gson()
         val type: Type = object : TypeToken<Photo.Urls>() {}.type
         return gson.toJson(urls, type)
@@ -52,9 +46,6 @@ class PhotoDataConverter {
 
     @TypeConverter
     fun fromLinks(links: Photo.Links): String? {
-        if (links == null) {
-            return null
-        }
         val gson = Gson()
         val type: Type = object : TypeToken<Photo.Links>() {}.type
         return gson.toJson(links, type)

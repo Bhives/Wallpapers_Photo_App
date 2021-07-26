@@ -1,6 +1,7 @@
 package com.vironit.garbuzov_p3_wallpapers.viewmodels
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PhotosSearchViewModel @Inject constructor(private val photosRepository: PhotosRepository) :
-    BaseViewModel() {
+    ViewModel() {
 
     private val currentQuery = MutableLiveData(CURRENT_QUERY)
 
