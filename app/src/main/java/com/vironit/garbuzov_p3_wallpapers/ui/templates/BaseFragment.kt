@@ -9,10 +9,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
+import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment(private val contentLayoutId: Int) : Fragment(contentLayoutId) {
+abstract class BaseFragment<V: ViewBinding>(private val contentLayoutId: Int) : Fragment(contentLayoutId) {
 
-    open var binding: ViewDataBinding? = null
+    open var binding: V? = null
     open val viewModel by viewModels<ViewModel>()
 
     override fun onCreateView(
@@ -20,7 +21,6 @@ abstract class BaseFragment(private val contentLayoutId: Int) : Fragment(content
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, contentLayoutId, container, false)
-        binding?.lifecycleOwner = viewLifecycleOwner
         return binding?.root ?: inflater.inflate(contentLayoutId, container, false)
     }
 

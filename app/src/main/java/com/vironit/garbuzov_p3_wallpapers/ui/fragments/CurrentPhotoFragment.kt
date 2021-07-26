@@ -33,7 +33,7 @@ import kotlinx.android.synthetic.main.photo_information_sheet.view.*
 import java.util.*
 
 @AndroidEntryPoint
-class CurrentPhotoFragment : BaseFragment(R.layout.fragment_current_photo) {
+class CurrentPhotoFragment : BaseFragment<FragmentCurrentPhotoBinding>(R.layout.fragment_current_photo) {
 
     private val args by navArgs<CurrentPhotoFragmentArgs>()
     private val photosFavoritesViewModel by viewModels<FavoritePhotosViewModel>()

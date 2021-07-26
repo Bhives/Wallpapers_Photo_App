@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
+import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentPhotoSearchBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnPhotosItemClickListener
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.SearchPhotosAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
@@ -26,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_photo_search.*
 
 @AndroidEntryPoint
-class PhotosSearchFragment : BaseFragment(R.layout.fragment_photo_search),
+class PhotosSearchFragment : BaseFragment<FragmentPhotoSearchBinding>(R.layout.fragment_photo_search),
     OnPhotosItemClickListener {
 
     private val args by navArgs<PhotosSearchFragmentArgs>()

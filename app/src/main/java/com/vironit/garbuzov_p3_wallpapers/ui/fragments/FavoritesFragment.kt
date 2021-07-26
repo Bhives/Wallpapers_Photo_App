@@ -3,12 +3,13 @@ package com.vironit.garbuzov_p3_wallpapers.ui.fragments
 import android.os.Bundle
 import android.view.View
 import com.vironit.garbuzov_p3_wallpapers.R
+import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentFavoritesBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.FavoritesFragmentPagerAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlin.math.abs
 
-class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
+class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>(R.layout.fragment_favorites) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

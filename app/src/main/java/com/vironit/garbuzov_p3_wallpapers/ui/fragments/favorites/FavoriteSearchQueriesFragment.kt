@@ -7,6 +7,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vironit.garbuzov_p3_wallpapers.R
+import com.vironit.garbuzov_p3_wallpapers.databinding.FavoriteSearchQueryCardBinding
+import com.vironit.garbuzov_p3_wallpapers.databinding.FragmentFavoriteSearchQueriesBinding
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnSearchQueryItemClickListener
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.favorites.FavoriteSearchQueriesAdapter
 import com.vironit.garbuzov_p3_wallpapers.ui.fragments.FavoritesFragmentDirections
@@ -17,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_favorite_search_queries.*
 import kotlinx.android.synthetic.main.fragment_search_history.*
 
 @AndroidEntryPoint
-class FavoriteSearchQueriesFragment : BaseFragment(R.layout.fragment_favorite_search_queries),
+class FavoriteSearchQueriesFragment : BaseFragment<FragmentFavoriteSearchQueriesBinding>(R.layout.fragment_favorite_search_queries),
     OnSearchQueryItemClickListener {
 
     override val viewModel by viewModels<FavoriteSearchQueriesViewModel>()
