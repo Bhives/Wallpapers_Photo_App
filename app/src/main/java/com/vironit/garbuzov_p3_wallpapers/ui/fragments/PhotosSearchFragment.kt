@@ -38,9 +38,8 @@ class PhotosSearchFragment : BaseFragment<FragmentPhotoSearchBinding>(R.layout.f
         super.onViewCreated(view, savedInstanceState)
         photosSearchAdapter = SearchPhotosAdapter(this)
         setAdapter()
-        //if (args.searchQuery!=null) {
+        //if (args.searchQuery?.isNotEmpty() == true) {
         //    searchPhotoWithArgs()
-        //    Toast.makeText(context, "searchPhotoWithArgs", Toast.LENGTH_SHORT).show()
         //}
         searchPhotos()
         toggleColumnsButton.setOnCheckedChangeListener{ _, isChecked ->
