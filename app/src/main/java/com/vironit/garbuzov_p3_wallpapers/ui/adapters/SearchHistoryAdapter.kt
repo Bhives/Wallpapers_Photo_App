@@ -25,7 +25,10 @@ class SearchHistoryAdapter(
     override fun onBindViewHolder(searchHistoryHolder: SearchHistoryHolder, position: Int) {
         searchHistoryHolder.bindSearchQuery(searchQueriesList[position])
         searchHistoryHolder.itemView.animation =
-            AnimationUtils.loadAnimation(searchHistoryHolder.itemView.context, R.anim.recyclerview_items_animation)
+            AnimationUtils.loadAnimation(
+                searchHistoryHolder.itemView.context,
+                R.anim.recyclerview_items_animation
+            )
     }
 
     inner class SearchHistoryHolder(private val binding: SearchQueryCardBinding) :

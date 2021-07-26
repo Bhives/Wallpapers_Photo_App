@@ -29,6 +29,7 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>(R.layou
 
     private fun setAdapter() {
         searchHistoryAdapter = SearchHistoryAdapter(viewModel, listOf(), this)
+        searchHistoryRecyclerView.setHasFixedSize(true)
         searchHistoryRecyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         viewModel.getAllSearchQueries().observe(viewLifecycleOwner, {

@@ -2,6 +2,7 @@ package com.vironit.garbuzov_p3_wallpapers.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.data.repositories.PhotosRepository
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchHistoryViewModel @Inject constructor(private val photosRepository: PhotosRepository) :
-    BaseViewModel() {
+    ViewModel() {
 
     fun getAllSearchQueries(): LiveData<List<SearchQuery>> {
         var searchQueriesList = MutableLiveData(listOf<SearchQuery>()) as LiveData<List<SearchQuery>>

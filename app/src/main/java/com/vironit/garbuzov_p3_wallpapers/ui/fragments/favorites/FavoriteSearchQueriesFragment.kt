@@ -33,6 +33,7 @@ class FavoriteSearchQueriesFragment : BaseFragment<FragmentFavoriteSearchQueries
     private fun setAdapter() {
         favoriteSearchQueriesAdapter =
             FavoriteSearchQueriesAdapter(viewModel, mutableListOf(), this)
+        favoriteQueriesRecyclerView.setHasFixedSize(true)
         favoriteQueriesRecyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         viewModel.getFavoriteSearchQueries().observe(viewLifecycleOwner, {
