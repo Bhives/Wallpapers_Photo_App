@@ -2,6 +2,7 @@ package com.vironit.garbuzov_p3_wallpapers.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,8 @@ class SearchPhotosAdapter(private val clickListenerPhotos: OnPhotosItemClickList
         if (currentPhoto != null) {
             searchHolder.bindPhoto(currentPhoto)
         }
+        searchHolder.itemView.animation =
+            AnimationUtils.loadAnimation(searchHolder.itemView.context, R.anim.recyclerview_items_animation)
     }
 
     inner class PhotosSearchHolder(private val binding: PhotoCardBinding) :

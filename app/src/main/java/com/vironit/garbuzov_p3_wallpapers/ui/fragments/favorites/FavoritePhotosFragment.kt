@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.ui.adapters.OnPhotosItemClickListener
@@ -28,6 +30,8 @@ class FavoritePhotosFragment : BaseFragment(R.layout.fragment_favorite_photos),
 
     private fun setAdapter() {
         favoritePhotosAdapter = FavoritePhotosAdapter(this, listOf())
+        favoritePhotosRecyclerView.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         viewModel.getFavoritePhotos().observe(viewLifecycleOwner, {
             favoritePhotosAdapter.photosList = it
         })

@@ -13,7 +13,6 @@
         android:layout_marginLeft="@dimen/default_border_margin"
         android:layout_marginTop="@dimen/default_border_margin"
         android:layout_marginRight="@dimen/default_border_margin"
-        android:layout_marginBottom="@dimen/default_border_margin"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        android:layout_marginBottom="@dimen/default_border_margin" />
 
 </FrameLayout>

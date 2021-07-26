@@ -2,7 +2,9 @@ package com.vironit.garbuzov_p3_wallpapers.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
+import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.SearchQueryCardBinding
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.SearchHistoryViewModel
@@ -22,6 +24,8 @@ class SearchHistoryAdapter(
 
     override fun onBindViewHolder(searchHistoryHolder: SearchHistoryHolder, position: Int) {
         searchHistoryHolder.bindSearchQuery(searchQueriesList[position])
+        searchHistoryHolder.itemView.animation =
+            AnimationUtils.loadAnimation(searchHistoryHolder.itemView.context, R.anim.recyclerview_items_animation)
     }
 
     inner class SearchHistoryHolder(private val binding: SearchQueryCardBinding) :

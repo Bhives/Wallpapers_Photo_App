@@ -29,7 +29,7 @@ class FavoritePhotosViewModel @Inject constructor(private val photosRepository: 
     BaseViewModel() {
 
     fun insertToFavorites(photo: Photo) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             photosRepository.insertPhotoToFavorites(photo)
         }
     }
