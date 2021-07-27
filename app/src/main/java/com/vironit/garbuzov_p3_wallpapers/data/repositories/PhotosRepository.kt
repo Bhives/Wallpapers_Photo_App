@@ -18,8 +18,8 @@ class PhotosRepository @Inject constructor(
 
     fun getPhotosSearchResults(query: String) = Pager(
         config = PagingConfig(
-            pageSize = 50,
-            maxSize = 150,
+            pageSize = 10,
+            maxSize = 50,
             enablePlaceholders = false
         ),
         pagingSourceFactory = { PhotosPagingSource(photosSearchApi, query) }
