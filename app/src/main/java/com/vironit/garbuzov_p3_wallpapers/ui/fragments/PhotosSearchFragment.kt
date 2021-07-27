@@ -37,7 +37,7 @@ class PhotosSearchFragment : BaseFragment<FragmentPhotoSearchBinding>(R.layout.f
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!args.searchQuery.isNullOrEmpty()) {
+        if (args.searchQuery.isNotEmpty()) {
             searchPhotoWithArgs()
         }
         photosSearchAdapter = SearchPhotosAdapter(this)
