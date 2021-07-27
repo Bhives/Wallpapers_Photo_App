@@ -3,6 +3,8 @@ package com.vironit.garbuzov_p3_wallpapers.ui.adapters.favorites
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.vironit.garbuzov_p3_wallpapers.R
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
@@ -15,7 +17,8 @@ class FavoriteSearchQueriesAdapter(
     var searchQueriesList: MutableList<SearchQuery>,
     private val clickListenerFavoriteSearchQueries: OnSearchQueryItemClickListener
 ) :
-    RecyclerView.Adapter<FavoriteSearchQueriesAdapter.FavoriteSearchQueriesHolder>() {
+    ListAdapter<SearchQuery, FavoriteSearchQueriesAdapter.FavoriteSearchQueriesHolder>(
+        QUERY_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteSearchQueriesHolder {
         val binding =
@@ -75,5 +78,15 @@ class FavoriteSearchQueriesAdapter(
         favoriteSearchQueriesViewModel.removeFromFavorites(searchQuery)
         searchQueriesList.remove(searchQuery)
         notifyDataSetChanged()
+    }
+
+    companion object {
+        private val QUERY_COMPARATOR = object : DiffUtil.ItemCallback<SearchQuery>() {
+            override fun areItemsTheSame(oldItem: SearchQuery, newItem: SearchQuery) =
+                oldItem.queryText == newItem.queryText
+
+            override fun areContentsTheSame(oldItem: SearchQuery, newItem: SearchQuery) =
+                oldItem == newItem
+        }
     }
 }

@@ -44,6 +44,5 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>(R.layou
                 searchQueryText
             )
         findNavController().navigate(action)
-        //PhotosSearchFragment().searchPhotoWithArgs()
     }
 }

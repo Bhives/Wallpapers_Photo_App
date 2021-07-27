@@ -1,10 +1,15 @@
 package com.vironit.garbuzov_p3_wallpapers.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.ListView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.vironit.garbuzov_p3_wallpapers.R
+import com.vironit.garbuzov_p3_wallpapers.data.database.entities.Photo
 import com.vironit.garbuzov_p3_wallpapers.data.database.entities.SearchQuery
 import com.vironit.garbuzov_p3_wallpapers.databinding.SearchQueryCardBinding
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.SearchHistoryViewModel
@@ -14,7 +19,7 @@ class SearchHistoryAdapter(
     var searchQueriesList: List<SearchQuery>,
     private val clickListenerSearchQueries: OnSearchQueryItemClickListener
 ) :
-    RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryHolder>() {
+    ListAdapter<SearchQuery, SearchHistoryAdapter.SearchHistoryHolder>(QUERY_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHistoryHolder {
         val binding =
@@ -43,6 +48,7 @@ class SearchHistoryAdapter(
             }
         }
 
+        @SuppressLint("SetTextI18n")
         fun bindSearchQuery(searchQuery: SearchQuery) {
             binding.apply {
                 queryTextView.text = searchQuery.queryText
@@ -67,6 +73,16 @@ class SearchHistoryAdapter(
             0
         } else {
             searchQueriesList.size
+        }
+    }
+
+    companion object {
+        private val QUERY_COMPARATOR = object : DiffUtil.ItemCallback<SearchQuery>() {
+            override fun areItemsTheSame(oldItem: SearchQuery, newItem: SearchQuery) =
+                oldItem.queryText == newItem.queryText
+
+            override fun areContentsTheSame(oldItem: SearchQuery, newItem: SearchQuery) =
+                oldItem == newItem
         }
     }
 }

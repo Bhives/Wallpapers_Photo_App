@@ -25,6 +25,7 @@ import com.vironit.garbuzov_p3_wallpapers.ui.templates.BaseFragment
 import com.vironit.garbuzov_p3_wallpapers.viewmodels.PhotosSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_photo_search.*
+import kotlinx.android.synthetic.main.search_query_card.view.*
 
 @AndroidEntryPoint
 class PhotosSearchFragment : BaseFragment<FragmentPhotoSearchBinding>(R.layout.fragment_photo_search),
@@ -36,12 +37,11 @@ class PhotosSearchFragment : BaseFragment<FragmentPhotoSearchBinding>(R.layout.f
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (!args.searchQuery.isNullOrEmpty()) {
+            searchPhotoWithArgs()
+        }
         photosSearchAdapter = SearchPhotosAdapter(this)
         setAdapter()
-        //if (args.searchQuery!=null) {
-        //    searchPhotoWithArgs()
-        //    Toast.makeText(context, "searchPhotoWithArgs", Toast.LENGTH_SHORT).show()
-        //}
         searchPhotos()
         toggleColumnsButton.setOnCheckedChangeListener{ _, isChecked ->
             if (isChecked) {
@@ -127,9 +127,9 @@ class PhotosSearchFragment : BaseFragment<FragmentPhotoSearchBinding>(R.layout.f
         })
     }
 
-    fun searchPhotoWithArgs() {
-        photosRecyclerView.smoothScrollToPosition(0)
+    private fun searchPhotoWithArgs() {
         photoSearchView.setQuery(args.searchQuery, true)
+        viewModel.searchPhotos(args.searchQuery)
     }
 
     override fun onItemClick(photo: Photo) {
