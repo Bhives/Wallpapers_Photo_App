@@ -19,4 +19,8 @@
     <string name="set_as_wallpaper">Set photo as wallpaper</string>
     <string name="set_as_lock_screen">Set photo as lock screen image</string>
     <string name="add_to_favorites">Add photo to favorites</string>
+
+    <string name="date">Date</string>
+    <string name="color">Color</string>
+    <string name="dimensions">Dimensions</string>
 </resources>

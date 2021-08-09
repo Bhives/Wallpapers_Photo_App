@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/photoInfoCard"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:behavior_hideable="true"
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -41,34 +41,173 @@
             app:layout_constraintStart_toStartOf="@id/userNameTextView"
             app:layout_constraintTop_toBottomOf="@id/userNameTextView" />
 
+        <ImageView
+            android:id="@+id/instagramLogoImageView"
+            android:layout_width="@dimen/social_media_icon_size"
+            android:layout_height="@dimen/social_media_icon_size"
+            android:src="@mipmap/ic_instagram"
+            app:layout_constraintEnd_toStartOf="@id/userInstagramLoginTextView"
+            app:layout_constraintTop_toBottomOf="@id/userLoginTextView" />
+
         <TextView
             android:id="@+id/userInstagramLoginTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_border_margin"
-            app:layout_constraintTop_toBottomOf="@id/userLoginTextView"
-            app:layout_constraintStart_toStartOf="@id/userLoginTextView" />
+            app:layout_constraintStart_toStartOf="@id/userLoginTextView"
+            app:layout_constraintTop_toBottomOf="@id/userLoginTextView" />
+
+        <ImageView
+            android:id="@+id/twitterLogoImageView"
+            android:layout_width="@dimen/social_media_icon_size"
+            android:layout_height="@dimen/social_media_icon_size"
+            android:layout_marginTop="@dimen/card_margin_from_card"
+            android:src="@mipmap/ic_twitter"
+            app:layout_constraintEnd_toStartOf="@id/userInstagramLoginTextView"
+            app:layout_constraintTop_toBottomOf="@id/instagramLogoImageView" />
 
         <TextView
             android:id="@+id/userTwitterLoginTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin_from_card"
-            app:layout_constraintTop_toBottomOf="@id/userInstagramLoginTextView"
-            app:layout_constraintStart_toStartOf="@id/userNameTextView" />
+            app:layout_constraintStart_toStartOf="@id/userNameTextView"
+            app:layout_constraintTop_toTopOf="@id/twitterLogoImageView" />
 
         <Button
             android:id="@+id/portfolioButton"
             android:layout_width="@dimen/portfolio_button_width"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userTwitterLoginTextView"
             android:layout_marginTop="@dimen/default_border_margin"
             android:background="@drawable/rounded_bottom_navigation"
             android:backgroundTint="@color/light_blue_app_color"
-            android:text="@string/portfolio"/>
+            android:text="@string/portfolio"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userTwitterLoginTextView" />
 
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/portfolioButton" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_margin_from_card"
+            android:layout_marginLeft="@dimen/default_border_margin"
+            android:layout_marginRight="@dimen/default_border_margin"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descriptionTextView">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/card_margin_from_card"
+                android:layout_marginRight="@dimen/card_margin_from_card"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_bottom_navigation"
+                android:backgroundTint="@color/background_green"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/social_media_icon_size"
+                    android:layout_height="@dimen/social_media_icon_size"
+                    android:layout_marginTop="@dimen/card_margin_from_card"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_time" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/date" />
+
+                <TextView
+                    android:id="@+id/photoDateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/card_margin_from_card"
+                    android:layout_marginLeft="@dimen/card_margin_from_card"
+                    android:layout_marginRight="@dimen/card_margin_from_card"
+                    android:singleLine="false"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_bottom_navigation"
+                android:layout_marginLeft="@dimen/card_margin_from_card"
+                android:layout_marginEnd="@dimen/card_margin_from_card"
+                android:layout_marginRight="@dimen/card_margin_from_card"
+                android:backgroundTint="@color/background_yellow"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/social_media_icon_size"
+                    android:layout_height="@dimen/social_media_icon_size"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_color"
+                    android:layout_marginTop="@dimen/card_margin_from_card"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/color" />
+
+                <TextView
+                    android:id="@+id/photoColorTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/card_margin_from_card"
+                    android:layout_marginLeft="@dimen/card_margin_from_card"
+                    android:layout_marginRight="@dimen/card_margin_from_card"
+                    android:singleLine="false"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_bottom_navigation"
+                android:layout_marginLeft="@dimen/card_margin_from_card"
+                android:backgroundTint="@color/background_red"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/card_margin_from_card">
+
+                <ImageView
+                    android:layout_width="@dimen/social_media_icon_size"
+                    android:layout_height="@dimen/social_media_icon_size"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_dimensions"
+                    android:layout_marginTop="@dimen/card_margin_from_card"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/dimensions" />
+
+                <TextView
+                    android:id="@+id/photoDimensionsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/card_margin_from_card"
+                    android:layout_marginLeft="@dimen/card_margin_from_card"
+                    android:layout_marginRight="@dimen/card_margin_from_card"
+                    android:singleLine="false"/>
+            </LinearLayout>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.cardview.widget.CardView>

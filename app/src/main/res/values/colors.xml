@@ -11,8 +11,9 @@
     <color name="rating_star_color">#ffc922</color>
     <color name="light_grey">#d3d3d3</color>
     <color name="light_blue_app_color">#03a9f4</color>
-    <color name="primary_yellow">#fff59d</color>
-    <color name="background_yellow">#fff54D</color>
     <color name="dark_blue_app_color">#FF01579B</color>
     <color name="call_green">#4caf50</color>
+    <color name="background_green">#c5e1a5</color>
+    <color name="background_yellow">#fff59d</color>
+    <color name="background_red">#ffab91</color>
 </resources>

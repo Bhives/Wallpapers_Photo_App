@@ -38,6 +38,18 @@
             android:src="@drawable/ic_back"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/selectedPhotoToolbar"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fullScreenButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_border_margin"
+            android:layout_marginEnd="@dimen/default_border_margin"
+            android:layout_marginRight="@dimen/default_border_margin"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_fulscreen_off"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/selectedPhotoToolbar" />
 
         <ImageView

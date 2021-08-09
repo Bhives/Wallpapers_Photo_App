@@ -33,7 +33,8 @@ import kotlinx.android.synthetic.main.photo_information_sheet.view.*
 import java.util.*
 
 @AndroidEntryPoint
-class CurrentPhotoFragment : BaseFragment<FragmentCurrentPhotoBinding>(R.layout.fragment_current_photo) {
+class CurrentPhotoFragment :
+    BaseFragment<FragmentCurrentPhotoBinding>(R.layout.fragment_current_photo) {
 
     private val args by navArgs<CurrentPhotoFragmentArgs>()
     private val photosFavoritesViewModel by viewModels<FavoritePhotosViewModel>()
@@ -86,6 +87,9 @@ class CurrentPhotoFragment : BaseFragment<FragmentCurrentPhotoBinding>(R.layout.
             userLoginTextView.text = "@${photo.user.username}"
             userInstagramLoginTextView.text = photo.user.instagramUsername
             userTwitterLoginTextView.text = photo.user.twitterUsername
+            photoDateTextView.text = photo.createdAt.toString()
+            photoColorTextView.text = photo.color
+            photoDimensionsTextView.text = "${photo.width}x${photo.height}"
         }
     }
 
@@ -125,11 +129,21 @@ class CurrentPhotoFragment : BaseFragment<FragmentCurrentPhotoBinding>(R.layout.
         bottomSheetDialog.setContentView(R.layout.bottom_photo_actions_dialog)
         bottomSheetDialog.show()
         bottomSheetDialog.findViewById<LinearLayout>(R.id.wallpaperOption)?.setOnClickListener {
-            photosFavoritesViewModel.setPhotoAs(selectedPhotoImageView, requireContext(), requireActivity(), 0)
+            photosFavoritesViewModel.setPhotoAs(
+                selectedPhotoImageView,
+                requireContext(),
+                requireActivity(),
+                0
+            )
             bottomSheetDialog.hide()
         }
         bottomSheetDialog.findViewById<LinearLayout>(R.id.lockScreenOption)?.setOnClickListener {
-            photosFavoritesViewModel.setPhotoAs(selectedPhotoImageView, requireContext(), requireActivity(), 1)
+            photosFavoritesViewModel.setPhotoAs(
+                selectedPhotoImageView,
+                requireContext(),
+                requireActivity(),
+                1
+            )
             bottomSheetDialog.hide()
         }
         bottomSheetDialog.findViewById<LinearLayout>(R.id.favoritesOption)?.setOnClickListener {
@@ -155,10 +169,12 @@ class CurrentPhotoFragment : BaseFragment<FragmentCurrentPhotoBinding>(R.layout.
                         photoInfoHideButton.isVisible = false
                         selectedPhotoToolbar.isVisible = true
                         bottomSheetBehavior.isDraggable = false
+                        currentPhotoBottomMenu.isVisible = true
                     }
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> {
                         selectedPhotoToolbar.isVisible = false
                         photoInfoHideButton.isVisible = true
+                        currentPhotoBottomMenu.isVisible = false
                     }
                 }
             }
